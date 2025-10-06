@@ -1,0 +1,758 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title> CEH Lab - Mod4 - Enumeration</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2463addf-00cb-8009-ac79-ff4570e01935" class="page sans"><header><h1 class="page-title"> CEH Lab - Mod4 - Enumeration</h1><p class="page-description"></p></header><div class="page-body"><p id="2463addf-00cb-805b-aebe-c5c785b12445" class="">
+</p><p id="2463addf-00cb-80da-84b2-f88d33d6da9d" class=""><em><strong>Enumeration: </strong></em><em>Process of extracting usernames, machine names, network resources, shares, and services from a system or network</em></p><p id="2463addf-00cb-80d3-8736-fb759fcee775" class=""><em>Creates ACTIVE connection with system</em></p><p id="2463addf-00cb-80ac-838a-cd4a066aa7cd" class="">
+</p><p id="2463addf-00cb-804b-8543-d9e702e37c7c" class=""><strong>First </strong>- We performed reconnaissance and used OSINT to gather info about the organization</p><p id="2463addf-00cb-807d-bb92-fc72365ed97a" class=""><strong>Second</strong> - We collected info about open ports and services, OSes, configuration lapses </p><p id="2463addf-00cb-8040-b74a-e21d2de93366" class=""><mark class="highlight-red"><strong>Third (Now)</strong></mark><strong> </strong>- Further probe network to extract more info</p><p id="2463addf-00cb-80f6-9d05-cef6c58096f3" class="">
+</p><h3 id="2463addf-00cb-8069-aa06-f994b685829b" class=""><em>Lab Obective: </em></h3><ul id="2463addf-00cb-806d-8214-da6b884b9611" class="bulleted-list"><li style="list-style-type:disc">Machine names, their OSes, services, and ports</li></ul><ul id="2463addf-00cb-8005-ae34-dc20f9fc979c" class="bulleted-list"><li style="list-style-type:disc">Network resources </li></ul><ul id="2463addf-00cb-801d-a4de-ef680e13a6ca" class="bulleted-list"><li style="list-style-type:disc">Usernames and user groups</li></ul><ul id="2463addf-00cb-80c9-96ac-fff4b3d72b94" class="bulleted-list"><li style="list-style-type:disc">Lists of shares on individual hosts on the network</li></ul><ul id="2463addf-00cb-80ce-a6b5-f7242a99f0d0" class="bulleted-list"><li style="list-style-type:disc">Policies and passwords</li></ul><ul id="2463addf-00cb-80d4-a427-d82e949a5b11" class="bulleted-list"><li style="list-style-type:disc">Routing tables</li></ul><ul id="2463addf-00cb-8084-9384-c2638278e3e4" class="bulleted-list"><li style="list-style-type:disc">Audit and service settings</li></ul><ul id="2463addf-00cb-8050-bb1a-eaef3994a788" class="bulleted-list"><li style="list-style-type:disc">SNMP and FQDN details</li></ul><p id="2463addf-00cb-8084-b349-e8f52c1ef35a" class="">
+</p><p id="2463addf-00cb-8063-adab-c0c030ea2d8c" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Perform NetBIOS Enumeration using nbtstat</summary><div class="indented"><p id="2463addf-00cb-8058-a09e-ce11a041c13b" class=""><em><strong>NetBIOS enumeration</strong></em><em> is a process of obtaining sensitive information about the target such as a list of computers belonging to a target domain, network shares, policies, etc. </em></p><p id="2463addf-00cb-80aa-970d-f7b8fe67f10b" class="">First step in the enumeration of a Windows system is to exploit the NetBIOS API</p><p id="2463addf-00cb-8050-adbe-fc542a59ca0a" class="">
+</p><p id="2463addf-00cb-8066-83c7-d35e67f8a112" class="">Windows uses NetBIOS for <strong>file and printer sharing</strong></p><p id="2463addf-00cb-80a8-b1c6-d77c0bb8a5fd" class=""><strong>NetBIOS name:</strong> Unique computer name assigned to Windows systems -<strong> 16-character ASCII string that identifies the network device</strong> over TCP/IP. The first 15 characters are used for the device name, and the 16th is reserved for the service or name record type.<br/>Runs on Windows systems even when not in use. </p><p id="2463addf-00cb-809f-af3a-caf6a3133590" class="">NetBIOS enumeration allows attackers to <strong>read or write to a remote computer</strong> system (depending on the availability of shares) or<strong> launch a denial of service (DoS)</strong> attack.<br/></p><h3 id="2463addf-00cb-80ea-9789-c2fa9ef12136" class=""><em>Lab Objectives:</em></h3><p id="2463addf-00cb-80b4-b270-d09edcd6c27a" class="">Perform NetBIOS enumeration using Windows command-line utilities<br/></p><p id="2463addf-00cb-80cd-b3ec-ed3d244394c6" class="">
+</p><p id="2463addf-00cb-80d9-93ed-d22ab515120e" class=""><strong><span style="border-bottom:0.05em solid">Nbtstat </span></strong><span style="border-bottom:0.05em solid">helps in troubleshooting NETBIOS name resolution problems. </span></p><p id="2463addf-00cb-8073-ae52-db9a4c5d255d" class=""><em><strong>nbtstat -a &lt;Target IP&gt;</strong></em></p><p id="2463addf-00cb-8059-9ca1-db90b6beb5bc" class=""><em><mark class="highlight-red"><strong>-a</strong></mark></em><em><strong> </strong></em>displays the NetBIOS name table of a remote computer </p><p id="2463addf-00cb-8063-85a1-d548f04cbb89" class="">
+</p><p id="2463addf-00cb-8048-9e4e-f0bc633eaff3" class=""><em><strong>nbtstat -c </strong></em></p><p id="2463addf-00cb-8040-8d88-c68e5b1fe5d3" class=""><em><mark class="highlight-red"><strong>-c</strong></mark></em> displays name cache of remote computer </p><p id="2463addf-00cb-80b9-bdcf-ed7bcdd391d5" class="">
+</p><p id="2463addf-00cb-8025-b1da-fc493eb293b1" class=""><em><strong>net use</strong></em></p><p id="2463addf-00cb-803d-9eee-e77e4b1821d4" class="">Displays info such as connection status, shared folder/drive and network info</p></div></details><p id="2463addf-00cb-801f-9495-e6a4a307fba0" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform SNMP Enumeration using snmpWalk</summary><div class="indented"><p id="2463addf-00cb-8049-818a-c3a96b7add75" class=""><em><strong>SNMP (Simple Network Management Protocol)</strong></em><em> is an application layer protocol that runs on UDP (User Datagram Protocol) and maintains and manages routers, hubs, and switches on an IP network. </em></p><p id="2463addf-00cb-8078-a0ab-c122668fe60b" class="">SNMP agent and SNMP Management station</p><p id="2463addf-00cb-8065-8607-c48df04bf11d" class="">We use SNMP to create a list of user accounts and devices on target computer</p><p id="2463addf-00cb-807f-b6cf-c04f797926e6" class="">
+</p><p id="2463addf-00cb-8031-aaf8-f845880083b9" class=""><strong>Can extract information about:</strong></p><p id="2463addf-00cb-802c-a91f-f014afd3915c" class="">Network resources (such as hosts, routers, devices, and shares)</p><p id="2463addf-00cb-80e2-948a-def2d91c70eb" class="">Network information (such as ARP tables, routing tables, device-specific information, and traffic statistics</p><p id="2463addf-00cb-80df-8c8e-f400530aeb6a" class="">
+</p><h3 id="2463addf-00cb-8007-96d0-e13770a0abe7" class=""><em><strong>Lab Objectives: </strong></em></h3><p id="2463addf-00cb-80f4-808f-d8b47e7a18b0" class="">Perform SNMP enumeration using snmpWalk</p><p id="2463addf-00cb-80ae-ae00-c4834f6ae288" class="">
+</p><p id="2463addf-00cb-8040-b1c4-c95e75a1d1d9" class=""><strong><span style="border-bottom:0.05em solid">snmpWalk </span></strong><span style="border-bottom:0.05em solid">is a command line tool that scans SNMP nodes and identifies variables available for accessing the target network </span></p><p id="2463addf-00cb-8068-af2e-c870c0890f6f" class="">
+</p><p id="2463addf-00cb-80da-b920-e417a7514863" class=""><em><strong>snmpwalk -v1 -c public [target IP] </strong></em></p><p id="2463addf-00cb-806e-ba7d-e66f67257937" class=""><em><strong>-v:</strong></em> Version</p><p id="2463addf-00cb-8092-b291-f382d77b0946" class=""><em><strong>-c</strong></em>: sets Community string</p><p id="2463addf-00cb-80e6-b21a-fc5b0f81964b" class="">Displays OIDs, variables, and other info </p><p id="2463addf-00cb-805e-b2ff-ec04a058e5df" class="">
+</p><p id="2463addf-00cb-8021-861c-f9b920bf21dc" class=""><em><strong>snmpwalk -v2c -c public [Target IP Address] </strong></em></p><p id="2463addf-00cb-8088-a564-dae5572655b4" class="">Displays data transmitted from the SNMP agent to the SNMP server, including information on server, user credentials, and other parameters</p></div></details><p id="2463addf-00cb-8045-a598-f810b4b255a1" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 3: Perform LDAP Enumeration</summary><div class="indented"><p id="2463addf-00cb-8005-b3be-ea1955ce678f" class=""><em>Uses LDAP to generate a list of distributed directory services on the target system. </em></p><p id="2463addf-00cb-803c-9a1e-fdc4de48833c" class="">
+</p><p id="2463addf-00cb-8020-99b2-c294fed13b39" class=""><strong>LDAP (Lightweight Directory Access Protocol) </strong>is an Internet protocol for accessing distributed directory services over a network</p><p id="2463addf-00cb-8059-a951-c90f876b6fa2" class="">Uses DNS for lookups and resolution of queries </p><p id="2463addf-00cb-80f4-b208-f6645dfc807f" class="">Client starts LDAP session by connecting to DSA on TCP port 389</p><p id="2463addf-00cb-80d9-b062-e2f79115665b" class="">BER (Basic Encoding Rules) used to transmit info between client and server </p><p id="2463addf-00cb-80da-b6f2-fbfee012db1f" class="">
+</p><p id="2463addf-00cb-80cc-8b9a-fd844608bbd2" class="">Can anonymously query the LDAP service for sensitive information:</p><p id="2463addf-00cb-8076-b012-d2e0f4be72fc" class="">Usernames, addresses, departmental details, and server names</p><p id="2463addf-00cb-802f-931f-c591392b7588" class="">
+</p><h3 id="2463addf-00cb-80c6-be23-ce6d6edbe15e" class=""><em>Lab Objectives:</em></h3><p id="2463addf-00cb-802a-94aa-d02900bb757e" class="">Perform LDAP enumeration using Active Directory Explorer (AD Explorer)<br/></p><ol type="1" id="2463addf-00cb-8086-b8b6-e2604780e1e3" class="numbered-list" start="1"><li>Open AD Explorer</li></ol><ol type="1" id="2463addf-00cb-80c9-bebd-f86ab2815f33" class="numbered-list" start="2"><li>Enter Target IP Adress </li></ol><ol type="1" id="2463addf-00cb-801f-ba63-cac413e0ffc8" class="numbered-list" start="3"><li>Expand DC=C:EH, DC=com &gt; Expand CN=Users</li></ol><ol type="1" id="2463addf-00cb-809f-8cb4-dd9a2faea0f1" class="numbered-list" start="4"><li>Click on a User &gt; Right click any property in the right pane &gt; Modify &gt; Can change the value </li></ol><p id="2463addf-00cb-80fe-82fc-d80e6f69848f" class="">
+</p><p id="2463addf-00cb-8053-9c2b-c72def94103f" class="">Other LDAP Enumeration Tools: </p><p id="2463addf-00cb-808a-991f-dd58481b7941" class="">Softerra LDAP Administrator (<a href="https://www.ldapadministrator.com/">https://www.ldapadministrator.com</a>)</p><p id="2463addf-00cb-800d-85f2-f4fa739e20ac" class="">LDAP Admin Tool (<a href="https://www.ldapsoft.com/">https://www.ldapsoft.com</a>)</p><p id="2463addf-00cb-8010-b5db-db1f62fbee0c" class="">LDAP Account Manager (<a href="https://www.ldap-account-manager.org/">https://www.ldap-account-manager.org</a>)</p><p id="2463addf-00cb-8053-bf26-ff8677c109de" class="">LDAP Search (<a href="https://securityxploded.com/">https://securityxploded.com</a>) to perform LDAP enumeration on the target</p></div></details><p id="2463addf-00cb-8022-b968-f263305af167" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 4: Perform NFS Enumeration using RPCscan and SuperEnum </summary><div class="indented"><p id="2463addf-00cb-8080-9b33-c3fdd570eb88" class=""><em><strong>NFS enumeration</strong></em><em> is a method by which exported directories and shared data on target systems is extracted. </em></p><p id="2463addf-00cb-80f9-bf5e-e85de885de59" class="">
+</p><p id="2463addf-00cb-80ea-8432-d6420c75736d" class=""><strong>NFS (Network File System)</strong> is a type of file system that enables computer users to access, view, store, and update files over a remote server. </p><p id="2463addf-00cb-80aa-a2d6-cc3cacccd35b" class=""><strong>RPCScan</strong> communicates with RPC (remote procedure call) services and checks misconfigurations on NFS shares. </p><p id="2463addf-00cb-80d5-b41d-c51c45413724" class=""><strong>SuperEnum</strong> includes a script that performs a basic enumeration of any open port</p><p id="2463addf-00cb-80a4-99a3-c8582f4f83ac" class="">
+</p><p id="2463addf-00cb-80d7-8ebb-e8eacb6947f7" class="">To determine if NFS port is open and NFS service is up: </p><p id="2463addf-00cb-800a-8d5c-e89dc886f2c2" class=""><em><strong>nmap -p 2049 &lt;target IP&gt;</strong></em></p><p id="2463addf-00cb-802b-b9f5-f7a2ba4b2fee" class="">
+</p><p id="2463addf-00cb-808b-b0c5-f77951db0d59" class=""><span style="border-bottom:0.05em solid">SuperEnum</span></p><ol type="1" id="2463addf-00cb-80d4-bc30-ff0c8a12338f" class="numbered-list" start="1"><li><em><strong>cd SuperEnum</strong></em></li></ol><ol type="1" id="2463addf-00cb-8072-b7e7-df0e7224c039" class="numbered-list" start="2"><li><em><strong>echo &lt;target IP&gt; &gt;&gt;Target.txt</strong></em><ol type="a" id="2463addf-00cb-8035-b24f-cd58f1d45be1" class="numbered-list" start="1"><li>Creates new file with target machine’s IP address</li></ol></li></ol><ol type="1" id="2463addf-00cb-807a-9bfe-d9491f355b86" class="numbered-list" start="3"><li><em><strong>./superenum &gt; </strong></em>Enter IP List filename path, Type Target.txt</li></ol><p id="2463addf-00cb-805e-90de-ce16540cd128" class=""><strong>Note: </strong>If error running ./superenum script - execute <em><strong>chmod +x superenum</strong></em></p><ol type="1" id="2463addf-00cb-80dc-8b6c-e4c9415ae9f9" class="numbered-list" start="4"><li>View open ports and services </li></ol><p id="2463addf-00cb-8044-a012-c98eba44dc9f" class="">
+</p><p id="2463addf-00cb-807e-850c-dc49053ead95" class=""><span style="border-bottom:0.05em solid">RPCscan:</span></p><ol type="1" id="2463addf-00cb-8062-9ec4-f9b3bee2cec9" class="numbered-list" start="1"><li><em><strong>cd RPCScan</strong></em></li></ol><ol type="1" id="2463addf-00cb-8064-838d-d28e732094a7" class="numbered-list" start="2"><li><em><strong>python3 </strong></em><em><strong><a href="http://rpc-scan.py">rpc-scan.py</a></strong></em><em><strong> &lt;Target IP Addresses&gt; --rpc</strong></em></li></ol></div></details><p id="27e3addf-00cb-80bb-9f5d-c2b4a0014696" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 5: Perform DNS Enumeration using Zone Transfer</summary><div class="indented"><p id="2463addf-00cb-80f3-ad50-fd693fe78c0a" class=""><em><strong>DNS enumeration </strong></em><em>is a process that locates and lists all possible DNS records for a target domain, including usernames</em></p><p id="2463addf-00cb-8075-95d7-da75db6ebfb9" class="">Yields information such as: </p><p id="2463addf-00cb-80b8-ac2e-de2d65f582ce" class="">DNS server names</p><p id="2463addf-00cb-80a4-ad37-d8a79e7b376c" class="">Hostnames</p><p id="2463addf-00cb-800d-b130-f1d4a81910c8" class="">Machine names</p><p id="2463addf-00cb-80bb-9f59-e0274fad74b3" class="">Usernames</p><p id="2463addf-00cb-8098-95a8-d1c236598bcd" class="">IP addresses</p><p id="2463addf-00cb-8055-b59d-cf689362324b" class="">Aliases </p><p id="2463addf-00cb-8039-9395-d9aa5d0ebd81" class="">
+</p><p id="2463addf-00cb-808f-a165-e50776a1a450" class=""><strong>Zone transfer</strong>: Process of transferring a copy of the DNS zone file from the <strong>primary DNS server to a secondary DNS server</strong></p><p id="2463addf-00cb-80b7-8bc0-e97cf5d74e03" class="">In most cases, the DNS server maintains a spare or secondary server for redundancy, which holds all information stored in the main server.<br/></p><p id="2463addf-00cb-8059-ae9c-fd92e669529d" class="">If DNS transfer setting enabled on target DNS server - will give DNS information</p><p id="2463addf-00cb-8087-bd39-c32e5f271730" class="">If not - will return an error saying it has failed or refuses the zone transfer</p><p id="2463addf-00cb-8012-9bf9-f30eb3631bd7" class="">
+</p><p id="2463addf-00cb-8031-9154-ff197ee6eab6" class=""><span style="border-bottom:0.05em solid">Linux / </span><em><strong><span style="border-bottom:0.05em solid">dig</span></strong></em><span style="border-bottom:0.05em solid">:</span></p><ol type="1" id="2463addf-00cb-80d2-a7b7-e73d79dd8688" class="numbered-list" start="1"><li><em><strong>dig ns &lt;Target Domain&gt; </strong></em><ol type="a" id="2463addf-00cb-8081-a09a-e2cc127682df" class="numbered-list" start="1"><li>Retrieves info about all the DNS name servers of the target domain and displays it in the <strong>ANSWER SECTION</strong></li></ol><ol type="a" id="2463addf-00cb-8069-8a46-c40a21343599" class="numbered-list" start="2"><li>Ex. <strong><a href="http://ns2.bluehost.com">ns2.bluehost.com</a></strong> is returned</li></ol></li></ol><ol type="1" id="2463addf-00cb-8021-8f03-f310f4ec8729" class="numbered-list" start="2"><li><em><strong>dig @&lt;NameServer&gt; &lt;Target Domain&gt; axfr</strong></em><ol type="a" id="2463addf-00cb-806d-8d57-e060bec97fde" class="numbered-list" start="1"><li><em><strong>axfr </strong></em>retrieves zone information </li></ol><ol type="a" id="2463addf-00cb-80db-bfb5-ebb41c68bbc7" class="numbered-list" start="2"><li>This will show if Transfer failed/refused or if enabled </li></ol></li></ol><p id="2463addf-00cb-80cb-9292-ef15cc62ade7" class="">
+</p><p id="2463addf-00cb-80b6-ba94-e42c4d6de10a" class=""><span style="border-bottom:0.05em solid">Windows / </span><em><strong><span style="border-bottom:0.05em solid">nslookup:</span></strong></em></p><ol type="1" id="2463addf-00cb-805b-9245-fc0ca1947626" class="numbered-list" start="1"><li><em><strong>nslookup</strong></em></li></ol><ol type="1" id="2463addf-00cb-8040-bada-d529ab3d2f94" class="numbered-list" start="2"><li><em><strong>set querytype=soa</strong></em><ol type="a" id="2463addf-00cb-80b1-bcdc-dc186cbd5178" class="numbered-list" start="1"><li>This retrieves administrative info about DNS zone of target domain </li></ol></li></ol><ol type="1" id="2463addf-00cb-8052-a228-c21cd6b577e8" class="numbered-list" start="3"><li><em><strong>&lt;Target Domain&gt; </strong></em></li></ol><ol type="1" id="2463addf-00cb-80ec-b73d-ecceb4c6c77c" class="numbered-list" start="4"><li><em><strong>ls -d &lt;Name Server&gt; </strong></em><ol type="a" id="2463addf-00cb-80b1-ae5a-c644783968d9" class="numbered-list" start="1"><li>Requests a zone transfer of specified name server</li></ol></li></ol></div></details><p id="2463addf-00cb-807e-9ec1-c5e78adb5514" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 6: Perform SMTP Enumeration using Nmap </summary><div class="indented"><p id="2463addf-00cb-8010-b6e3-c1c4401a10df" class=""><em><strong>SMTP enumeration</strong></em><em> determines a valid list of user accounts on the SMTP server. </em></p><p id="2463addf-00cb-8071-a2a7-fe7f774367d9" class="">Obtain: </p><p id="2463addf-00cb-801c-a6f5-dcb70e03345a" class="">Valid users</p><p id="2463addf-00cb-8087-8b54-c8d923c593e6" class="">Delivery addresses</p><p id="2463addf-00cb-8079-986f-f7509390e042" class="">Message recipients</p><p id="2463addf-00cb-80e0-aa3b-c844a9a4fab9" class=""><br/><strong>Simple Mail Transfer Protocol (SMTP)</strong> is an internet standard based communication protocol for electronic mail transmission</p><ul id="2463addf-00cb-8086-98b2-ed943c19c86d" class="bulleted-list"><li style="list-style-type:disc">Uses mail exchange (MX) servers to direct mail via DNS</li></ul><ul id="2463addf-00cb-80c4-bbf8-e0b321c1049c" class="bulleted-list"><li style="list-style-type:disc">Runs on<strong> TCP port 25, 2525, or 587</strong></li></ul><p id="2463addf-00cb-80d4-9818-e7897304b461" class="">
+</p><h3 id="2463addf-00cb-8064-9f97-d419284a0bf0" class="">Lab Objectives: </h3><p id="2463addf-00cb-803c-b7de-c0b991ca6ef5" class="">Perform SMTP enumeration using Nmap</p><p id="2463addf-00cb-80bb-8918-f833822606c4" class="">
+</p><ol type="1" id="2463addf-00cb-80a2-9f98-c0172313cbc6" class="numbered-list" start="1"><li><em><strong>nmap -p 25 --script=smtp-enum-users &lt;Target IP&gt;</strong></em><ol type="a" id="2463addf-00cb-80b7-abf8-daf1395adde4" class="numbered-list" start="1"><li>Uses NSE to display list of all possible mail users on target machine</li></ol></li></ol><ol type="1" id="2463addf-00cb-8021-81fb-f6a1adeb5c5d" class="numbered-list" start="2"><li><em><strong>nmap -p 25 --script=smtp-open-relay &lt;Target IP&gt;</strong></em><ol type="a" id="2463addf-00cb-803a-a1a9-f34efc0d2c16" class="numbered-list" start="1"><li>Uses NSE to display list of open SMTP relays on target machine </li></ol></li></ol><ol type="1" id="2463addf-00cb-8036-828f-ec0e801618d0" class="numbered-list" start="3"><li><em><strong>nmap -p 25 --script=smtp-commands &lt;Target IP&gt;</strong></em><ol type="a" id="2463addf-00cb-8056-b76c-cc45613dbe4c" class="numbered-list" start="1"><li>Displays list of all SMTP commands available</li></ol></li></ol><p id="2463addf-00cb-80a3-9e9a-cda91b69590e" class="">
+</p><h3 id="2463addf-00cb-80c9-9047-c04bb47139bc" class="">Goal:</h3><p id="2463addf-00cb-80e6-a9e0-fd5133fd9a61" class="">Attackers can perform password spraying attacks to gain unauthorized access to user accounts </p><p id="2463addf-00cb-80da-b9a0-deba1ad6c059" class="">
+</p><p id="2463addf-00cb-8045-b6e4-ec5516576b7c" class="">
+</p></div></details><p id="2463addf-00cb-8029-a9b8-de0149b0b442" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 7: Perform Enumeration using Global Network Inventory</summary><div class="indented"><p id="2463addf-00cb-80bf-b5a6-ccb03cbfd12f" class="">
+</p><p id="2463addf-00cb-8096-967f-e495988b76b3" class=""><strong>Global Network Inventory</strong> is used as an audit scanner in zero deployment and agent-free environments</p><p id="2463addf-00cb-80bc-99a3-cc286b599eee" class="">Scans single/multiple computers by IP range/domain, as defined by the Global Network Inventory host file. </p><p id="2463addf-00cb-803f-9938-eb92e89edcc4" class="">
+</p><ol type="1" id="2463addf-00cb-806a-8e57-c6c1623343e3" class="numbered-list" start="1"><li>Search Global Network Inventory (Windows)</li></ol><ol type="1" id="2463addf-00cb-80cf-a758-f7399ecd0f2c" class="numbered-list" start="2"><li>Audit Scan Mode - Single address scan (Or IP Range if desired) </li></ol><ol type="1" id="2463addf-00cb-8048-bc03-d0ac47ad728c" class="numbered-list" start="3"><li>Enter Authentication Settings </li></ol><ol type="1" id="2463addf-00cb-8034-a22c-fbea67e977eb" class="numbered-list" start="4"><li>Shows multiple Categories to view </li></ol></div></details><p id="2463addf-00cb-8055-acec-cc7b11dd1322" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 8: Perform Enumeration using AI</summary><div class="indented"><p id="2463addf-00cb-808b-9585-dc7ea8a3e287" class="">
+</p><p id="2463addf-00cb-8040-bc48-e6c4e0565ed9" class=""><span style="border-bottom:0.05em solid">Perform NetBIOS enumeration on target system:</span></p><p id="2463addf-00cb-80c8-a9a6-e51801bb790a" class=""><em><strong>sgpt --shell “Perform NetBIOS enumeration on target IP 10.10.1.11” </strong></em></p><p id="2463addf-00cb-8099-8bac-efe89c62bf1d" class="">
+</p><p id="2463addf-00cb-8075-a2f8-e253502d1933" class=""><span style="border-bottom:0.05em solid">View the associated names of target system:</span></p><p id="2463addf-00cb-8033-b66e-e8f973221d63" class=""><em><strong>sgpt --shell “Get NetBIOS info for IP 10.10.1.11 and display the associated names&quot; </strong></em></p><p id="2463addf-00cb-8058-abfc-c3e7b40713db" class="">
+</p><p id="2463addf-00cb-8023-b78f-d7f4b404732a" class=""><span style="border-bottom:0.05em solid">Perform NetBIOS enumeration using Nmap: </span></p><p id="2463addf-00cb-80ce-a0d6-ea8e1175c07e" class=""><em><strong>sgpt --shell “Enumerate NetBIOS on target IP 10.10.1.22 with nmap” </strong></em></p><p id="2463addf-00cb-80cb-9c2d-c46f644fd7dd" class="">
+</p><p id="2463addf-00cb-80b6-b403-ebe8e32369c8" class=""><span style="border-bottom:0.05em solid">Perform SNMP enumeration:</span></p><p id="2463addf-00cb-80e6-97f5-e4ef86dd05a9" class=""><em><strong>sgpt --chat enum --shell “Perform SNMP enumeration on target IP 10.10.1.22 using SnmpWalk and display the result here” </strong></em></p><p id="2463addf-00cb-803d-9801-f8c34870af4d" class="">
+</p><p id="2463addf-00cb-80a7-9a51-f84e261775a6" class=""><span style="border-bottom:0.05em solid">Perform SNMP enumeration using Nmap:</span></p><p id="2463addf-00cb-80fa-abfa-db0253ea54c2" class=""><em><strong>sgpt --chat enum --shell “Perform SNMP enumeration on target IP 10.10.1.22 using nmap and display the result here&quot; </strong></em></p><p id="2463addf-00cb-8098-b64b-e69add7af189" class="">
+</p><p id="2463addf-00cb-805b-92ca-ddac4bc96ac2" class=""><span style="border-bottom:0.05em solid">Perform SMTP enumeration on a target IP: </span></p><p id="2463addf-00cb-80b0-87bb-f29797fde207" class=""><em><strong>sgpt --chat enum --shell “Perform SMTP enumeration on target IP 10.10.1.19.” </strong></em></p><p id="2463addf-00cb-80a5-9e10-cba73741079d" class="">
+</p><p id="2463addf-00cb-807e-9308-fdce748415b4" class=""><span style="border-bottom:0.05em solid">Perform DNS enumeration with Nmap:</span></p><p id="2463addf-00cb-8092-9297-ff034c384de9" class=""><em><strong>sgpt --chat enum --shell &quot;Use Nmap to perform DNS Enumeration on target domain </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>&quot; </strong></em></p><p id="2463addf-00cb-803a-b5a2-eb72c97a0f30" class="">
+</p><p id="2463addf-00cb-806b-a2d2-ce997e984b57" class=""><span style="border-bottom:0.05em solid">DNS cache snooping on target domain:</span></p><p id="2463addf-00cb-8077-9382-f312fd028ff1" class=""><em><strong>sgpt --chat enum --shell “Use dig command to perform DNS cache snooping on target domain </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong> using recursive method. Use DNS server IP as 162.241.216.11&quot; </strong></em></p><p id="2463addf-00cb-8020-b33e-cd44ecb43d41" class="">
+</p><p id="2463addf-00cb-807c-a753-c3a7f6d319b1" class=""><span style="border-bottom:0.05em solid">Perform SMB enumeration:</span></p><p id="2463addf-00cb-809c-9855-fc1b654296ff" class=""><em><strong>sgpt --shell “Scan the target IP 10.10.1.22 for the port using SMB with Nmap” </strong></em></p><p id="2463addf-00cb-805a-b64f-f624a30b1571" class="">
+</p><p id="2463addf-00cb-801d-b121-c4f2bf022c7c" class=""><span style="border-bottom:0.05em solid">Create and execute a custom script to automate network enumeration tasks:</span></p><p id="2463addf-00cb-80f8-9f2d-e02c1663a737" class=""><em><strong>sgpt --chat enum --shell “Develop and execute a script which will automate various network enumeration tasks on target IP range 10.10.1.0/24” </strong></em></p><p id="2463addf-00cb-8021-a35f-ca6a76ad90be" class="">
+</p><p id="2463addf-00cb-804a-aaf9-e9b795363249" class=""><span style="border-bottom:0.05em solid">Perform LDAP enumeration:</span></p><p id="2463addf-00cb-80c2-bb6c-dadd5435740f" class=""><em><strong>sgpt --shell &quot;Use nmap script to perform ldap-brute-force on IP 10.10.1.22&quot; </strong></em></p><p id="2463addf-00cb-8059-9ec6-e064b166ddce" class="">
+</p><p id="2463addf-00cb-8025-9052-f1c5bbad3ccf" class=""><span style="border-bottom:0.05em solid">Perform FTP enumeration:</span></p><p id="2463addf-00cb-804f-aa48-d4eb469a5ec7" class=""><em><strong>sgpt --shell &quot;Use Nmap to perform FTP Enumeration on </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>&quot; </strong></em></p></div></details><p id="2463addf-00cb-805e-b478-e3e288c5ad72" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

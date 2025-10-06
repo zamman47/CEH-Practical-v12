@@ -1,0 +1,770 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod2 - Footprinting and Reconnaissance </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2403addf-00cb-8041-b602-f843b959330a" class="page sans"><header><h1 class="page-title">CEH Lab - Mod2 - Footprinting and Reconnaissance </h1><p class="page-description"></p></header><div class="page-body"><p id="2403addf-00cb-80eb-8d45-e1d13a01bfa7" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Perform Footprinting Through Search Engines </summary><div class="indented"><h3 id="2403addf-00cb-806e-ab71-f34cf90e93b4" class=""><em><strong>Lab Objectives:</strong></em></h3><p id="2403addf-00cb-8009-b76d-ce720413b4ab" class=""><strong>Organization Information:</strong></p><p id="2403addf-00cb-8072-8593-df788d6bd937" class="">Employee details, addresses and contact details, partner details, weblinks, web technologies, patents, trademarks, etc.</p><p id="2403addf-00cb-80ed-8dea-d4ec155d0cf5" class=""><strong>Network Information:</strong></p><p id="2403addf-00cb-80e1-930d-de2aa2785cb0" class="">Domains, sub-domains, network blocks, network topologies, trusted routers, firewalls, IP addresses of the reachable systems, the Whois record, DNS records, and other related information</p><p id="2403addf-00cb-80ce-8017-d5c2134a895c" class=""><strong>System Information:</strong></p><p id="2403addf-00cb-8067-8931-eca19c82ba89" class="">Operating systems, web server OSes, location of web servers, user accounts and passwords, etc.</p><p id="2403addf-00cb-8002-a6a7-cdffbaf1f048" class="">
+</p><p id="2403addf-00cb-80e4-a203-cef421688961" class="">
+</p><p id="2403addf-00cb-8001-9a4e-e9111b6b7014" class=""><strong>intitle:login site:eccouncil.org</strong></p><p id="2403addf-00cb-80da-a513-e9779d1bda1a" class="">Searches for login pages of target organization’s website </p><p id="2403addf-00cb-8091-ad3f-f98b8a47d966" class="">
+</p><p id="2403addf-00cb-809b-8a91-f380606825d6" class=""><strong>EC-Council filetype:pdf ceh </strong></p><p id="2403addf-00cb-802b-9b32-cd35d89fd858" class="">Searches for EC-Council, filetype of PDF, name containing CEH</p><p id="2403addf-00cb-8033-92fc-ff90220b2106" class="">May provide sensitive information about the target&#x27;s products and services</p><p id="2403addf-00cb-80e1-93cc-d45ba2d58ea2" class="">
+</p><p id="2403addf-00cb-808b-877e-dba30069484b" class="">
+</p><figure id="2403addf-00cb-8097-91a5-cea0f0ee66f8" class="image" style="text-align:left"><a href="image%2014.png"><img style="width:912px" src="image%2014.png"/></a></figure><p id="2403addf-00cb-8056-9f7c-c3e46909d41d" class="">▪ <strong>filetype</strong>: This operator allows you to search for results based on a file extension. </p><p id="2403addf-00cb-8093-9986-cf906147a1d4" class="">      For Example, [jasmine:jpg] will provide jpg files based on jasmine.<br/>▪ <strong>source</strong>: This operator displays information from a specific website in Google News.<br/>      For example, [Malware news source:”Hacker News”] returns articles from Hacker News containing the word “Malware”.<br/>▪ <strong>phonebook</strong>: This operator finds the residential and business phone numbers of a person or organization. </p><p id="2403addf-00cb-8095-9fc7-c3043862480b" class="">      For example, [phonebook:Sundar Pichai] will provide Sundar Pichai&#x27;s phone number.<br/>▪ <strong>before</strong>: This operator filters search results to include only content published before a specified date. </p><p id="2403addf-00cb-80fc-9aa1-c42cbffc3468" class="">      For example, [ransomware before:2020-06-29] will give results about the ransomware that occurred before June 29, 2020.<br/>▪ <strong>after</strong>: This operator finds information that was published after a certain date.<br/>       For example, [site:wikipedia.org after:2023-01-01 artificial intelligence] will retrieve Wikipedia articles about artificial intelligence published after January 1, 2023.</p><p id="2403addf-00cb-8012-b3d7-efb943188c78" class="">
+</p><h3 id="2403addf-00cb-80ce-b268-d3508c9c6006" class="">Footprinting Using Advanced Google Hacking Techniques <em>with AI</em></h3><p id="2403addf-00cb-8071-94d9-efd245800582" class="">ShellGPT can be used to perform the above tasks via a prompt in plain english: </p><p id="2403addf-00cb-8076-91d4-e3b500a07e1a" class=""><em>“Use filetype search operator to obtain pdf files on the target website </em><em><a href="http://eccouncil.org/">eccouncil.org</a></em><em> and store the result in the recon1.txt file”</em></p><p id="2403addf-00cb-8099-b58c-ee7850c73eac" class="">
+</p><h3 id="2403addf-00cb-8040-a500-f6fe9f5ebf89" class="">Google Hacking Database</h3><p id="2403addf-00cb-80a4-90a0-f82f5f737e89" class=""> Focuses on using Google search queries (often referred to as &quot;Google Dorks&quot;) to find sensitive information inadvertently exposed on the web</p><ul id="2403addf-00cb-80e0-b468-e7bfe2f16ba6" class="bulleted-list"><li style="list-style-type:disc">Sensitive files, database dumps, log files </li></ul><ul id="2403addf-00cb-80b1-88e8-edc5cdf44450" class="bulleted-list"><li style="list-style-type:disc">Exposed directories </li></ul><ul id="2403addf-00cb-8020-b98d-f56974ba745c" class="bulleted-list"><li style="list-style-type:disc">Error messages </li></ul><ul id="2403addf-00cb-806c-86af-c23e00ff6abc" class="bulleted-list"><li style="list-style-type:disc">Vulnerable devices / software versions  </li></ul><p id="2403addf-00cb-8049-97f4-c1e9cb97e003" class="">
+</p><p id="2403addf-00cb-8085-a860-e949ee21a19d" class=""><strong>SearchSploit</strong>:  a command-line search tool for Exploit-DB that allows taking a copy of the Exploit database for remote use</p><p id="2403addf-00cb-8016-9197-f20e97934dfe" class="">Useful for security assessments of segregated or air-gapped networks without internet access </p><p id="2403addf-00cb-802c-8c81-db611ae49fa0" class="">
+</p><p id="2403addf-00cb-8020-bd2f-f36f7dccd76b" class="">
+</p><h3 id="2403addf-00cb-80f3-a490-e805ad0a1af4" class="">VPN Footprinting through GHDB: </h3><figure id="2403addf-00cb-8077-b60b-e27efff80e94" class="image" style="text-align:left"><a href="image%2015.png"><img style="width:694.98046875px" src="image%2015.png"/></a></figure><p id="2403addf-00cb-8074-8c7d-df8a1819494b" class="">
+</p><h3 id="2403addf-00cb-8048-8ae7-e510cf1fddc9" class="">Footprinting through SHODAN Search Engine </h3><p id="2403addf-00cb-800c-a818-eb24b3708447" class=""> Used to detect devices and networks with vulnerabilities. </p><ul id="2403addf-00cb-80c7-bc52-d427a59a8feb" class="bulleted-list"><li style="list-style-type:disc">VPN and VoIP related information </li></ul><p id="2403addf-00cb-8069-bd34-db2a26404c20" class="">
+</p><h3 id="2403addf-00cb-8075-abbb-f6f7e8090927" class="">Meta Search engines</h3><ul id="2403addf-00cb-8087-addd-c912f5d7f37d" class="bulleted-list"><li style="list-style-type:disc">Startpage, MetaGer, and <a href="http://etools.ch/">eTools.ch</a></li></ul><p id="2403addf-00cb-80b4-adcb-e5b5391feb15" class="">
+</p><h3 id="2403addf-00cb-8071-8eb8-fa7b0f1efdda" class="">FTP search engines </h3><ul id="2403addf-00cb-8081-b238-dd0881efef7c" class="bulleted-list"><li style="list-style-type:disc">NAPALM FTP Indexer, FreewareWeb FTP File Search, Mamont, <a href="http://Globalfilesearch.com">Globalfilesearch.com</a> </li></ul><ul id="2403addf-00cb-80b2-90b4-f4b2b0dbc15f" class="bulleted-list"><li style="list-style-type:disc"><a href="https://filezilla-project.org/">https://filezilla-project.org</a> - Client that can access FTP accounts <br/></li></ul><figure id="2403addf-00cb-80af-809b-cfe1ea397440" class="image" style="text-align:left"><a href="image%2016.png"><img style="width:672px" src="image%2016.png"/></a></figure><p id="2403addf-00cb-8052-8f4c-c881ae40c71d" class="">
+</p><h3 id="2403addf-00cb-80f3-ab5b-e9052261e6ee" class="">IoT search engines </h3><ul id="2403addf-00cb-80de-bff0-fc0ec1bb2be6" class="bulleted-list"><li style="list-style-type:disc">Shodan, Censys, and ZoomEye</li></ul><p id="2403addf-00cb-8036-84ab-cda03df9f998" class="">
+</p><p id="2403addf-00cb-80b9-8db2-f7cd23b1260a" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform Footprinting Through Internet Research Services</summary><div class="indented"><h3 id="2403addf-00cb-80f3-a894-f8d6519bc3b7" class=""><em><strong>Lab Objectives: </strong></em></h3><p id="2403addf-00cb-802c-acd4-c2434d3113c0" class="">Find the Company’s Domains, Subdomains, and Hosts using <strong>Netcraft</strong> and <strong>DNSdumpster</strong><br/></p><h3 id="2403addf-00cb-80a9-843b-f1739c619a73" class="">Netcraft: </h3><ol type="1" id="2403addf-00cb-8034-890e-eea4e78a37b8" class="numbered-list" start="1"><li>Navigate to <a href="https://www.netcraft.com/">https://www.netcraft.com</a> </li></ol><ol type="1" id="2403addf-00cb-80c1-b02a-c0ac1a167527" class="numbered-list" start="2"><li>Resources → Research Tools → Site Report</li></ol><ol type="1" id="2403addf-00cb-80ed-bdc3-efff3f32bcc0" class="numbered-list" start="3"><li>Search target domain</li></ol><p id="2403addf-00cb-800b-b037-f786dd5a0ff4" class="">Can see <strong>Background, Network, Hosting History</strong></p><ol type="1" id="2403addf-00cb-8097-8dc4-f1c203ee2b2e" class="numbered-list" start="4"><li>Under ‘Network’, click website link in Domain field to view <strong>subdomains/netblock/OS information </strong></li></ol><p id="2403addf-00cb-8025-8c69-c4de7efe62fc" class="">
+</p><p id="2403addf-00cb-80c8-b86f-e0b9b3924dc8" class="">Find DNS Servers along with Geo IP and domain mapping:</p><p id="2403addf-00cb-8081-b770-e69e5d7e9d72" class="">
+</p><h3 id="2403addf-00cb-80e6-80a0-d8469d287d50" class="">DNS Dumpster: </h3><ol type="1" id="2403addf-00cb-8059-b2e2-f964361bcc88" class="numbered-list" start="1"><li>Navigate to <a href="https://dnsdumpster.com/">https://dnsdumpster.com/</a> </li></ol><ol type="1" id="2403addf-00cb-8013-81b4-c515ebd1885d" class="numbered-list" start="2"><li>Search target domain </li></ol><p id="2403addf-00cb-801e-ac79-c4f1be58d688" class="">View the list of DNS Servers, MX Records, Host Record (A)</p><ol type="1" id="2403addf-00cb-8035-b7bc-c78ccafa15eb" class="numbered-list" start="3"><li>‘Download .xlsx of Hosts’ to export to Excel sheet</li></ol><p id="2403addf-00cb-806c-be7d-ef9b8656b655" class="">Displays Hostname, IP, Reverse DNS, Netblock owner, COuntry, HTTP / Title, etc. </p><p id="2403addf-00cb-8044-9419-f5cb8ee37bd7" class="">
+</p><h3 id="2403addf-00cb-80eb-918f-eb9d9a61be0b" class="">Additional Tools: </h3><p id="2403addf-00cb-8052-9460-d597d8c7d5e0" class=""><strong>Pentest-Tools Find Subdomains</strong> (<a href="https://pentest-tools.com/">https://pentest-tools.com</a>), to identify the domains and subdomains of any target website</p><p id="2403addf-00cb-80c6-8a98-d6ed48fe5d97" class="">
+</p><p id="2403addf-00cb-80ca-b000-ca728eb7eecb" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 3: Perform Footprinting Through Social Networking Sites  </summary><div class="indented"><h3 id="2403addf-00cb-8004-9cef-f23769f646f8" class=""><em><strong>Lab Objective: </strong></em></h3><p id="2403addf-00cb-80b5-a21e-c0b4e3ca830a" class="">Gather personal information from various social networking sites using <strong>Sherlock</strong></p><p id="2403addf-00cb-8023-ad9e-f1e707a6eb26" class="">
+</p><ol type="1" id="2403addf-00cb-8062-a200-e02a16b21e11" class="numbered-list" start="1"><li>Login to Parrot VM </li></ol><ol type="1" id="2403addf-00cb-804a-861b-f2a2b5b38f08" class="numbered-list" start="2"><li>In cmd - <em><strong>sudo su </strong></em>→<strong> </strong><em><strong>cd sherlock</strong></em></li></ol><ol type="1" id="2403addf-00cb-80e5-8cb2-d0510e0a1413" class="numbered-list" start="3"><li>Syntax: <em><strong>sherlock &lt;”name”&gt;</strong></em></li></ol><p id="2403addf-00cb-80e1-9225-eea7f2db8cce" class=""><br/><strong>Social Searcher</strong> (<a href="https://www.social-searcher.com/">https://www.social-searcher.com</a>) to gather additional information related to the target company and its employees from social networking sites.</p><p id="2403addf-00cb-804e-80e1-f736b3ebd5db" class="">
+</p><p id="2403addf-00cb-805f-a6b3-e1a6ffb02cb8" class="">
+</p></div></details><p id="2403addf-00cb-80ee-bf13-f1478512722c" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 4: Perform Whois Footprinting</summary><div class="indented"><p id="2403addf-00cb-80bb-9e0d-fab396bf3e85" class="">Provides target domain information such as the owner, its registrar, registration details, name server, contact information, etc</p><h3 id="2403addf-00cb-80aa-9391-d983d0e4005f" class=""><em><strong>Lab Objective: </strong></em></h3><p id="2403addf-00cb-8011-b486-c1967aefc347" class="">Perform Whois lookup using DomainTools<br/><a href="http://whois.domaintools.com/">http://whois.domaintools.com</a> </p><p id="2403addf-00cb-8043-ad10-f1bce198df97" class="">
+</p><p id="2403addf-00cb-806c-802c-f36ac6883d53" class="">You can also use other Whois lookup tools such as <strong>SmartWhois</strong> (<a href="https://www.tamos.com/">https://www.tamos.com</a>), <strong>Batch IP Converter</strong> (<a href="http://www.sabsoft.com/">http://www.sabsoft.com</a>), etc. to extract additional target Whois information.<br/></p><p id="2403addf-00cb-8065-8adc-de168b4453fb" class="">
+</p><p id="2403addf-00cb-80d5-8065-ef6f878d2fdd" class="">
+</p><p id="2403addf-00cb-807d-a551-f07fe950d3d8" class="">
+</p><p id="2403addf-00cb-804f-917c-f7a9636ec7c1" class="">
+</p></div></details><p id="2403addf-00cb-8000-9027-de2c6d46195b" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0"><strong>Lab 5: Perform DNS Footprinting</strong></summary><div class="indented"><p id="2403addf-00cb-80b4-87fd-cf182a43c84f" class="">DNS zone data include DNS domain names, computer names, IP addresses, domain mail servers, service records, etc. </p><h3 id="2403addf-00cb-800e-b824-fba470b61ee6" class=""><em><strong>Lab Objective: </strong></em></h3><p id="2403addf-00cb-80fd-b7f6-cb0fd4c213c1" class="">Gather DNS information using nslookup command line utility and online tool<br/></p><p id="2403addf-00cb-8084-a34d-d52de5e7775c" class=""><strong>nslookup: </strong></p><ol type="1" id="2403addf-00cb-8079-bb1f-d0a78f935671" class="numbered-list" start="1"><li>In cmd - run <em><strong>nslookup  </strong></em><strong>(Note: </strong>This specifies that the result was directed to the default server hosted on the local machine (Windows 11) that resolves your requested domain) </li></ol><ol type="1" id="2403addf-00cb-80d6-a207-eab704281beb" class="numbered-list" start="2"><li><em><strong>set type=a</strong></em> - Queries IP address of given domain </li></ol><ol type="1" id="2403addf-00cb-808f-8ee2-ede1210ee47f" class="numbered-list" start="3"><li>Type target domain </li></ol><ol type="1" id="2403addf-00cb-8048-acce-d2fa32c31cde" class="numbered-list" start="4"><li>To find authoritative name server - <em><strong>set type=cname → </strong></em>type target domain </li></ol><ol type="1" id="2403addf-00cb-80af-829b-e888734de8d7" class="numbered-list" start="5"><li>Now to find IP of name server - change <em><strong>set type=a</strong></em><em> → </em>type target name server (ex. ns1.bluehost.com)</li></ol><p id="2403addf-00cb-80bd-b7df-ef0176590795" class="">
+</p><p id="2403addf-00cb-8050-9b9c-ed924b745ea1" class="">The authoritative name server stores the records associated with the domain. So, if an attacker can determine the authoritative name server (primary name server) and obtain its associated IP address, he/she might attempt to exploit the server to perform attacks such as DoS, DDoS, URL Redirection, etc</p><p id="2403addf-00cb-80e9-b4b3-e37fbac398c0" class="">
+</p><p id="2403addf-00cb-8091-a09d-f555a744ef61" class="">To use <strong>online nslookup interface</strong>: </p><p id="2403addf-00cb-8068-ac63-d81a9c901fca" class=""><a href="http://www.kloth.net/services/nslookup.php">http://www.kloth.net/services/nslookup.php</a> </p><p id="2813addf-00cb-801c-b472-fbf21f94285d" class="">
+</p><p id="2403addf-00cb-8083-9bdc-da09ffbcde7e" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 6: Perform Network Footprinting</summary><div class="indented"><p id="2403addf-00cb-809f-b9e8-f511d8cd34f9" class="">Next task is to perform network footprinting to gather the network-related information of a target organization such as network range, traceroute, TTL values, etc. This information will help you to create a map of the target network and perform a man-in-the-middle attack</p><h3 id="2403addf-00cb-80b8-89f2-fe66bd17898f" class=""><em>Lab Objectives: </em></h3><p id="2403addf-00cb-80c3-903a-f3707be4febc" class="">Perform network tracerouting in Windows and Linux Machines<br/></p><h3 id="2403addf-00cb-80e3-a580-c92ea1904070" class="">Network Tracerouting in Windows and Linux Machines<br/></h3><p id="2403addf-00cb-80c5-a59c-c78cf5fe7d92" class=""><em><strong>tracert /? </strong></em></p><p id="2403addf-00cb-80c0-950d-fcc3a73b8e98" class="">Shows tracert flags and parameters </p><p id="2403addf-00cb-8002-897f-ce34bc00c231" class="">
+</p><p id="2403addf-00cb-8085-b985-cac97ec87318" class=""><strong>PingPlotter</strong> (<a href="https://www.pingplotter.com/">https://www.pingplotter.com/</a>)</p><p id="2403addf-00cb-8074-ba05-c89e3417f8f4" class=""><strong>Traceroute NG</strong> (<a href="https://www.solarwinds.com/">https://www.solarwinds.com</a>), <br/>etc. to extract additional network information of the target organization.<br/></p><p id="2403addf-00cb-800a-9e18-e0a6c554050e" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 7: Perform Email Footprinting</summary><div class="indented"><p id="2403addf-00cb-80a5-a3ec-f8a4f6bbe1b5" class="">
+</p><p id="2403addf-00cb-80a0-9c80-fe20532c83a9" class="">
+</p><p id="2403addf-00cb-803a-b19f-c1490f95b4b3" class="">To find email headers: </p><blockquote id="2403addf-00cb-80fe-9908-c55fed4ee41e" class="">In Gmail, find the email header by following the steps:<ul id="2403addf-00cb-8070-9ee1-d36cf947654a" class="bulleted-list"><li style="list-style-type:disc">Open an email; click the dots (<strong>More</strong>) icon arrow next to the <strong>Reply</strong> icon at the top-right corner of the message pane.</li></ul><ul id="2403addf-00cb-8023-95f7-e733dcf8a8d3" class="bulleted-list"><li style="list-style-type:disc">Select <strong>Show original</strong> from the list.</li></ul><ul id="2403addf-00cb-80a8-85b3-de72a78a37f7" class="bulleted-list"><li style="list-style-type:disc">The <strong>Original Message</strong> window appears in a new browser tab with all the details about the email, including the email header</li></ul></blockquote><blockquote id="2403addf-00cb-80f3-9df1-d81caad991a6" class="">In Outlook, find the email header by following the steps:<ul id="2403addf-00cb-8082-a11e-c47ec46fc83d" class="bulleted-list"><li style="list-style-type:disc">Double-click the email to open it in a new window</li></ul><ul id="2403addf-00cb-8055-b3fb-d8765ef49fc5" class="bulleted-list"><li style="list-style-type:disc">Click the <strong>… (More actions)</strong> icon present at the right of the message-pane to open message options</li></ul><ul id="2403addf-00cb-8084-8259-f1562c2152b6" class="bulleted-list"><li style="list-style-type:disc">From the options, click <strong>View</strong></li></ul><ul id="2403addf-00cb-80b5-834e-d4c470926810" class="bulleted-list"><li style="list-style-type:disc">The <strong>view message source</strong> window appears with all the details about the email, including the email header</li></ul></blockquote><p id="2403addf-00cb-805e-a548-e62922033f62" class="">
+</p><p id="2403addf-00cb-80c9-9d21-cb11eb0d5968" class="">
+</p><h3 id="2403addf-00cb-80e3-b7e3-c0d1092a8bc8" class="">eMailTrackerPro: </h3><ol type="1" id="2403addf-00cb-8006-96e8-d778fb9c8ee9" class="numbered-list" start="1"><li>My Trace Reports </li></ol><ol type="1" id="2403addf-00cb-80e1-bd22-e9e3b8b2292b" class="numbered-list" start="2"><li>Trace Headers → New Email Trace → Trace email I have received</li></ol><ol type="1" id="2403addf-00cb-804d-8776-e4b386a56758" class="numbered-list" start="3"><li>Copy/Paste email header </li></ol><p id="2403addf-00cb-80cc-99e5-fdf92340e4b8" class="">
+</p><p id="2403addf-00cb-801e-9ccf-d5578d54da46" class=""><strong>MxToolbox</strong> (<a href="https://mxtoolbox.com/">https://mxtoolbox.com/</a>)</p><p id="2403addf-00cb-80f0-924a-cba4ee5fc4b5" class=""><strong>Social Catfish</strong> (<a href="https://socialcatfish.com/">https://socialcatfish.com/</a>)</p><p id="2403addf-00cb-8083-b5a0-f52176e8d970" class=""><strong>IP2Location Email Header Tracer</strong> (<a href="https://www.ip2location.com/">https://www.ip2location.com/</a>) </p><p id="2403addf-00cb-8075-9821-e93d0ad66afd" class="">
+</p><p id="2403addf-00cb-80a3-ae75-d7aaa0c06bbd" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 8: Various Footprinting tools (recon-ng) </summary><div class="indented"><h3 id="2403addf-00cb-80f9-8dce-f74cbcf18ce4" class=""><em><strong>Lab Objectives:</strong></em></h3><p id="2403addf-00cb-80ae-8a09-d49f588dddd2" class="">Footprinting a target using Recon-ng<br/></p><p id="2403addf-00cb-8022-8fad-c995683476b6" class="">
+</p><h3 id="2403addf-00cb-80e4-966b-f12151539917" class="">Network Recon with recon-ng</h3><p id="2403addf-00cb-80c6-b81d-d5f71c15dda7" class="">
+</p><p id="2403addf-00cb-806b-9b89-d6dad5c9d687" class=""><em><strong>cd</strong></em><em> </em>into the correct directory</p><ol type="1" id="2403addf-00cb-806a-9325-ed76434d1813" class="numbered-list" start="1"><li>Run <em><strong>recon-ng</strong></em></li></ol><ol type="1" id="2403addf-00cb-80d1-8317-ccde6c7f4093" class="numbered-list" start="2"><li>Run help command to view all the commands that allow you to add/delete records to a database, query a database, etc.</li></ol><ol type="1" id="2403addf-00cb-809e-ba4f-fb1e39afee7e" class="numbered-list" start="3"><li>Run <em><strong>marketplace install all</strong></em> command to install all the modules available in recon-n (ignore errors while running the command) </li></ol><ol type="1" id="2403addf-00cb-80b1-b342-f9bb63e664ef" class="numbered-list" start="4"><li><em><strong>modules search </strong></em>displays all modules available in recon-ng</li></ol><ol type="1" id="2403addf-00cb-80f3-a6ed-f33e69a268be" class="numbered-list" start="5"><li>Run <em><strong>workspaces </strong></em>command to view the commands related to the workspaces</li></ol><ol type="1" id="2403addf-00cb-806f-9950-d26dd0eef411" class="numbered-list" start="6"><li>Create a workspace in which to perform network reconnaissance:<ol type="a" id="2403addf-00cb-80d9-81e3-d7f1891b9cb5" class="numbered-list" start="1"><li><em><strong>workspaces create &lt;workspace name&gt;</strong></em></li></ol></li></ol><ol type="1" id="2403addf-00cb-801b-a1f1-f61c8fa5f435" class="numbered-list" start="7"><li><em><strong>workspaces list </strong></em>- displays list of workspaces present </li></ol><ol type="1" id="2403addf-00cb-8059-9639-cc75f292f97a" class="numbered-list" start="8"><li>Add a domain in which you want to perform network recon: <ol type="a" id="2403addf-00cb-806b-8609-f43686a1d9c3" class="numbered-list" start="1"><li><em><strong>db insert domains</strong></em></li></ol><ol type="a" id="2403addf-00cb-80c4-a4dc-f894b9daa180" class="numbered-list" start="2"><li><strong>domain (TEXT): </strong>&lt;input website here&gt; (certifiedhacker.com) </li></ol><ol type="a" id="2403addf-00cb-803d-bdb6-efcd75086774" class="numbered-list" start="3"><li><strong>notes (TEXT): </strong>optional </li></ol></li></ol><ol type="1" id="2403addf-00cb-8040-870f-cf5ed222425e" class="numbered-list" start="9"><li>Domains added can be viewed with <em><strong>show domains</strong></em></li></ol><ol type="1" id="2403addf-00cb-80ac-9fba-cfcbeef38b2c" class="numbered-list" start="10"><li>Harvest host related info by loading network reconnaissance modules such as brute_hosts, Netcraft, and Bing: <ol type="a" id="2403addf-00cb-806c-bdae-efb4a5a88455" class="numbered-list" start="1"><li><em><strong>modules load brute </strong></em>- shows all modules related to brute forcing </li></ol></li></ol><ol type="1" id="2403addf-00cb-805c-b505-c1f95e7dc7a9" class="numbered-list" start="11"><li>To load module: <em><strong>modules load &lt;module-name&gt; (modules load recon/domains-hosts/brute_hosts)</strong></em></li></ol><ol type="1" id="2403addf-00cb-80d1-8beb-f59d0ec30c92" class="numbered-list" start="12"><li><em><strong>Run </strong></em>to run the module <ol type="a" id="2403addf-00cb-8037-9211-f1a4a88bcc11" class="numbered-list" start="1"><li>Observe that hosts will be added</li></ol></li></ol><ol type="1" id="2403addf-00cb-808a-8037-ce7801e1c756" class="numbered-list" start="13"><li>Use<em><strong> back </strong></em>command return to previous terminal </li></ol><ol type="1" id="2403addf-00cb-801d-8bf3-e0d227f01b6e" class="numbered-list" start="14"><li>To resolve hosts using the bing module<ol type="a" id="2403addf-00cb-8007-ac96-cfe9562de828" class="numbered-list" start="1"><li><em><strong>modules load recon/domains-hosts/bing_domain_web → run </strong></em></li></ol></li></ol><p id="2403addf-00cb-8014-ac3b-d1cda1efd2a1" class="">
+</p><ol type="1" id="2403addf-00cb-8034-bdca-d895dbb0a25b" class="numbered-list" start="15"><li>Perform a reverse lookup for IP address obtained during recon process: <ol type="a" id="2403addf-00cb-8040-a628-ce8c7754c01c" class="numbered-list" start="1"><li><em><strong>modules load reverse_resolve - </strong></em> View all modules associated with <em><strong>reverse_resolve </strong></em>keyword</li></ol><ol type="a" id="2403addf-00cb-80bf-b1ed-f7d5261bfbc3" class="numbered-list" start="2"><li><em><strong>modules load recon/hosts-hosts/reverse_resolve → run </strong></em></li></ol><ol type="a" id="2403addf-00cb-8015-b3a3-e4d99d0d6b29" class="numbered-list" start="3"><li>Run <em><strong>show hosts - </strong></em>displays all hosts harvested so far</li></ol></li></ol><ol type="1" id="2403addf-00cb-802d-87bb-dccef5df8e3d" class="numbered-list" start="16"><li>Create report of hosts: <ol type="a" id="2403addf-00cb-80c3-94d1-f2d7119f5a09" class="numbered-list" start="1"><li><em><strong>modules load reporting</strong></em></li></ol><ol type="a" id="2403addf-00cb-80e8-acb5-ce6cfc01adc3" class="numbered-list" start="2"><li><em><strong>modules load reporting/html</strong></em></li></ol><ol type="a" id="2403addf-00cb-805e-ad0a-f56034b75f89" class="numbered-list" start="3"><li>Assign values for CREATOR and CUSTOMER, set FILENAME and filepath: <ol type="i" id="2403addf-00cb-80c0-b91b-da54a280c4c6" class="numbered-list" start="1"><li><em><strong>options set FILENAME /home/attacker/Desktop/results.html </strong></em></li></ol><ol type="i" id="2403addf-00cb-80a6-a173-dabe982e472a" class="numbered-list" start="2"><li><em><strong>options set CREATOR &lt;name&gt;</strong></em></li></ol><ol type="i" id="2403addf-00cb-8099-9330-c6a61b2d677c" class="numbered-list" start="3"><li><em><strong>options set CUSTOMER &lt;name&gt;</strong></em></li></ol></li></ol></li></ol><p id="2403addf-00cb-80a6-a4ab-c7500fa8bb13" class="">
+</p><h3 id="2403addf-00cb-80e1-aba6-ed4aba8b39af" class="">Personnel Info Gathering with recon-ng</h3><p id="2403addf-00cb-8066-8970-d687358326b1" class="">
+</p><ol type="1" id="2403addf-00cb-804a-aa2f-f11d78e2a55a" class="numbered-list" start="1"><li><em><strong>workspaces create &lt;workspace name&gt; </strong></em></li></ol><ol type="1" id="2403addf-00cb-80a4-97fc-fa9ab429d660" class="numbered-list" start="2"><li>Set a domain: <em><strong>db insert domains </strong></em></li></ol><ol type="1" id="2403addf-00cb-8059-86cb-d70c5331a36e" class="numbered-list" start="3"><li>Specify a domain </li></ol><ol type="1" id="2403addf-00cb-80d9-9d96-efedad3c8923" class="numbered-list" start="4"><li><em><strong>modules load recon/domains-contacts/whois_pocs - </strong></em>uses the ARIN Whois RWS to harvest POC data from Whois queries for the given domain</li></ol><ol type="1" id="2403addf-00cb-80f7-ae26-e387f4434987" class="numbered-list" start="5"><li>Run <em><strong>options set SOURCE &lt;domain&gt; </strong></em></li></ol><ol type="1" id="2403addf-00cb-809b-a2f7-f4007e9130ab" class="numbered-list" start="6"><li><em><strong>Run</strong></em></li></ol><p id="2403addf-00cb-80f5-886a-dbdf5a44e833" class="">
+</p><h3 id="2403addf-00cb-80b4-b481-e7e7964d7ed6" class="">Subdomain and IP Gathering with recon-ng</h3><p id="2403addf-00cb-80c9-8a38-c2fe877ca7a1" class="">
+</p><ol type="1" id="2403addf-00cb-8055-bb11-f9d83d191217" class="numbered-list" start="1"><li><em><strong>modules load recon/domains-hosts/hackertarget</strong></em></li></ol><ol type="1" id="2403addf-00cb-80bf-896b-efd8ff8509a9" class="numbered-list" start="2"><li><em><strong>options set SOURCE &lt;domain&gt; </strong></em></li></ol><p id="2403addf-00cb-8092-b495-d7fc653ba99e" class="">
+</p><p id="2403addf-00cb-8077-a47a-ebe03880b5f0" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 9: Perform Footprinting using AI</summary><div class="indented"><h3 id="2413addf-00cb-80a9-ae78-f03729a5f82b" class=""><em><strong>Lab Objectives:</strong></em></h3><p id="2413addf-00cb-8014-be68-f5b35638f210" class="">Footprinting a target using ShellGPT</p><p id="2413addf-00cb-8097-a298-d6130221a6cd" class="">
+</p><p id="2413addf-00cb-8049-a719-ed08563431e3" class=""><em><strong>bash </strong></em><em><strong><a href="http://sgpt.sh">sgpt.sh</a></strong></em><em><strong> </strong></em>to configure shell gpt if necessary</p><p id="2413addf-00cb-8020-9ccb-d3840832f776" class="">
+</p><p id="2413addf-00cb-80e4-ba67-d6992e5bc60d" class="">Harvesting emails pertaining to a target organization: </p><p id="2413addf-00cb-8075-8339-f14457dab37a" class=""><em><strong>sgpt --chat footprint --shell “Use theHarvester to gather email accounts associated with &#x27;</strong></em><em><strong><a href="http://microsoft.com/">microsoft.com</a></strong></em><em><strong>&#x27;, limiting results to 200, and leveraging &#x27;baidu&#x27; as a data source” </strong></em></p><p id="2413addf-00cb-8076-a36a-f275aac7e1a1" class="">
+</p><p id="2413addf-00cb-8048-82ea-c87702099880" class="">Perform footprinting through social networking sites: </p><p id="2413addf-00cb-8071-981b-fd359c01b96a" class=""><em><strong>sgpt --chat footprint --shell “Use Sherlock to gather personal information about &#x27;&lt;individual’s name&gt;&#x27; and save the result in recon2.txt” </strong></em></p><p id="2413addf-00cb-802a-ad32-d73e61763d66" class="">Run<em><strong> ls </strong></em>to view contents of working directory </p><p id="2413addf-00cb-8056-b16a-eb5bba8e4d4f" class="">Run <em><strong>pluma &lt;filename.txt&gt;</strong></em> to view contents </p><p id="2413addf-00cb-806b-8a7d-c985df03711a" class="">
+</p><p id="2413addf-00cb-8041-9609-c5d2e6f08ff6" class="">Perform website footprinting using ShellGPT: </p><p id="2413addf-00cb-8007-ae4e-e2d73f43435f" class=""><em><strong>sgpt --chat footprint --shell “Footprint the target website </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong> and save the result in website_footprint.txt” </strong></em></p><p id="2413addf-00cb-808e-adab-c4b50024ab6b" class="">Run <em><strong>pluma website_footprint.txt </strong></em>to view contents </p><p id="2413addf-00cb-8058-a5a8-dc664464b027" class="">
+</p><p id="2413addf-00cb-805f-82eb-e03f7eb9f8cb" class="">Gather a word list from specified website: </p><p id="2413addf-00cb-80ff-aba2-e148d0ae7fa3" class=""><em><strong> sgpt --chat footprint --shell “Use cewl to gather a wordlist from the target website </strong></em><em><strong><a href="https://www.certifiedhacker.com/">https://www.certifiedhacker.com</a></strong></em><em><strong> and save the result in recon4.csv file” </strong></em></p><p id="2413addf-00cb-80b8-82a2-da6f6ab1fbc5" class="">Navigate to<strong> /home/attacker</strong> location and open <strong>recon4.csv </strong></p><p id="2413addf-00cb-80fa-a24b-f13d77a27938" class="">
+</p><p id="2413addf-00cb-8041-8a46-eccc5c9fa6cb" class="">Perform website mirroring: </p><p id="2413addf-00cb-80a8-9170-c886966eef1c" class=""><em><strong>sgpt --chat footprint --shell “Use website mirroring tool to clone the target website </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>” <br/></strong></em>Navigate to<strong> /home/attacker/www.certifiedhacker.com</strong> and double-click <strong>index.html</strong> file to view the cloned website</p><p id="2413addf-00cb-802b-9034-fa6fae1d5069" class="">
+</p><p id="2413addf-00cb-80ce-bc3c-ef56cbfca208" class="">Perform DNS lookup using ShellGPT: </p><p id="2413addf-00cb-800b-81b4-e470f35cb10e" class=""><em><strong>sgpt --chat footprint --shell “Install and use DNSRecon to perform DNS enumeration on the target domain </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>” </strong></em></p><p id="2413addf-00cb-80b5-bcb8-f3a4792e5369" class="">
+</p><p id="2413addf-00cb-809f-ba8d-cd4a04524a5c" class="">Traceroute target: </p><p id="2413addf-00cb-808f-ba1e-c761172e2111" class=""><em><strong>sgpt --chat footprint --shell “Perform network tracerouting to discover the routers on the path to a target host </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>” </strong></em></p><p id="2413addf-00cb-8046-851f-e57d5609cae4" class="">
+</p><p id="2413addf-00cb-8029-b3ff-faaad1a9b26a" class="">Python script to automate footprinting tasks: </p><p id="2413addf-00cb-803a-b6cf-caa0a21c064f" class=""><em><strong>sgpt --chat footprint --shell “Develop a Python script which will accept domain name </strong></em><em><strong><a href="http://microsoft.com/">microsoft.com</a></strong></em><em><strong> as input and execute a series of website footprinting commands, including DNS lookups, WHOIS records retrieval, email enumeration, and more to gather information about the target domain” </strong></em></p><p id="2413addf-00cb-809e-9646-d4fcb40c16ab" class="">
+</p></div></details></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

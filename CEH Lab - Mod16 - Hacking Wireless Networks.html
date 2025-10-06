@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod16 - Hacking Wireless Networks</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="27e3addf-00cb-8080-9d16-d7cfa06e382c" class="page sans"><header><h1 class="page-title">CEH Lab - Mod16 - Hacking Wireless Networks</h1><p class="page-description"></p></header><div class="page-body"><p id="27e3addf-00cb-8029-b49d-f407bfa91b16" class="">
+</p><p id="27e3addf-00cb-805d-89ed-ffc4352bde5d" class="">A wireless network is an unbounded data communication system that uses radio-frequency technology to communicate with devices and obtain data. </p><p id="27e3addf-00cb-800c-b239-e697d3c8aad0" class="">Through RF technology, Wi-Fi allows devices to access wireless networks without cables from anywhere within range of an access point. The wireless network can be at risk to various types of attacks, including access-control attacks, integrity attacks, confidentiality attacks, availability attacks, and authentication attacks.<br/></p><p id="27e3addf-00cb-80e6-9513-e0fd4017224c" class="">Types of wireless networks: </p><p id="27e3addf-00cb-800f-86a9-e413ad9dc175" class=""><strong>▪ Extension to a wired network</strong>: A wired network is extended by the introduction of access points between the wired network and wireless devices<br/>▪<strong> Multiple access points: </strong>Multiple access points connect computers wirelessly </p><p id="27e3addf-00cb-80f3-84d0-e7be0a314119" class="">▪<strong> LAN-to-LAN wireless network:</strong> All hardware APs have the ability to interconnect with other hardware access points</p><p id="27e3addf-00cb-8085-ad88-d3419a4706c2" class="">
+</p><h3 id="27e3addf-00cb-80b5-9c7f-dd4992956643" class="">Lab Objective </h3><p id="27e3addf-00cb-8057-ac10-eca6b429418d" class="">The objective of the lab is to protect the target wireless network from unauthorized access. To do so, you will perform various tasks that include, but are not limited to: <br/>Discover Wi-Fi networks<br/>▪ Create fake access point</p><p id="27e3addf-00cb-805a-9681-e021bc2221c2" class="">▪ Discover Wi-Fi networks</p><p id="27e3addf-00cb-8091-a262-fb74ec45017f" class="">▪Capture and analyze wireless traffic </p><p id="27e3addf-00cb-80a5-82c0-c939a09a31d3" class="">▪Crack WPA2 Wi-Fi network</p><p id="27e3addf-00cb-8039-ba73-fdcbe723c320" class="">
+</p><p id="27e3addf-00cb-8086-b7da-dcefc5790601" class="">The demonstrations in this lab use a <strong>Linksys 802.11 g WLAN</strong> adapter and <strong>ECC LABS</strong> as the access point. </p><p id="27e3addf-00cb-80ad-854f-f9b203b71291" class="">The <strong>ECC Labs</strong> access point has been configured with <strong>WPA2</strong> encryption (password: 12345678) as per the lab requirements</p><p id="27e3addf-00cb-803a-adb6-e6b8e84ad9f6" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Perform Wireless Traffic Analysis</summary><div class="indented"><p id="27e3addf-00cb-80e1-ae20-e4e52d8ac5ef" class="">
+</p><h3 id="27e3addf-00cb-80d4-b40b-dbbf14b0cfb7" class="">Task 1: Find Wi-Fi Networks and Sniff Wi-Fi Packets using Wash and Wireshark</h3><p id="27e3addf-00cb-8023-9a9d-fe05a71c5ec9" class="">
+</p><p id="27e3addf-00cb-80b0-b891-f8bf59e7493e" class=""><strong>Wash </strong>is a utility that can be used to identify WPS-enabled access points in the target wireless network. </p><ul id="27e3addf-00cb-8049-87f8-d9825441acc3" class="bulleted-list"><li style="list-style-type:disc">Enables you to check if the access point is in a locked or unlocked state. M</li></ul><ul id="27e3addf-00cb-8026-8880-f74c7ad5f7f6" class="bulleted-list"><li style="list-style-type:disc">Most WPS-enabled routers automatically lock after five or more unsuccessful login attempts (an attempted brute-force attack) and can be unlocked only manually in the administrator interface of the router</li></ul><p id="27e3addf-00cb-801e-a739-df73416a22af" class="">
+</p><p id="27e3addf-00cb-80d1-9f08-edf003d22520" class="">Use <strong>Wash </strong>to find Wi-Fi networks and <strong>Wireshark </strong>to sniff Wi-Fi packets</p><p id="27e3addf-00cb-80e3-965e-e340c3cb4e37" class="">
+</p><ol type="1" id="27e3addf-00cb-802b-9eac-fde4ed704c77" class="numbered-list" start="1"><li>In the Parrot Terminal window, type <em><strong>ifconfig </strong></em>and press Enter. </li></ol><p id="27e3addf-00cb-8082-af68-da71465a0942" class="">Observe that the wireless interface (here, <strong>wlx00e02d886189</strong>) gets connected to the machine. Note: The name of wireless interface might vary in your lab environment</p><ol type="1" id="27e3addf-00cb-800a-ae4f-e9324488495c" class="numbered-list" start="2"><li><em><strong>airmon-ng start wlx00e02d886189</strong></em> and press Enter. This command puts the wireless interface (here, wlx00e02d886189) into monitor mode</li></ol><ol type="1" id="27e3addf-00cb-8019-95ed-f9431a122cbc" class="numbered-list" start="3"><li>Type <em><strong>airmon-ng check kill</strong></em> and press Enter to stop the network managers and kill the interfering processes</li></ol><ol type="1" id="27e3addf-00cb-808f-b4b4-fa53fb7b4d62" class="numbered-list" start="4"><li>run the command <em><strong>airmon-ng start wlx00e02d886189</strong></em> again to put the wireless interface in monitor mode</li></ol><ol type="1" id="27e3addf-00cb-8034-89a5-dbc36965ae83" class="numbered-list" start="5"><li>Now, we shall find Wi-Fi networks (access points) by using the wireless interface wlx00e02d886189.<ol type="a" id="27e3addf-00cb-8024-b793-c6988cfc850e" class="numbered-list" start="1"><li><em><strong>wash -i wlx00e02d886189</strong></em> and press Enter to detect WPS-enabled devices</li></ol></li></ol><ol type="1" id="27e3addf-00cb-80d7-8d66-d8cb55152dd5" class="numbered-list" start="6"><li>Results appear displaying discovered Wi-Fi access points</li></ol><p id="27e3addf-00cb-8033-9973-e19d1fce7585" class="">Note: If no results appear, restart the Parrot Security virtual machine and perform Steps 1 - 8, type wash -i wlx00e02d886189 in the Terminal window, and press Enter.</p><p id="27e3addf-00cb-802a-918a-d2bb5b5ea2b8" class="">
+</p><ol type="1" id="27e3addf-00cb-80a5-8510-d595a730cf02" class="numbered-list" start="1"><li>Open Wireshark</li></ol><ol type="1" id="27e3addf-00cb-80f1-baf2-dcc54fc1cb12" class="numbered-list" start="2"><li>Double click the wireless interface </li></ol><ol type="1" id="27e3addf-00cb-8010-9de6-c159b092cd78" class="numbered-list" start="3"><li>Wireshark starts capturing network traffic. Note that the captured wireless packets are labeled <strong>802.11 </strong>under the Protocol column, as shown in the screenshot</li></ol></div></details><p id="27e3addf-00cb-803d-976b-c09c36252d70" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform Wireless Attack</summary><div class="indented"><p id="27e3addf-00cb-80a6-b5a2-f22555fc69d2" class="">
+</p><p id="27e3addf-00cb-80b2-9634-f5d4c9a674f5" class=""><strong>▪ Fragmentation attack: </strong>When successful, such attacks can obtain 1,500 bytes of PRGA (pseudo random generation algorithm)<br/><strong>▪ MAC spoofing attack: </strong>The attacker changes their MAC address to that of an authenticated user in order to bypass the access point’s MAC-filtering configuration<br/><strong>▪ Disassociation attack: </strong>The attacker makes the victim unavailable to other wireless devices by destroying the connectivity between the access point and client<br/><strong>▪ Deauthentication attack</strong>: The attacker floods station(s) with forged deauthentication packets to disconnect users from an access point<br/><strong>▪ Man-in-the-middle attack: </strong>An active Internet attack in which the attacker attempts to intercept, read, or alter information between two computers<br/><strong>▪ Wireless ARP poisoning attack:</strong> An attack technique that exploits the lack of a verification mechanism in the ARP protocol by corrupting the ARP cache maintained by the OS in order to associate the attacker’s MAC address with the target host<br/><strong>▪ Rogue access points:</strong> Wireless access points that an attacker installs on a network without authorization and that are not under the management of the network administrator<br/><strong>▪ Evil twin:</strong> A fraudulent wireless access point that pretends to be a legitimate access point by imitating another network name<br/>▪<strong> Wi-Jacking attack</strong>: A method used by attackers to gain access to an enormous number of wireless networks</p><p id="27e3addf-00cb-800a-8479-fa5bc7cd4f46" class="">
+</p><h3 id="27e3addf-00cb-80d6-b589-fae115d5751a" class="">Task 1: Crack a WPA2 Network using Aircrack-ng </h3><p id="27e3addf-00cb-80c0-a023-dbf4bbd71546" class="">
+</p><p id="27e3addf-00cb-80c5-b1f4-c29aed884019" class=""><strong>WPA2 is an upgrade to WPA</strong>; </p><ul id="27e3addf-00cb-80bf-bda0-f4a662413cfb" class="bulleted-list"><li style="list-style-type:disc">Includes mandatory support for Counter Mode with Cipher Block Chaining Message Authentication Code Protocol (<strong>CCMP</strong>), an AES-based encryption protocol with strong security. </li></ul><ul id="27e3addf-00cb-802a-a870-e202fd9ebd3e" class="bulleted-list"><li style="list-style-type:disc">WPA2 has 2 modes of operation: WPA2-Personal and WPA2-Enterprise. Despite being stronger than both WEP and WPA, the WPA2 encryption method can also be cracked using various techniques and tools. </li></ul><p id="27e3addf-00cb-80c3-9071-ce4b40f2114b" class="">
+</p><ol type="1" id="27e3addf-00cb-806c-a777-c1ef4c9c8022" class="numbered-list" start="1"><li><em><strong>cd </strong></em>to root directory</li></ol><ol type="1" id="27e3addf-00cb-80b3-8d8d-ca13fbf3a44e" class="numbered-list" start="2"><li><em><strong>ifconfig</strong></em></li></ol><ol type="1" id="27e3addf-00cb-80e9-a5ac-ed8bd0e706ef" class="numbered-list" start="3"><li>Note wireless interface connected to machine</li></ol><ol type="1" id="27e3addf-00cb-80b0-b02b-d058d467ef53" class="numbered-list" start="4"><li><em><strong> airmon-ng start wlx00e02d886189 </strong></em></li></ol><ol type="1" id="27e3addf-00cb-8051-9d44-c5037e6e99eb" class="numbered-list" start="5"><li><em><strong>airmon-ng check kill </strong></em></li></ol><ol type="1" id="27e3addf-00cb-80e7-ad97-d065c144cb6e" class="numbered-list" start="6"><li><em><strong>airmon-ng start wlx00e02d886189 </strong></em></li></ol><ol type="1" id="27e3addf-00cb-80bd-b301-f467686322d5" class="numbered-list" start="7"><li> We will now use airodump-ng to get a list of detected access points and connected clients. In the terminal window, type <em><strong>airodump-ng wlx00e02d886189</strong></em></li></ol><p id="27e3addf-00cb-800a-a98f-c13ffdf31bd6" class="">Note: Airodump-ng hops from channel to channel and shows all access points from which it can receive beacons. Channels 1 to 14 are used for 802.11b and g.</p><p id="27e3addf-00cb-802e-96c8-c0d94a5cd646" class="">
+</p><ol type="1" id="27e3addf-00cb-8023-ab60-fed56ddbd332" class="numbered-list" start="8"><li>Target the ECC LABS access point for WPA2 cracking</li></ol><ol type="1" id="27e3addf-00cb-8057-843e-e5ea80c28912" class="numbered-list" start="9"><li><em><strong>cd </strong></em>to jump to root directory</li></ol><ol type="1" id="27e3addf-00cb-8095-9f75-febd1bb7ad62" class="numbered-list" start="10"><li><em><strong>airodump-ng --bssid 22:7F:AC:6D:E6:8B -c 1 -w ECCLabs wlx00e02d886189 </strong></em><ol type="a" id="27e3addf-00cb-80ff-b113-f88214dac0fa" class="numbered-list" start="1"><li>We obtained the MAC in the previous steps</li></ol></li></ol><p id="27e3addf-00cb-801c-9504-eb2fd9a4f65d" class="">Note: In this command, --bssid: is the MAC address of the target access point (in this case, 22:7F:AC:6D:E6:8B); -c: is the channel on which the target access point is configured (in this case, ECC LABS is running on channel number 11); -w: is the name of the dump file prefix which contains the IVs (in this case, ECC LABS); and wlan0mon: is the wireless interface.</p><p id="27e3addf-00cb-80c8-853b-ef8aab5f998b" class="">
+</p><ol type="1" id="27e3addf-00cb-805c-a6a7-d535d530a326" class="numbered-list" start="11"><li>In another terminal: <ol type="a" id="27e3addf-00cb-8073-af47-f867d45be745" class="numbered-list" start="1"><li><em><strong>aireplay-ng -0 11 -a 22:7F:AC:6D:E6:8B -c EE:AB:46:A7:CF:18 wlx00e02d886189 </strong></em></li></ol><ol type="a" id="27e3addf-00cb-800e-b46b-e60381a47d14" class="numbered-list" start="2"><li>Note: In this command, -0: activates deauthentication mode; 11: is the number of deauthentication packets that should be sent; -a: sets access point MAC address; -c: sets destination MAC address; and wlx00e02d886189: the wireless interface.</li></ol><ol type="a" id="27e3addf-00cb-80f3-9e87-f0130c7619d1" class="numbered-list" start="3"><li>Rerun the above command multiple times to send a large number of de-authentication packets. </li></ol></li></ol><ol type="1" id="27e3addf-00cb-8074-9527-f8848ac9754a" class="numbered-list" start="12"><li>Switch back to terminal where airodump-ng is running and keep capturing packets until you receive WPA handshake: 22:7F:AC:6D:E6:8B packet, which indicates that a WPA/WPA2 handshake was successfully captured for the target BSSID</li></ol><ol type="1" id="27e3addf-00cb-802d-980d-fd58f999f0d7" class="numbered-list" start="13"><li>Stop the capture with Ctrl+C</li></ol><p id="27e3addf-00cb-8094-81d5-c3183bc0c78c" class="">
+</p><ol type="1" id="27e3addf-00cb-8073-aced-e5dd7c86c27e" class="numbered-list" start="14"><li>In another terminal: <ol type="a" id="27e3addf-00cb-80b5-8678-dadcfd930bdb" class="numbered-list" start="1"><li><em><strong>aircrack-ng -a2 22:7F:AC:6D:E6:8B -w password.txt ECCLabs-01.cap</strong></em> and press Enter. The file ECC LABS-01.cap contains captured packets located at /root/</li></ol></li></ol><p id="27e3addf-00cb-8018-bf14-cd2f8ef85c2d" class="">Note: In this command, -a: specifies the attack mode (in this case, 2 [WPA-PSK]) and -w: specifies the path to a wordlist (we created the file password.txt on the Desktop earlier in this lab</p><ol type="1" id="27e3addf-00cb-8059-9b41-c4f8cca5db4b" class="numbered-list" start="15"><li>The result appears, showing the WPA handshake packet captured with airodump-ng. The target access point’s password is cracked and displayed in plain text next to the message <strong>KEY FOUND!</strong></li></ol></div></details><p id="27e3addf-00cb-80a6-a616-d345b25034cd" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

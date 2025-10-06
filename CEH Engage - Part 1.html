@@ -1,0 +1,725 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Engage - Part 1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="27f3addf-00cb-8029-842f-e8949cf45f78" class="page sans"><header><h1 class="page-title">CEH Engage - Part 1</h1><p class="page-description"></p></header><div class="page-body"><p id="27f3addf-00cb-80aa-93dc-c00244a6e48e" class="">
+</p><p id="27f3addf-00cb-8045-aa0b-e888ce4ca055" class="">Part 1: </p><p id="27f3addf-00cb-800d-a02b-edb73a69d953" class="">Footprinting and Reconnaissaince</p><p id="27f3addf-00cb-80d0-a51e-f0f00f67e2e7" class="">Scanning Networks</p><p id="27f3addf-00cb-80ee-9017-ef678f09eecc" class="">Enumeration</p><p id="27f3addf-00cb-8035-a94a-ca37bf640447" class="">Vulnerability Analysis</p><p id="27f3addf-00cb-8087-a2c1-e8095ffbf7d1" class="">
+</p><p id="27f3addf-00cb-80b7-b34e-c3c21b76a9fe" class="">
+</p><ol type="1" id="27f3addf-00cb-80f3-a709-e947204d3290" class="numbered-list" start="1"><li>Footprinting complete on a web application. Analyze report and ID hostname associated with IP xxx.xxx.xxxx</li></ol><p id="27f3addf-00cb-8033-975e-f1ca4d9d201f" class="">Answer: henry.ns.cloudflare.com</p><p id="27f3addf-00cb-8076-81f1-ecf5b99e68cf" class="">Explanation: </p><p id="27f3addf-00cb-80f8-a73d-e58cadf46dec" class="">
+</p><ol type="1" id="27f3addf-00cb-8047-bd69-e51cfa9df67f" class="numbered-list" start="2"><li>Identify the number of live machines excluding the gateway in 192.168.10.0/24 subnet <strong>(Host Discovery)</strong></li></ol><p id="27f3addf-00cb-80e7-aabc-db5afc5988a2" class="">Answer: 5</p><p id="27f3addf-00cb-8037-ac6c-f1594ed813e7" class="">Explanation: </p><p id="27f3addf-00cb-8070-89dd-df0093d7f9c1" class="">Host discovery using nmap: <em><strong>nmap -sn xxx.xxx.xxx.* </strong></em></p><p id="27f3addf-00cb-809b-8ba6-c2aa13f3187e" class="">Host, service, port discover: <em><strong>nmap -sS -sV -O xxx.xxx.xxx.*</strong></em></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="27f3addf-00cb-80b0-b886-f9f655384eb7"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="27f3addf-00cb-8029-8f0f-d6c8eef2c91b" class="">Save scan as .nmap file to desktop, can view in notepad for future reference </p></div></figure><p id="27f3addf-00cb-8065-97ac-c366ad070c97" class="">
+</p><ol type="1" id="27f3addf-00cb-80b5-b785-e8029bd96de5" class="numbered-list" start="3"><li>Identify the IP address of a Linux-based machine with port 22 open in the target network</li></ol><p id="27f3addf-00cb-804b-87b3-c798d719671c" class="">Answer: 192.168.10.111</p><p id="27f3addf-00cb-80c6-9631-ff4e868c7e00" class="">Explanation: </p><p id="27f3addf-00cb-80a4-938e-d48dfa44ca81" class="">Perform OS / Service discovery using nmap: <em><strong>nmap -p 22 -T4 -O -v &lt;target subnet&gt;</strong></em></p><p id="27f3addf-00cb-8095-bca7-d4c58481a145" class="">
+</p><ol type="1" id="27f3addf-00cb-80ac-8ade-f8b58f606890" class="numbered-list" start="4"><li>Find the IP address of the Domain Controller machine in 192.168.0.0/24</li></ol><p id="27f3addf-00cb-806d-a493-d7546987a5c5" class="">Answer: 192.168.0.222</p><p id="27f3addf-00cb-8041-a7e7-e0cc42bbebd3" class="">Explanation: <br/>Perform nmap scan for open ldap service (port 389,636): <em><strong>nmap -p 389,636 &lt;target subnet&gt;</strong></em></p><p id="2803addf-00cb-8004-8d58-fe341a108b60" class="">or<em><strong> nmap -p 389 --script ldap-rootdse &lt;target subnet&gt;</strong></em></p><p id="2803addf-00cb-8050-832a-ea561d89628f" class="">Port 88 (Kerberos) may also be open</p><p id="27f3addf-00cb-80f2-9ba2-eb2a6c342fad" class="">
+</p><ol type="1" id="27f3addf-00cb-8017-8027-f78e817920ac" class="numbered-list" start="5"><li>Perform a host discovery scanning and identify the NetBIOS_Domain_Name of the host at 192.168.0.222. </li></ol><p id="27f3addf-00cb-8027-bae5-c61379ec3fe2" class="">Answer: SKILL.CEH</p><p id="27f3addf-00cb-80c5-8fa4-d22967bf3e48" class="">Explanation: </p><p id="27f3addf-00cb-80f6-876c-fe7cdfec82b1" class="">Use nmap service discovery: <em><strong>nmap -sV -A &lt;target IP&gt;</strong></em></p><p id="27f3addf-00cb-8025-b4fd-f328c19c8ea6" class="">
+</p><ol type="1" id="27f3addf-00cb-80a1-b842-ff4bd3ee6ec2" class="numbered-list" start="6"><li>Perform an intense scan on 192.168.0.222 and find out the DNS_Tree_Name of the machine in the network. </li></ol><p id="27f3addf-00cb-80b9-b00a-c8de2014313b" class="">Answer: SKILL.CEH.com</p><p id="27f3addf-00cb-80ca-bb0f-e4bcc2ad6155" class="">Explanation: </p><p id="27f3addf-00cb-80f4-8abb-d8f5bd65f36d" class="">Nmap command for #5 shows this</p><p id="27f3addf-00cb-80f8-95ca-ed10139c9884" class="">
+</p><ol type="1" id="27f3addf-00cb-80d7-bf7a-d3c1027a6a74" class="numbered-list" start="7"><li>While performing a security assessment against the CEHORG network, you came to know that one machine in the network is running OpenSSH and is vulnerable. Identify the version of the OpenSSH running on the machine. Note: Target network 192.168.10.0/24. (Format: N.NaN)</li></ol><p id="27f3addf-00cb-8061-97ef-eb55fae32c2c" class="">Answer: 8.9p1</p><p id="27f3addf-00cb-8033-835d-e87654e018db" class="">Explanation: </p><p id="27f3addf-00cb-80d1-8f33-e37b27533661" class="">Can search for open port 22 on subnet and then probe individual machine: nmap <em><strong>-p 22 -sV 192.168.10.0/24 --open</strong></em></p><p id="27f3addf-00cb-8007-be58-e75204d19048" class="">Run <em><strong>nmap -sV -A -v &lt;target IP&gt; </strong></em>(This scan may take a while) </p><p id="27f3addf-00cb-80c7-8f0c-e9cbf628ca65" class="">
+</p><ol type="1" id="27f3addf-00cb-809e-81ca-e45eee67bdbe" class="numbered-list" start="8"><li>During a security assessment, it was found that a server was hosting a website that was susceptible to blind SQL injection attacks. Further investigation revealed that the underlying database management system of the site was MySQL. Determine the machine OS that hosted the database. Note: Target network 172.30.10.0/24 (Format: Aaaaaa)</li></ol><p id="27f3addf-00cb-80e0-81ee-c6262b4adb34" class="">Answer: Ubuntu </p><p id="27f3addf-00cb-800d-b020-c18df92fbb61" class="">Explanation: </p><p id="27f3addf-00cb-80f4-ad03-f980e36df44f" class="">Scan the subnet: <em><strong>nmap -sV  -A -v &lt;target subnet&gt; </strong></em>and then search for IP with mysql service </p><p id="27f3addf-00cb-80e4-a5e8-e24c1663d11b" class="">or </p><p id="27f3addf-00cb-80ab-9c36-e75c2e74e2f4" class=""><em><strong>nmap -p 3306 172.30.10.0/24 --open </strong></em>to search for the IP with mysql service port open</p><p id="27f3addf-00cb-8039-aed9-c4f25755836a" class=""><em><strong>nmap -A 172.30.10.99 </strong></em>to aggressively scan that IP</p><figure id="27f3addf-00cb-8059-af8e-d9142596f54c" class="image" style="text-align:left"><a href="image%2096.png"><img style="width:672px" src="image%2096.png"/></a></figure><p id="27f3addf-00cb-80c7-afd2-f9201bd54dd3" class="">
+</p><ol type="1" id="27f3addf-00cb-80d1-a8fb-feef3b0349a5" class="numbered-list" start="9"><li>Perform an intense scan on target subnet 192.168.10.0/24 and determine the IP address of the machine hosting the MSSQL database service. (Format: NNN.NNN.NN.NNN)</li></ol><p id="27f3addf-00cb-80ed-830f-d0199913a00a" class="">Answer: 192.168.10.0</p><p id="27f3addf-00cb-80d2-8315-c9dc36a921c8" class="">Explanation: </p><p id="27f3addf-00cb-8085-b1c6-fe2d83d7ac68" class=""><em><strong>nmap -A -v &lt;target subnet&gt; </strong></em>or <em><strong>nmap -p 1433 &lt;target subnet&gt;</strong></em></p><p id="27f3addf-00cb-808a-8817-ce63a074a30e" class="">Find IP with open MSSQL service </p><p id="27f3addf-00cb-80c5-ba2b-fdd139d25aee" class="">
+</p><ol type="1" id="27f3addf-00cb-802e-9d81-f50649281639" class="numbered-list" start="10"><li>Perform a DNS enumeration on www.certifiedhacker.com and find out the name servers used by the domain. (Format: aaN.aaaaaaaa.aaa, aaN.aaaaaaaa.aaa)</li></ol><p id="27f3addf-00cb-8031-92d2-ec6a0e300d24" class="">Answer: ns2.bluehost.com, ns1.bluehost.com</p><p id="27f3addf-00cb-804e-8bfe-ed86794a1150" class="">Explanation: <em><strong>dig ns www.certifiedhacker.com </strong></em>or WHOis lookup</p><p id="27f3addf-00cb-800d-b8f1-c78028233195" class="">
+</p><ol type="1" id="27f3addf-00cb-80e9-ad56-c7add79995c1" class="numbered-list" start="11"><li>Find the IP address of the machine running SMTP service on the 172.30.10.0/24 network. (Format: NNN.NN.NN.NNN)</li></ol><p id="27f3addf-00cb-80c2-af02-d4937fd085a8" class="">Answer: 172.30.10.200<br/>Explanation: <br/><em><strong>nmap -p 25 172.30.10.0/24 --open</strong></em></p><p id="27f3addf-00cb-80d6-99a1-c283880c02c2" class="">
+</p><ol type="1" id="27f3addf-00cb-8074-a04f-c0fb3be7bab5" class="numbered-list" start="12"><li>Perform an SMB Enumeration on 172.30.10.200 and check whether the Message signing feature is required. Give your response as Yes/No</li></ol><p id="27f3addf-00cb-8009-a231-c7056d42d75c" class="">Answer: No<br/>Explanation: <br/><em><strong>nmap -p 445 -sV -A 172.30.10.200</strong></em></p><figure id="27f3addf-00cb-808d-b5e9-e5d77a0ee453" class="image" style="text-align:left"><a href="image%2097.png"><img style="width:432px" src="image%2097.png"/></a></figure><p id="27f3addf-00cb-80ca-a94b-c3f1a4487ac2" class="">
+</p><ol type="1" id="27f3addf-00cb-80cf-a466-dbd4b63f0ddf" class="numbered-list" start="13"><li>Conduct a Common Weakness Enumeration on the Weakness ID 276 and identify the name associated with the ID. (Format: Aaaaaaaaa Aaaaaaa</li></ol><p id="27f3addf-00cb-80a1-b432-d3e19a2241d0" class="">Answer: Incorrect Default Permissions<br/>Explanation: Google search or CWE search</p><p id="27f3addf-00cb-80ef-93c7-f31f1fbd31c4" class="">
+</p><ol type="1" id="27f3addf-00cb-806d-b106-cc2b8345ae2d" class="numbered-list" start="14"><li>Perform vulnerability scanning for the Linux host in the 192.168.10.0/24 network using OpenVAS and find the QoD percentage of vulnerabilitiy with severity level as medium. (Format: NN)</li></ol><p id="27f3addf-00cb-80d6-a811-fb0eab12fa67" class="">Answer: 70 <br/>Explanation:</p><p id="27f3addf-00cb-8029-b8ba-d6db8ecdbce0" class="">Use OpenVAS application on desktop or run <em><strong>docker run -d -p 443:443 --name openvas mikesplain/openvas </strong></em>and navigate to 127.0.0.1</p><p id="27f3addf-00cb-802f-a0d4-c31096840dfd" class="">
+</p><ol type="1" id="27f3addf-00cb-8066-bc63-de88232d6b80" class="numbered-list" start="15"><li>Perform a vulnerability scan on the host at 192.168.10.144 using OpenVAS and identify any FTP-related vulnerability. (Format: AAA Aaaaaaaaa Aaaaaaaaa Aaaaa )</li></ol><p id="27f3addf-00cb-80fc-83b6-d7b6ee386623" class="">Answer: FTP Unencrypted Cleartext Login<br/>Explanation: Utilize OpenVAS</p><p id="27f3addf-00cb-80fd-b6d7-f2451b66167f" class="">
+</p><p id="27f3addf-00cb-8015-907e-d4eed1407423" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

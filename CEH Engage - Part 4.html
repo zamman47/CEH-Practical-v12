@@ -1,0 +1,737 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Engage - Part 4</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2843addf-00cb-805a-a232-fd3915d9c729" class="page sans"><header><h1 class="page-title">CEH Engage - Part 4</h1><p class="page-description"></p></header><div class="page-body"><p id="2843addf-00cb-8018-9b87-cd32cc0f1209" class="">
+</p><p id="2843addf-00cb-8031-9d29-ed5f8f27ff36" class="">Hacking Wireless Networks</p><p id="2843addf-00cb-8075-bfe0-fbed12a55c76" class="">Hacking Mobile Platforms</p><p id="2843addf-00cb-803f-98f0-c8206de92115" class="">IoT and OT Hacking </p><p id="2843addf-00cb-804c-8901-e4bd248d9cb5" class="">Cloud Computing</p><p id="2843addf-00cb-8068-8d79-cb5cbd5ed9f1" class="">Cryptography modules</p><p id="2843addf-00cb-80b6-bdc2-d1bb61498c9c" class="">
+</p><ol type="1" id="2843addf-00cb-802c-b403-e8ee7c7b5bf5" class="numbered-list" start="1"><li>An employee&#x27;s mobile device within CEHORG has been compromised, leading to an encrypted message BCtetx.txt being placed on the Android operating system. The password needed to decrypt the file is saved on EH-workstation-1. As an ethical hacker, your task is to decrypt the file using the password and input the extracted information. (note: the password file pawned.txt is stored in documents folder). (Format: <em>aaaaAN</em>NaN )</li></ol><p id="2843addf-00cb-80bb-aeff-c3bccd191526" class="">Explanation: <div class="indented"><p id="2843addf-00cb-805f-9f65-d2e824f3eba9" class="">Open terminal in Phonesploit dir </p><p id="2843addf-00cb-80a1-9053-c286b8a62812" class=""><em><strong>python3 phonesploitpro.py</strong></em></p><p id="2843addf-00cb-805b-9e2b-e46b20921630" class="">1 → Enter phones IP </p><p id="2843addf-00cb-8075-ac3d-ec6a7a8e4ab4" class="">14 → pwd / cd / ls to navigate file system and find file (located at sdcard/Download</p><p id="2843addf-00cb-80f5-8af9-c621a246a64f" class="">8 → Download ‘Download’ dir</p><p id="2843addf-00cb-809e-909d-fc7526cc9187" class="">Use BC text Encoder Utility (download on internet for Windows) to decode text (choose text file icon → enter password - here Pa$$w0rd)</p></div></p><p id="2843addf-00cb-808e-b2be-cdacb0d3c3e7" class="">Answer: <div class="indented"><p id="2843addf-00cb-80af-9791-ea3db9b1537f" class="">(ryptD3(0d3</p><p id="2843addf-00cb-8095-8e6f-fae831b254f4" class="">
+</p></div></p><ol type="1" id="2843addf-00cb-80c9-8c0d-dbdf9556fe13" class="numbered-list" start="2"><li>A compromised Android device is suspected of containing malicious applications. As an ethical hacker, you are tasked with identifying and extracting all installed APK files. Within these APKs, you must locate and extract a specific CRC value ends with &quot;614c&quot; . This CRC value is believed to be a crucial component of a larger security breach investigation. Determine the complete CRC value as answer. (Format: NNaaNNNa)</li></ol><p id="2843addf-00cb-8069-933a-ecdedf6a3dd8" class="">Explanation: <div class="indented"><p id="2843addf-00cb-80ad-ad2f-d6890d34488d" class="">Connect via phonesploit as above </p><p id="2843addf-00cb-80b3-80b5-d6cdb888cd98" class="">n x2 to get to next menu pages </p><p id="2843addf-00cb-80b4-848b-cc50cb7e8362" class="">36 (Extract APK from Installed app)</p><p id="2843addf-00cb-8018-939e-d223459244c2" class="">Select 2 for com.cxinventor.file.explorer</p><p id="2843addf-00cb-809d-ab72-d51a3a8991d0" class="">Open terminal in installed .apk path </p><p id="2843addf-00cb-805c-bbd9-d08dc5b1c187" class=""><em><strong>crc32 &lt;.apk filename&gt; </strong></em></p></div></p><p id="2843addf-00cb-809e-acfa-d8c5841e8ee2" class="">
+</p><p id="2843addf-00cb-80f4-9f38-d84fbd10e002" class="">Answer:<div class="indented"><p id="2843addf-00cb-80f2-a67a-c1ce421b1ea0" class="">53ac614c</p></div></p><p id="2843addf-00cb-806e-8802-e81a905f9cfe" class="">
+</p><ol type="1" id="2843addf-00cb-806c-ba8e-cd5c294c7dc5" class="numbered-list" start="3"><li>A ZIP archive encompassing redundant images of a physical signature has been compromised signature.zip and stored in Documents folder of EH Workstation-1 machine. Your role as an ethical hacker involves a forensic examination of the archive&#x27;s contents to pinpoint the image file associated with an MD5 hash value ends with sequence &quot;24CCB&quot;. Determine the original signature file name as answer. (Format: aN*aaa)</li></ol><p id="2843addf-00cb-808e-970d-e901f77fcc03" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8022-8618-ce17567353d9" class="">Extract files from zip </p><p id="2843addf-00cb-80d0-b654-ee87920bbc61" class="">Open directory in powershell</p><p id="2843addf-00cb-8039-8150-eb3518aec293" class=""><em><strong>get-filehash &lt;filename&gt; -algorithm md5</strong></em></p></div></p><p id="2843addf-00cb-80a8-9091-f9822d430711" class="">
+</p><p id="2843addf-00cb-8016-a3dc-df5cbbe15d63" class="">Answer: <div class="indented"><p id="2843addf-00cb-80f4-ad2d-ca88ef584a66" class="">k4.png</p></div></p><p id="2843addf-00cb-80b6-8912-e749f1b88576" class="">
+</p><ol type="1" id="2843addf-00cb-8004-90ef-fb60d02d92fb" class="numbered-list" start="4"><li>As a cybersecurity analyst, you are investigating a potential phishing campaign targeting Ruby, an employee at a local tech company. You have access to Ruby’s call log from the past few days, stored on an Android device within the target subnet 192.168.10.0/24. Identify the call in the log that is most likely a phishing attempt and provide the suspected phone number. (Format: +N (NNN) NNN-NNNN )</li></ol><p id="2843addf-00cb-80c9-8f67-cc37a83d9fdd" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8096-8b24-d13e9c2f844c" class="">Note: Dumping call log does not work….</p><p id="2843addf-00cb-8061-b3c8-e1066b525b87" class="">Access call_log_dump file in sd card/calls </p><p id="2843addf-00cb-80c4-9c0c-ff3f1cb9a7db" class="">See call requesting SSN</p><p id="2843addf-00cb-806a-a952-d4625c521ff0" class="">
+</p></div></p><p id="2843addf-00cb-805d-8970-f3ef39ca5d64" class="">Answer: <div class="indented"><p id="2843addf-00cb-80e9-8605-c2027a709fbc" class="">+1 (555) 678-9012</p></div></p><p id="2843addf-00cb-8027-b3e9-d4d8336e040a" class="">
+</p><ol type="1" id="2843addf-00cb-808e-aed7-dc8e1d1b2ec5" class="numbered-list" start="5"><li>An employee&#x27;s mobile device has reportedly been compromised and is suspected of being used to launch a Denial of Service (DoS) attack against one of the company&#x27;s internal servers. Your assignment is to conduct a thorough analysis of the network capture file &quot;And_Dos.pcapng&quot; located in the Documents directory of EH workstation-2 machine and identify the severity level/potential impact of the attack performed. (perform deep down Expert Info analysis). (Format: Aaaaaaa)</li></ol><p id="2843addf-00cb-801d-a753-e0011d59a679" class="">Explanation: <div class="indented"><p id="2843addf-00cb-80e4-ac4b-f74d8ea0ad5a" class="">Open pcap file in Wireshark </p><p id="2843addf-00cb-8017-a6b9-cc3d2de8bd98" class="">Analyze → Expert Information</p></div></p><p id="2843addf-00cb-8057-8de7-f3767c6a738a" class="">
+</p><p id="2843addf-00cb-800c-be33-fda18bdbbb84" class="">Answer: <div class="indented"><p id="2843addf-00cb-800f-bb1e-fb753e7b3c2d" class="">Warning</p></div></p><p id="2843addf-00cb-80fb-bf1d-edcd0f092149" class="">
+</p><ol type="1" id="2843addf-00cb-806f-8878-de7f5f35c95f" class="numbered-list" start="6"><li>CEHORG manages multiple IoT devices and sensors to oversee its supply chain fleet. You are tasked with examining the file &quot;MQTT.pcapng,&quot; located in the Home directory of the EH Workstation - 2 machine. Analyze the packet containing the &quot;High_humidity&quot; message and determine the alert percentage specified in the message. (Format: NN)</li></ol><p id="2843addf-00cb-809a-af29-c9cc442ffaeb" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8042-972a-c55453e3ccd2" class="">Edit → Find packet </p><p id="2843addf-00cb-8052-a3b4-c0ae20e9fef2" class="">Search parameter ‘String’ → “High_humidity</p><p id="2843addf-00cb-801b-a81e-e4ff732eadfc" class="">Right click packet → Follow tcp stream → see alert percentage </p><p id="2843addf-00cb-8044-ac98-c27b03e592c4" class="">
+</p></div></p><p id="2843addf-00cb-80d1-89aa-fb1041feeadb" class="">Answer: <div class="indented"><p id="2843addf-00cb-804b-930e-e7b19beb9b54" class="">50</p></div></p><p id="2843addf-00cb-8069-83f6-dbb4c67e527f" class="">
+</p><ol type="1" id="2843addf-00cb-80a0-8e74-d8f0d352094d" class="numbered-list" start="7"><li>An attacker had sent a file cryt-128-06encr.hex containing ransom file password, which is located in documents folder of EH-workstation-2. You are assigned a task to decrypt the file using cryp tool. Perform cryptanalysis, Identify the algorithm used for file encryption and hidden text. Note: check filename for key length and hex characters. (Format: Aaaaaaa/<strong>aa</strong>aA*a)</li></ol><p id="2843addf-00cb-8093-b5a5-c0b1cd6462c4" class="">Explanation:<div class="indented"><p id="2843addf-00cb-8023-a759-f67f288ccc4e" class=""> Cryptool is on Windows vm</p><p id="2843addf-00cb-805c-939a-d3edb841dd0f" class="">Unclear how to determine to use Twofish algorithm </p><p id="2843addf-00cb-80bf-a569-d03e49f72f97" class="">Keylength is 128 and key is 6 as defined in notes</p></div></p><p id="2843addf-00cb-80f5-ab3a-f2fa518a96e2" class="">
+</p><p id="2843addf-00cb-80a9-85be-f5b3a5ec40b4" class="">Answer: <div class="indented"><p id="2843addf-00cb-80f7-b35f-cb3104acfa81" class="">Twofish/@!ph@|tE*t</p><p id="2843addf-00cb-8006-8ccd-df5123438114" class="">
+</p></div></p><ol type="1" id="2843addf-00cb-80fe-8605-d61447aaa7b3" class="numbered-list" start="8"><li>A VeraCrypt volume file &quot;MyVeracrypt&quot; is stored on the Document folder of the EH Workstation – 1 machine. You are an ethical hacker working with CEHORG; you have been tasked to decrypt the encrypted volume and determine the number of files stored in the volume folder. (Hint: Password: veratest). (Format: N )</li></ol><p id="2843addf-00cb-8082-b4d6-c8ae01922980" class="">Explanation: <div class="indented"><p id="2843addf-00cb-804b-ac27-efe08e9a077e" class="">Import file into VeraCrypt</p><p id="2843addf-00cb-8091-829f-f9fc5c803b66" class="">Mount to drive and decrypt</p><p id="2843addf-00cb-80e8-8831-d6ff4747cccf" class="">4 files located in S2 folder</p><p id="2843addf-00cb-80d7-9b3f-c02334678c6a" class="">
+</p></div></p><p id="2843addf-00cb-808a-a323-d41eb85cfa79" class="">Answer: <div class="indented"><p id="2843addf-00cb-8006-9b7b-c803c6ae1ca9" class="">4</p></div></p><p id="2843addf-00cb-8040-bd03-fe6cdb801caa" class="">
+</p><ol type="1" id="2843addf-00cb-8055-8884-c5b953adf78a" class="numbered-list" start="9"><li>An ex-employee of CEHORG is suspected of performing an insider attack. You are assigned a task to retrieve the contacts dump from the employee&#x27;s Android phone. Using PhoneSploit, find the country code of the contact named &quot;Maddy.&quot; (Note: Use option &#x27;N&#x27; in PhoneSploit for next page.). (Format: NN )</li></ol><p id="2843addf-00cb-8031-88a0-d5487f2a8eca" class="">Explanation: <div class="indented"><p id="2843addf-00cb-809c-b2b9-db205d12d0de" class="">Phone sploit instructions above </p><p id="2843addf-00cb-80d5-a95d-f666d1664969" class="">
+</p></div></p><p id="2843addf-00cb-8016-84d2-fb5397ee84b2" class="">Answer: <div class="indented"><p id="2843addf-00cb-8050-92ec-c47b1d6db658" class="">61</p><p id="2843addf-00cb-800c-80ee-c74e5532df71" class="">
+</p></div></p><ol type="1" id="2843addf-00cb-80fa-b30b-e18006e07b09" class="numbered-list" start="10"><li>CEHORG manages multiple IoT devices and sensors to oversee its supply chain fleet. You are tasked with examining the file &quot;MQTT.pcapng,&quot; located in the Home directory of the EH Workstation - 2 machine. Analyze the packet containing the &quot;High_temperature&quot; message and determine the topic length . (Format: NN )</li></ol><p id="2843addf-00cb-805a-b362-e152ad45e3b8" class="">Explanation: <div class="indented"><p id="2843addf-00cb-80af-8d41-d94a3338446b" class="">Search wireshark in the same manner as in above step </p><p id="2843addf-00cb-8057-97c5-f191e4601c48" class="">See Topic Lenght in MQTTP Header</p><p id="2843addf-00cb-80c7-92c2-cd37af8499de" class="">
+</p></div></p><p id="2843addf-00cb-8057-929a-e638f2ccf0e7" class="">Answer: <div class="indented"><p id="2843addf-00cb-802e-8dbd-f38331b69b75" class="">16</p><p id="2843addf-00cb-809a-9a92-edd39139f839" class="">
+</p></div></p><ol type="1" id="2843addf-00cb-80a9-bacf-dc068d2201dc" class="numbered-list" start="11"><li>An ex-employee of CEHORG is suspected to be performing insider attack. You are assigned a task to attain KEYCODE-5 used in the employees&#x27; mobile phone. Note: use option N in PhoneSploit for next page. (Format: Aaaaa*Aaaaaa)</li></ol><p id="2843addf-00cb-80c0-a2d5-e5d2c5986308" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8051-b8d3-e2f0b037d20b" class="">Phonesploit → Select 39 (Use Keycodes) → See key code 5 </p><p id="2843addf-00cb-8015-b4e4-c2c9d7058b9f" class="">
+</p></div></p><p id="2843addf-00cb-80af-a1a3-c086886eac44" class="">Answer: <div class="indented"><p id="2843addf-00cb-80c5-9792-f59418afcaf7" class="">Power Butoon</p></div></p><p id="2843addf-00cb-80f3-942f-c2b8a5a7d335" class="">
+</p><ol type="1" id="2843addf-00cb-8035-861a-c15fa5fd5b46" class="numbered-list" start="12"><li>An employee in CEHORG has secretly acquired Confidential access ID through an application from the company. He has saved this information on the Music folder of his Android mobile phone. You have been assigned a task as an ethical hacker to access the file and delete it covertly. Enter the account information present in the file. Note: Only provide the numeric values in the answer field. (Format: NNNNNNNN)</li></ol><p id="2843addf-00cb-808f-90e6-e636ba8105bf" class="">
+</p><p id="2843addf-00cb-805f-81c2-c433b47df6ec" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8067-b9a6-c6b5c3759e30" class="">Phonesploit instructions above </p><p id="2843addf-00cb-804f-9ab5-f84fb0dc5ea3" class="">
+</p></div></p><p id="2843addf-00cb-8081-8150-ed081408d5d0" class="">Answer: <div class="indented"><p id="2843addf-00cb-80be-bce7-e9f0d0894fa0" class="">80099889</p><p id="2843addf-00cb-8003-973f-ccc710e7c9fd" class="">
+</p></div></p><ol type="1" id="2843addf-00cb-8011-97a2-dc419353417e" class="numbered-list" start="13"><li>An attacker has hacked an employee&#x27;s Android device at CEHORG and initiated a LOIC attack from the device. As an ethical hacker, you have obtained a screenshot of the attack using a background application. Retrieve the screenshot of the attack using PhoneSploit from the compromised mobile device and determine the number of HTTP packets sent per second. (Format: NN)</li></ol><p id="2843addf-00cb-80bb-9ae2-ec516efe84f2" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8034-9b28-d825c9602a4b" class="">Screenshot located in music folder </p><p id="2843addf-00cb-804c-8db6-cb9ec7fc9516" class="">
+</p></div></p><p id="2843addf-00cb-802d-81bf-dd5cce4bda05" class="">Answer: <div class="indented"><p id="2843addf-00cb-80e7-980d-c2772cda6d32" class="">23</p><p id="2843addf-00cb-806f-8ea5-c58f4d4e4883" class="">
+</p></div></p><ol type="1" id="2843addf-00cb-8013-9520-d7ed7b1a74ff" class="numbered-list" start="14"><li>You have received a folder named &quot;Archive&quot; from a vendor. You suspect that someone might have tampered with the files during transmission. The Original hashes of the files have been sent by the sender separately and are stored in a file named FileHashes.txt stored in the Document folder in the &quot;EH Workstation – 2&quot; machine. Your task is to check the integrity of the files by comparing the MD5 hashes. Compare the hash values and determine the file name that has been tampered with. Note: Exclude the file extension in the answer field. The answer is case-sensitive. (Format: Aaaaaa)</li></ol><p id="2843addf-00cb-8046-9f6d-eb5defe4e5d8" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8064-b237-cae528bcbf1f" class="">Open path to potentially altered files in terminal </p><p id="2843addf-00cb-800d-82ae-cb405b273c2d" class=""><em><strong>md5sum &lt;filename&gt; </strong></em>and compare the hashes to the originals in the txt file to determine which has been altered </p></div></p><p id="2843addf-00cb-80ab-823e-c681ecabfafb" class="">Answer: </p><p id="2843addf-00cb-80fc-8782-f0f27547567c" class="">
+</p><ol type="1" id="2843addf-00cb-80f5-bf03-c77f9652a1f1" class="numbered-list" start="15"><li>A VeraCrypt volume file &quot;secret&quot; is stored on the Document folder in the EH Workstation – 2 machine. You are an ethical hacker working with CEHORG; you have been tasked to decrypt the encrypted volume and determine the number of files stored in the volume. (Hint: Password: test). (Format: N)</li></ol><p id="2843addf-00cb-8059-8f0a-d08e41fa63b2" class="">
+</p><p id="2843addf-00cb-8079-8d07-feb9e782999f" class="">Explanation: <div class="indented"><p id="2843addf-00cb-8020-80d6-e35916ff78ad" class="">Veracrypt instructions above </p></div></p><p id="2843addf-00cb-8014-8970-c7a646f78da9" class="">
+</p><p id="2843addf-00cb-80b7-9726-e97ecaac2178" class="">Answer: <div class="indented"><p id="2843addf-00cb-80f2-8141-d168f673802a" class="">6 </p></div></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

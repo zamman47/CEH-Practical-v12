@@ -1,0 +1,739 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod14 - Hacking Web Applications</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2793addf-00cb-80d6-9639-e26aefc5a355" class="page sans"><header><h1 class="page-title">CEH Lab - Mod14 - Hacking Web Applications</h1><p class="page-description"></p></header><div class="page-body"><p id="2793addf-00cb-80af-b7f6-c7de6bd56c94" class="">
+</p><h3 id="2793addf-00cb-809f-9fcf-d3510073c4c8" class="">Lab Objective </h3><p id="2793addf-00cb-80c6-8b8f-dd98fdd0173d" class="">The objective of the lab is to perform web application hacking and other tasks that include, but are not limited to: </p><p id="2793addf-00cb-809f-88bb-ccd7f73ed752" class="">▪ Footprinting a web application using various information-gathering tools </p><p id="2793addf-00cb-80c2-882a-c5d9fd31c3b1" class="">▪ Performing web spidering, detect load balancers, and identify web server directories </p><p id="2793addf-00cb-80d4-980a-fb4abde89d4e" class="">▪ Performing web application vulnerability scanning<br/>▪ Performing brute-force and cross-site request forgery (CSRF) attack </p><p id="2793addf-00cb-8078-98cb-d6f38698bec4" class="">▪ Exploiting remote command execution vulnerability </p><p id="2793addf-00cb-80f1-a80b-f1d5c3e49f05" class="">▪ Gaining backdoor access via a web shell </p><p id="2793addf-00cb-80b6-bbb7-eb71e55c7f87" class="">▪ Detecting web application vulnerabilities using various web application security tools </p><p id="2793addf-00cb-804f-a528-f049bf31e392" class="">
+</p><p id="2793addf-00cb-803c-92b9-d4994f139e55" class="">Web applications run on web browsers and use a group of <strong>server-side scripts (such as ASP and PHP)</strong> and <strong>client-side scripts (such as HTML and JavaScript)</strong> to execute the application. </p><p id="2793addf-00cb-80a4-bfbf-f039f2dd5946" class="">The working of a web application depends on its architecture, which includes the hardware and software that performs tasks such as reading the request, searching, gathering, and displaying the required data</p><p id="2793addf-00cb-80c3-8435-e5e327ed685a" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 1: Footprint the Web Infrastructure</summary><div class="indented"><p id="2793addf-00cb-80bd-8e79-e0f606a6829b" class="">
+</p><h3 id="2793addf-00cb-8005-bfbf-e30714b38069" class="">Lab Objectives</h3><p id="2793addf-00cb-8032-ac4b-f8598991f429" class="">▪ Perform web application reconnaissance using Nmap and Telnet </p><p id="2793addf-00cb-8077-bec3-e420c3253165" class="">▪ Perform web spidering using OWASP ZAP </p><p id="2793addf-00cb-80a6-b834-e93678258b3b" class="">▪ Perform web application vulnerability scanning using SmartScanner </p><p id="2793addf-00cb-80b7-8d52-dbcd6c2b85ec" class="">
+</p><p id="2793addf-00cb-80f5-9d97-d29351400e34" class=""><strong>Server Discovery:</strong> Attackers attempt to discover the physical servers that host a web application using techniques such as Whois Lookup, DNS Interrogation, and Port Scanning<br/><strong>Service Discovery:</strong> Attackers discover services running on web servers to determine whether they can use some of them as attack paths for hacking a web app<br/><strong>Server Identification:</strong> Attackers use banner-grabbing to obtain server banners; this helps to identify the make and version of the web server software<br/><strong>Hidden Content Discovery: </strong>Footprinting also allows attackers to extract content and functionality that is not directly linked to or reachable from the main visible content<br/></p><h3 id="2793addf-00cb-8087-9b72-edb1519e67eb" class="">Task 1: Perform Web Application Reconnaissance using Nmap and Telnet</h3><p id="2793addf-00cb-80dd-a26c-eb8514f20ea4" class="">
+</p><p id="2793addf-00cb-80df-bc44-d67316b3d543" class=""><strong>Note:</strong> In this task, the target website (<a href="http://www.moviescope.com/">www.moviescope.com</a>) is hosted by the victim machine (Windows Server 2019). </p><p id="2793addf-00cb-80d5-90bc-e2f333c9aaa1" class="">Here, the host machine is the Parrot Security machine. </p><p id="2793addf-00cb-80ff-a76b-fb26c3e90d76" class="">
+</p><ol type="1" id="2793addf-00cb-8031-8239-d800b0756213" class="numbered-list" start="1"><li>Use tools such as <strong>Netcraft </strong>(<a href="https://www.netcraft.com/">https://www.netcraft.com</a>), <strong>SmartWhois</strong> (<a href="https://www.tamos.com/">https://www.tamos.com</a>), <strong>WHOIS Lookup</strong> (<a href="https://whois.domaintools.com/">https://whois.domaintools.com</a>), and <strong>Batch IP Converter</strong> (<a href="http://www.sabsoft.com/">http://www.sabsoft.com</a>) to perform Whois lookup</li></ol><ol type="1" id="2793addf-00cb-80dd-8bfc-e18272e64d0f" class="numbered-list" start="2"><li>Perform <strong>DNS Interrogation</strong> to gather information about the DNS servers, DNS records, and types of servers used by the target organization. DNS zone data include DNS domain names, computer names, IP addresses, domain mail servers, service records, etc.<ol type="a" id="2793addf-00cb-80d2-9b2a-f8f3f02aeab6" class="numbered-list" start="1"><li>DNSRecon (<a href="https://github.com/">https://github.com</a>), and Domain Dossier (<a href="https://centralops.net/">https://centralops.net</a>) </li></ol></li></ol><ol type="1" id="2793addf-00cb-8076-b9d7-cb1b2094550a" class="numbered-list" start="3"><li>Run <em><strong>nmap -T4 -A -v [Target Web Application] </strong></em>command (here, the target web application is <a href="http://www.moviescope.com/">www.moviescope.com</a>) to perform a port and service discovery scan<ol type="a" id="2793addf-00cb-80cf-9885-dd25bab7e45a" class="numbered-list" start="1"><li>Can see open ports and services</li></ol><ol type="a" id="2793addf-00cb-8021-b1f5-c1719f29a78a" class="numbered-list" start="2"><li>Target machine name, NetBIOS name, MAC address, OS, etc. <figure id="2793addf-00cb-8061-9668-f046ff69ed25" class="image"><a href="image%2067.png"><img style="width:603.9756469726562px" src="image%2067.png"/></a></figure></li></ol></li></ol><ol type="1" id="2793addf-00cb-80a3-80d7-ce2417272219" class="numbered-list" start="4"><li>Perform banner grabbing to identify the make, model, and version of the target web server software.<ol type="a" id="2793addf-00cb-80d1-b644-ddfe6fd44111" class="numbered-list" start="1"><li><em><strong>telnet </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> 80 </strong></em></li></ol><ol type="a" id="2793addf-00cb-80d3-ac7b-d83d7ba6e463" class="numbered-list" start="2"><li><em><strong>GET / HTTP/1.0</strong></em> and press Enter two times.</li></ol><ol type="a" id="2793addf-00cb-8079-ab4f-de51df0c0e37" class="numbered-list" start="3"><li>Server is <strong>MIcrosoft-IIS/10.0 </strong></li></ol><ol type="a" id="2793addf-00cb-80da-b52f-eda159028e69" class="numbered-list" start="4"><li>Technology used is <strong>ASP.NET</strong></li></ol><figure id="2793addf-00cb-80a2-8ebd-c4f508fd171c" class="image"><a href="image%2068.png"><img style="width:542.9686889648438px" src="image%2068.png"/></a></figure></li></ol><p id="2793addf-00cb-80ea-83c2-f85023f028c5" class=""><strong>Note: </strong> If attacker enters IP address, they receive the banner information of the target machine; if they enter the URL of a website, they receive the banner information of the respective web server that hosts the website</p><p id="2793addf-00cb-8057-b79e-f66191a7357b" class="">
+</p><p id="2793addf-00cb-80ac-aed3-f154620a785a" class="">
+</p><h3 id="2793addf-00cb-80bc-b455-cec42ba3dc22" class="">Task 2: Perform Web Spidering using OWASP ZAP</h3><p id="2793addf-00cb-8091-b639-c78758b2319c" class=""><strong>OWASP Zed Attack Proxy (ZAP)</strong> is an integrated penetration testing tool for finding vulnerabilities in web applications. It offers automated scanners as well as a set of tools that allow you to find security vulnerabilities manually.</p><p id="2793addf-00cb-808f-855b-f45a14c76c48" class="">
+</p><p id="2793addf-00cb-80df-940e-dee186f88d65" class=""><strong>Note: </strong>In this task, the target website (<a href="http://www.moviescope.com/">www.moviescope.com</a>) is hosted by the victim machine (Windows Server 2019). Here, the host machine is the Parrot Security machine. </p><p id="2793addf-00cb-80ee-bf7d-eb0ca3c35d77" class="">
+</p><ol type="1" id="2793addf-00cb-8052-8a91-dce61b4f38e0" class="numbered-list" start="1"><li>Jump to root directory</li></ol><ol type="1" id="2793addf-00cb-8079-bdf7-c359959f9d68" class="numbered-list" start="2"><li><em><strong>zaproxy</strong></em><ol type="a" id="2793addf-00cb-8090-ae97-e8766a838ab0" class="numbered-list" start="1"><li>Do not persist this session</li></ol></li></ol><ol type="1" id="2793addf-00cb-8046-a2fb-ec99d51d9a49" class="numbered-list" start="3"><li>Click automated scan</li></ol><ol type="1" id="2793addf-00cb-8042-83bb-dab4ddfcbce7" class="numbered-list" start="4"><li>Navigate to Acive Scan tab to observe various scanned links</li></ol><ol type="1" id="2793addf-00cb-8072-9068-fb1a23fcbaf6" class="numbered-list" start="5"><li>Alerts will show vulnerabilities </li></ol><ol type="1" id="2793addf-00cb-804d-98fd-e6260a8b5a35" class="numbered-list" start="6"><li>Click Spider tabl to view web spidering information</li></ol><ol type="1" id="2793addf-00cb-80fc-b1ce-e97e63b2aebb" class="numbered-list" start="7"><li>The URLs tab contains various links for hidden content and functionality associated with the target website (<a href="http://www.moviescope.com/">www.moviescope.com</a></li></ol><p id="2793addf-00cb-8011-856f-c13f53ef28f6" class=""><strong>Note</strong>: In real-time, attackers perform web spidering or crawling to discover hidden content and functionality, which is not reachable from the main visible content, to exploit user privileges within the application. It also allows attackers to recover backup copies of live files, configuration and log files containing sensitive data, backup archives containing snapshots of files within the web root, and new functionality that is not linked to the main application</p><p id="2793addf-00cb-80bf-966e-ed68f1503479" class="">
+</p><h3 id="2793addf-00cb-8041-8cbf-e713856e493a" class="">Task 3: Perform Web Application Vulnerability Scanning using SmartScanner</h3><p id="27a3addf-00cb-80d8-a5b4-c3150c8884d9" class="">Uses AI for identifying vulnerable pages, detecting 404 custom pages, identifying input vectors, fingerprinting the target and calculating the security risk</p><p id="27a3addf-00cb-80da-b151-d9321ed7f7f0" class="">
+</p><ol type="1" id="27a3addf-00cb-804b-a33f-d991dfd7e19b" class="numbered-list" start="1"><li>In Windows - search smartscanner</li></ol><ol type="1" id="27a3addf-00cb-8003-8e3b-d1db203ad980" class="numbered-list" start="2"><li>Add URL to scan</li></ol></div></details><p id="27e3addf-00cb-806d-aae0-f0625b009dfb" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform Web Application Attacks</summary><div class="indented"><p id="27e3addf-00cb-808b-b8df-d5a21c49419c" class="">
+</p><h3 id="27e3addf-00cb-8082-a806-e6485cc19986" class="">Task 1: Perform Brute-force attack using Burp Suite</h3><p id="27e3addf-00cb-80b3-a631-c220f496e031" class="">
+</p><p id="27e3addf-00cb-8042-9ef2-e33b7fd311e2" class="">Burp <strong>Suite </strong>is an integrated platform for performing security testing of web applications</p><p id="27e3addf-00cb-8019-812c-e30e73594096" class="">
+</p><ol type="1" id="2843addf-00cb-8059-9d25-cf99075461f5" class="numbered-list" start="1"><li>In Parrot security machine</li></ol><ol type="1" id="27e3addf-00cb-80f5-b12d-d33a56f6780e" class="numbered-list" start="2"><li>Launch the <strong>Mozilla Firefox</strong> web browser and go to <strong>http://10.10.1.22:8080/CEH/wp-login.php? (target webapp)</strong></li></ol><p id="27e3addf-00cb-80cd-828d-d495bf431b0c" class="">Note: Here, we will perform a brute-force attack on the designated WordPress website hosted by the Windows Server 2022 machine</p><ol type="1" id="2843addf-00cb-807d-885a-ef28760728f1" class="numbered-list" start="3"><li>Now, we shall set up a Burp Suite proxy by first configuring the proxy settings of the browser.</li></ol><ol type="1" id="2843addf-00cb-8033-a59f-c460af8512e0" class="numbered-list" start="4"><li>In the Mozilla Firefox browser, click the Open application menu icon in right corner of the menu bar and select Settings from the drop-down list.</li></ol><ol type="1" id="2843addf-00cb-80e5-aff7-e263d41c5a9e" class="numbered-list" start="5"><li>The General settings tab appears. In the Find in Settings search bar, search for proxy and in the Search Results, click the Settings button under the Network Settings option.</li></ol><ol type="1" id="2843addf-00cb-801b-a864-f0c3cb2d05c1" class="numbered-list" start="6"><li>The Connection Settings window appears; select the Manual proxy configuration radio button and specify the HTTP Proxy as 127.0.0.1 and the Port as 8080. Tick the Also use this proxy for HTTPS checkbox and click OK. Close the Settings tab and minimize the browser window</li></ol><ol type="1" id="2843addf-00cb-8000-bc5d-dc7f9641bd19" class="numbered-list" start="7"><li>Now, minimize the browser window, click the Applications menu from the top left corner of Desktop, and navigate to Pentesting → Web Application Analysis → Web Application Proxies → Burpsuite CE to launch the Burpsuite CE application</li></ol><ol type="1" id="2843addf-00cb-8009-803e-ff4ef710bf49" class="numbered-list" start="8"><li>The Burp Suite main window appears; ensure that the Temporary project radio button is selected and click the Next button, as shown in the screenshot</li></ol><ol type="1" id="2843addf-00cb-803c-94dd-d5ce2b380659" class="numbered-list" start="9"><li>In the next window, select the Use Burp defaults radio-button and click the Start Burp button</li></ol><ol type="1" id="2843addf-00cb-80cf-ab1a-f000713f2406" class="numbered-list" start="10"><li>In the Proxy settings, by default, the Intercept tab opens-up. Observe that by default, the interception is active as the button says Intercept is on. Leave it running</li></ol><ol type="1" id="2843addf-00cb-8047-995a-f176dd46eca0" class="numbered-list" start="11"><li> Switch back to the browser window. On the login page of the target WordPress website, type random credentials, here admin and password. Click the Log In button</li></ol><ol type="1" id="2843addf-00cb-8055-bff5-c4e40e30b7f0" class="numbered-list" start="12"><li>Switch back to the Burp Suite window; observe that the HTTP request was intercepted by the application.</li></ol><ol type="1" id="2843addf-00cb-80a3-9520-f2344c3e006b" class="numbered-list" start="13"><li> Now, right-click anywhere on the HTTP request window, and from the context menu, click Send to Intruder. Observe that Burp Suite intercepted the entered login credentials</li></ol><p id="2843addf-00cb-8053-895f-cf7d9bd96fbc" class="">Note: If you do not get the request as shown in the screenshot, then press the Forward button.</p><ol type="1" id="2843addf-00cb-8075-a85c-ee8789d22a7a" class="numbered-list" start="14"><li>Now, click on the Intruder tab from the toolbar and observe that under the Intruder tab, the Positions tab appears by default</li></ol><ol type="1" id="2843addf-00cb-80c9-b6b9-e5f675e8d9fb" class="numbered-list" start="15"><li> In the Positions tab under the Intruder tab observe that Burp Suite sets the target positions by default, as shown in the HTTP request. Click the Clear § button from the right-pane to clear the default payload values.</li></ol><ol type="1" id="2843addf-00cb-8096-9b19-cef0b8d61ea1" class="numbered-list" start="16"><li>Once you clear the default payload values, select Cluster bomb from the Attack type drop-down list</li></ol><ol type="1" id="2843addf-00cb-8030-94eb-f384fb41557b" class="numbered-list" start="17"><li>Now, we will set the username and password as the payload values. To do so, select the username value entered in previous step and click Add § from the right-pane. Similarly, select the password value entered in Step#14 and click Add § from the right-pane</li></ol><ol type="1" id="2843addf-00cb-804c-893f-d7d6750a2ffa" class="numbered-list" start="18"><li> Once the username and password payloads are added. The symbol ‘§’ will be added at the start and end of the selected payload values. Here, as the screenshot shows, the values are admin and password</li></ol><ol type="1" id="2843addf-00cb-80e2-b6db-dccdc186b71a" class="numbered-list" start="19"><li>Navigate to the Payloads tab under the Intruder tab and ensure that under the Payload Sets section, the Payload set is selected as 1, and the Payload type is selected as Simple list</li></ol><ol type="1" id="2843addf-00cb-80a3-8162-dbb4c2d0136f" class="numbered-list" start="20"><li>Under the Payload settings [Simple list] section, click the Load... button. </li></ol><ol type="1" id="2843addf-00cb-80ea-a1b8-ffddbf030eb8" class="numbered-list" start="21"><li> A file selection window appears; navigate to the location of the username.txt file and click Open</li></ol><ol type="1" id="2843addf-00cb-8007-b536-ef0d5c6a969b" class="numbered-list" start="22"><li>Observe that the selected username.txt file content appears under the Payload settings [Simple list] section, as shown in the screenshot.</li></ol><ol type="1" id="2843addf-00cb-80e5-86fc-e45d601ee13a" class="numbered-list" start="23"><li>Similarly, load a password file for the payload set 2. To do so, under the Payload Sets section, select the Payload set as 2 from the drop-down options and ensure that the Payload type is selected as Simple </li></ol><ol type="1" id="2843addf-00cb-8087-bde7-e54240ca7d0e" class="numbered-list" start="24"><li>Once the wordlist files are selected as payload values, click the Start attack button to launch the attack</li></ol><ol type="1" id="2843addf-00cb-80ae-9dc8-cebccee677ee" class="numbered-list" start="25"><li>After the progress bar completes, scroll down and observe the different values of Status and Length. Here, Status=302 and Length= 1155.<br/>Note: Different values of Status and Length indicate that the combination of the respective credentials is successful. </li></ol><ol type="1" id="2843addf-00cb-807e-ac27-d99180f04942" class="numbered-list" start="26"><li>Navigate back to the Proxy tab and click the Intercept is on button to turn off the interception. The Intercept is on button toggles to Intercept is off, indicating that the interception </li></ol><ol type="1" id="2843addf-00cb-800c-b312-e5f0ca1cbff1" class="numbered-list" start="27"><li> Remove the browser proxy set up in Step#6, by selecting the No proxy radio-button in the Connection Settings window and click OK. Close the tab.</li></ol><ol type="1" id="2843addf-00cb-8047-aba3-e679718ae471" class="numbered-list" start="28"><li>Reload the target website <a href="http://10.10.1.22:8080/CEH/wp-login.php?,">http://10.10.1.22:8080/CEH/wp-login.php?,</a> enter the Username and Password obtained in Step#35 and click Log In.<br/><br/></li></ol></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 3: Detect Web Application Vulnerabilities </summary><div class="indented"><p id="27e3addf-00cb-8026-b5ed-cdbbc88da9be" class="">
+</p><p id="27e3addf-00cb-80db-8e95-f4f83a431d2a" class=""><strong>Wapiti </strong>web-application vulnerability scanner identifies security weaknesses in web applications by crawling websites and performing black-box testing. It detects issues like SQL injections, XSS, and other vulnerabilities</p><p id="27e3addf-00cb-8044-8ffc-d8746689abee" class="">
+</p><ol type="1" id="27e3addf-00cb-80d7-a28f-f535312fa69c" class="numbered-list" start="1"><li><em><strong>cd wapiti</strong></em></li></ol><ol type="1" id="27e3addf-00cb-80c2-8728-e6626f7eb205" class="numbered-list" start="2"><li><em><strong>python3 -m venv wapiti3</strong></em></li></ol><ol type="1" id="27e3addf-00cb-8036-8d6c-f9c10b9441d2" class="numbered-list" start="3"><li><em><strong>. wapiti/bin/activate</strong></em></li></ol><ol type="1" id="27e3addf-00cb-80ad-8dcc-fa5f35538cf7" class="numbered-list" start="4"><li><em><strong>pip install . </strong></em></li></ol><ol type="1" id="27e3addf-00cb-8033-ac7b-c5596c92a047" class="numbered-list" start="5"><li><em><strong>wapiti -u https://&lt;targetwebsite&gt;</strong></em></li></ol><ol type="1" id="27e3addf-00cb-8099-a9ae-c4def9e2f311" class="numbered-list" start="6"><li><em><strong>cd /root/.wapiti/generated_report/</strong></em><strong> </strong>to navigate to generated_report directory.</li></ol><ol type="1" id="27e3addf-00cb-8085-982c-dff1c687f40e" class="numbered-list" start="7"><li><em><strong>ls </strong></em> to view contents of directory</li></ol><ol type="1" id="27e3addf-00cb-8020-b1ba-f6fd2c200d94" class="numbered-list" start="8"><li>Run <em><strong>cp certifiedhacker.com_xxxxxxxx_xxxx.html /home/attacker/</strong></em> command to copy the .html file to /home/attacker location</li></ol><ol type="1" id="27e3addf-00cb-80de-a1f4-ee0dfd6ea713" class="numbered-list" start="9"><li><em><strong>firefox certifiedhacker.com_xxxxxxxx_xxxx.html </strong></em>to open .html file in firefox browser</li></ol></div></details><p id="27e3addf-00cb-8030-8ba7-c74aa965b63c" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 4: Web Application Hacking using AI</summary><div class="indented"><p id="27e3addf-00cb-806e-b02b-fa4c8fc6d0e1" class="">
+</p><p id="27e3addf-00cb-80ff-803e-c625c22d5663" class="">CHeck for WAF using wafwoof: <br/><em><strong>sgpt --shell “Check if the target url </strong></em><em><strong><a href="https://www.certifiedhacker.com/">https://www.certifiedhacker.com</a></strong></em><em><strong> is protected with web application firewall using wafwoof” </strong></em></p><p id="27e3addf-00cb-8041-8539-c5e77f778bfe" class="">
+</p><p id="27e3addf-00cb-80cb-b7f4-f147f27d3412" class="">To detect load balancers: <br/><em><strong>sgpt --shell &quot;Use load balancing detector on target domain </strong></em><em><strong><a href="http://yahoo.com/">yahoo.com</a></strong></em><em><strong>.” </strong></em></p><p id="27e3addf-00cb-8078-b6de-e49367bc8c9e" class="">
+</p><p id="27e3addf-00cb-805c-b35e-f145f9f322d5" class="">To detect server-side technologies: </p><p id="27e3addf-00cb-8048-8944-d9543f10091f" class=""><em><strong>sgpt --chat HWA --shell &quot;Launch whatweb on the target website </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> to perform website footprinting. Run a verbose scan and print the output. Save the results in file whatweb_log.txt.” </strong></em></p><p id="27e3addf-00cb-808b-97d2-f06f0144c18b" class="">Note: To view the generated whatweb_log.txt file contents, navigate to /home/attacker and double-click on whatweb_log.txt file</p><p id="27e3addf-00cb-80ba-871d-e1db4edf2b33" class="">
+</p><p id="27e3addf-00cb-80fa-a089-f9e9cb76f01f" class="">Identify web application vulnerabilities on target website: </p><p id="27e3addf-00cb-80fe-8ff3-e37e84b0bb51" class=""><em><strong>sgpt --shell “Perform the Vulnerability scan on the target url </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong>” </strong></em></p><p id="27e3addf-00cb-8099-b178-ce3f32486a35" class="">
+</p><p id="27e3addf-00cb-8016-b037-dd71e3dc03f0" class="">Web application scanning using nmap: </p><p id="27e3addf-00cb-800b-95aa-d88e90eb5b13" class=""><em><strong>sgpt --shell “Perform the Vulnerability scan on the target url </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> using nmap” </strong></em></p><p id="27e3addf-00cb-801d-a68b-d37f2ba2a74b" class="">
+</p><p id="27e3addf-00cb-80ca-adbb-eac8ea58f2a5" class="">Perform vulnerability scan on web app using Sniper tool:</p><p id="27e3addf-00cb-8094-930e-db0fb21ca0b3" class=""><em><strong>sgpt --shell &quot;Use Sn1per tool and scan the target url </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> for web vulnerabilities and save result in file scan3.txt” </strong></em></p><p id="27e3addf-00cb-80b6-913e-fed074ed8e55" class="">
+</p><p id="27e3addf-00cb-80b7-9ef7-e02faf493cb5" class="">Identify files of a web app: </p><p id="27e3addf-00cb-8027-a5ec-cd760da9c8da" class=""><em><strong>sgpt --shell “Scan the web content of target url </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> using Dirb” </strong></em></p><p id="27e3addf-00cb-80ff-b3ba-d2fe67c7172e" class="">
+</p><p id="27e3addf-00cb-808c-82b6-fd2930c29ab7" class="">Identify directories using Gobuster: </p><p id="27e3addf-00cb-8065-a085-db8220e75561" class=""><em><strong>sgpt --shell “Scan the web content of target url </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> using Gobuster&quot; </strong></em></p><p id="27e3addf-00cb-80b2-b800-db57727f9a64" class="">
+</p><p id="27e3addf-00cb-80c8-becd-eaf142ead529" class="">FTP bruteforce attack: </p><p id="27e3addf-00cb-8070-b0ac-ff6a7d17ffe5" class=""><em><strong>sgpt --shell &quot;Attempt FTP login on target IP 10.10.1.11 with hydra using usernames and passwords file from /home/attacker/Wordlists&quot; </strong></em></p><p id="27e3addf-00cb-8076-af9f-cd89b7b42a14" class="">
+</p><p id="27e3addf-00cb-8090-b2c1-e4185cc2ae1f" class="">Automate web application hacking with custom scripts: </p><p id="27e3addf-00cb-800b-becc-ed36f86f143a" class=""><em><strong>sgpt --chat wah --shell “create and run a custom script for web application footprinting and vulnerability scanning. The target url is </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>” </strong></em></p><p id="27e3addf-00cb-80e5-b597-f500157cab69" class="">
+</p><p id="27e3addf-00cb-805f-8622-e4a7e1778396" class="">Create custom python scripts for web application scanning: </p><p id="27e3addf-00cb-80e2-b795-df8edce9097d" class=""><em><strong>sgpt --chat wah --shell “create and run a custom python script for web application footprinting and vulnerability scanning. The target url is </strong></em><em><strong><a href="http://www.certifiedhacker.com/">www.certifiedhacker.com</a></strong></em><em><strong>” </strong></em></p><p id="27e3addf-00cb-809b-a9e1-fc66ac21794c" class="">
+</p><p id="27e3addf-00cb-80c6-9d41-cb388534bfae" class="">Web application fuzz testing: </p><p id="27e3addf-00cb-808c-9934-db82af921f04" class=""><em><strong>sgpt --shell “Fuzz the target url </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> using Wfuzz tool” </strong></em></p></div></details><p id="27e3addf-00cb-80d7-9ecd-d8086a0ebf7f" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,809 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Lab - Mod3 - Scanning Networks</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2413addf-00cb-80a5-b60d-ee86ad7832a5" class="page sans"><header><h1 class="page-title">CEH Lab - Mod3 - Scanning Networks</h1><p class="page-description"></p></header><div class="page-body"><p id="2413addf-00cb-8032-8cf5-ee00da242335" class=""><strong>Perform port scanning and network scanning on the IP addresses that you obtained in the information-gathering phase</strong></p><p id="2413addf-00cb-80f7-a846-cc523028708e" class="">▪ Check live systems and open ports </p><p id="2413addf-00cb-8015-b90d-de7281860bce" class="">▪ Identify services running in live system </p><p id="2413addf-00cb-8030-b410-cb99acc0289e" class="">▪ Perform banner grabbing/OS fingerprinting </p><p id="2413addf-00cb-8046-a1fa-feda4e8ab691" class="">▪ Identify network vulnerabilities<br/></p><p id="2413addf-00cb-8016-a824-e5fc56289763" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0"> Lab 1: Perform Host Discovery</summary><div class="indented"><h3 id="2413addf-00cb-804e-97a0-f165cff5c64d" class=""><em><strong>Lab Objectives: </strong></em></h3><p id="2413addf-00cb-806c-9d42-cdf3b53ba9a9" class="">Perform host discovery using Nmap</p><p id="2413addf-00cb-80cb-93f3-d0804f3d9c50" class="">▪ ARP ping scan</p><p id="2413addf-00cb-8010-aaa9-cdb0b6bd205a" class="">▪ UDP ping scan</p><p id="2413addf-00cb-809f-9ef1-eabeedd29128" class="">▪ ICMP ping scan (ICMP ECHO ping, ICMP timestamp, ping ICMP, and address mask ping) </p><p id="2413addf-00cb-80c6-b2b1-ef801dab9a43" class="">▪ TCP ping scan (TCP SYN ping and TCP ACK ping) </p><p id="2413addf-00cb-80cf-a943-c5adc4da155a" class="">▪ IP protocol ping scan<br/></p><p id="2413addf-00cb-800c-baad-e39cf0e08d26" class="">
+</p><p id="2413addf-00cb-8048-9642-f657ceb0d030" class="">
+</p><h3 id="2413addf-00cb-804d-9045-eda1ea135535" class="">Host Discovery Using nmap: </h3><p id="2413addf-00cb-80aa-aa8e-c68964e2c9bd" class="">
+</p><p id="2413addf-00cb-807e-b8e2-c53f7c78a050" class="">
+</p><p id="2413addf-00cb-805c-a790-cb7e8c2d1c88" class=""><em><strong>nmap -sn -PR [Target IP Address]</strong></em> </p><p id="2413addf-00cb-807c-b908-ffdd82f2ee44" class=""><em><strong>-sn</strong></em>: Disables port scanning</p><p id="2453addf-00cb-80b3-b64f-c8105ce7286a" class=""><em><strong>-PR</strong></em><em>: </em>Performs ARP ping scan</p><p id="2413addf-00cb-80dc-bd64-c6bde1ad4ce2" class="">
+</p><p id="2453addf-00cb-8096-86ef-dbd4eba7ec1f" class=""><em><strong>nmap -sn -PU [Target IP Address]</strong></em> </p><p id="2453addf-00cb-80a0-9a37-fb0b5d88276a" class=""><em><strong>-PU</strong></em>: Performs UPD ping scan </p><p id="2453addf-00cb-80e4-8c9a-c27b4d612cf4" class="">
+</p><p id="2453addf-00cb-801c-9348-d3e9218aeb4d" class=""><strong>Note</strong>: </p><p id="2453addf-00cb-8039-b84a-ff6b026626a5" class="">The UDP ping scan sends UDP packets to the target host; a UDP response means that the host is active. If the target host is offline or unreachable, various error messages such as “host/network unreachable” or “TTL exceeded” could be returned.<br/></p><p id="2453addf-00cb-80d5-9255-de07c0288578" class="">
+</p><p id="2453addf-00cb-809b-a804-ff1fc020937e" class=""><em><strong>-nmap -sn -PE [Target IP Address]</strong></em></p><p id="2453addf-00cb-8053-8b73-f27fcab91c8b" class=""><em><strong>-PE</strong></em>: performs the ICMP ECHO ping scan. </p><p id="2453addf-00cb-8023-8797-e61aa34f2fa3" class="">Note: The ICMP ECHO ping scan involves sending ICMP ECHO requests to a host. If the target host is alive, it will return an ICMP ECHO reply. This scan is useful for locating active devices or determining if the ICMP is passing through a firewall.<br/></p><p id="2453addf-00cb-80af-8228-fa0c2a63eab7" class="">Ping sweep: </p><p id="2413addf-00cb-8039-92ad-e0176dd2d8ff" class=""><em><strong>nmap -sn -PE [Target Range of IP Addresses] <br/></strong></em></p><p id="2453addf-00cb-8020-b48a-d5e48160dc03" class="">ICMP Timestamp ping: </p><p id="2453addf-00cb-8056-b3f2-ddcda2df7448" class=""><em><strong>nmap -sn -PP [Target IP Address] </strong></em></p><p id="2453addf-00cb-802d-b5f9-c6a4c6773fa5" class="">ICMP timestamp ping is an optional and additional type of ICMP ping whereby the attackers query a timestamp message to acquire the information related to the current time from the target host machine.<br/>CEH </p><p id="2453addf-00cb-80b6-b631-c872b2e74fa4" class="">
+</p><p id="2453addf-00cb-80d9-8db2-d8a3b1ff8e09" class="">ICMP Address Mask Ping Scan: This technique is an alternative for the traditional ICMP ECHO ping scan, which are used to determine whether the target host is live specifically when administrators block the ICMP ECHO pings.<br/><em><strong>nmap -sn -PM [target IP address]</strong></em><br/></p><p id="2453addf-00cb-8030-a05f-d6b80d8b3842" class="">TCP SYN Ping Scan: This technique sends empty TCP SYN packets to the target host, ACK response means that the host is active.<br/><em><strong>nmap -sn -PS [target IP address]</strong></em><br/></p><p id="2453addf-00cb-8001-8f57-dfbdcd79045e" class="">TCP ACK Ping Scan: This technique sends empty TCP ACK packets to the target host; an RST response means that the host is active.<br/><em><strong>nmap -sn -PA [target IP address]</strong></em><br/></p><p id="2453addf-00cb-80b4-b41c-f0d5c78acf7b" class="">IP Protocol Ping Scan: This technique sends different probe packets of different IP protocols to the target host, any response from any probe indicates that a host is active.<br/><em><strong>nmap -sn -PO [target IP address]<br/></strong></em></p><p id="2453addf-00cb-8053-b807-d8d959072627" class="">
+</p></div></details><p id="2453addf-00cb-801b-9ca3-e577d2ead63e" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 2: Perform Port and Service Discovery</summary><div class="indented"><h3 id="2453addf-00cb-805b-9cd3-d2d9fe54d949" class=""><em>Lab Objectives:</em></h3><p id="2453addf-00cb-8019-a252-e88fc7776b6f" class="">Explore various network scanning techniques using Nmap<br/></p><p id="2453addf-00cb-8044-9dfd-f4f76801195f" class="">TCP Scanning <div class="indented"><p id="2453addf-00cb-8010-989b-f1a9481d1c99" class="">o Open TCP scanning methods (TCP connect/full open scan) </p><p id="2453addf-00cb-802d-b3ef-d8f93234c159" class="">o Stealth TCP scanning methods (Half-open Scan, Inverse TCP Flag Scan, ACK flag probe scan, third party and spoofed TCP scanning methods)</p></div></p><p id="2453addf-00cb-80d7-b645-e01c0e330073" class="">UDP Scanning</p><p id="2453addf-00cb-800c-a409-f2da6f3af865" class="">SCTP Scanning <div class="indented"><p id="2453addf-00cb-8004-b7b3-e11a14a39d12" class="">o SCTP INIT Scanning </p><p id="2453addf-00cb-8020-896f-e669860cd858" class="">o SCTP COOKIE/ECHO Scanning</p></div></p><p id="2453addf-00cb-8052-9ce0-df6e4346468b" class="">SSDP and List Scanning</p><p id="2453addf-00cb-80da-bed3-cbc909f15913" class="">IPv6 Scanning</p><p id="2453addf-00cb-804b-9d40-c2acb98fe31c" class="">
+</p><p id="2453addf-00cb-8097-aa4b-f4885a87f97b" class="">
+</p><p id="2453addf-00cb-803c-9bab-c11177458bae" class="">
+</p><p id="2453addf-00cb-8040-9468-e52947001019" class="">
+</p><p id="2453addf-00cb-8052-9b98-d631cd27df77" class=""><span style="border-bottom:0.05em solid">TCP Connect/Full Open Scan: </span></p><p id="2453addf-00cb-80cc-b9ba-f72185f60d7a" class=""><em><strong>nmap </strong></em><em><mark class="highlight-red"><strong>-sT </strong></mark></em><em><strong>-v [Target IP Address] </strong></em></p><p id="2453addf-00cb-8006-80e6-dc35f88a5b0a" class="">
+</p><p id="2453addf-00cb-8028-a78b-ff3ca37b7272" class=""><strong>Note</strong>: TCP connect scan completes a three-way handshake with the target machine. In the TCP three-way handshake, the client sends a SYN packet, which the recipient acknowledges with the SYN+ACK packet. In turn, the client acknowledges the SYN+ACK packet with an ACK packet to complete the connection. Once the handshake is completed, the client sends an RST packet to end the connection.</p><p id="2453addf-00cb-8007-a642-f269e06cddc9" class="">
+</p><p id="2453addf-00cb-80ac-b5b4-c8696ee701c1" class=""><strong>Note</strong>: You can use any of these services and their open ports to enter into the target network/host and establish a connection.<br/></p><p id="2453addf-00cb-8065-90ed-e7156dcade2f" class="">
+</p><p id="2453addf-00cb-8000-8215-d79cb3012980" class=""><span style="border-bottom:0.05em solid">Stealth scan/TCP half-open scan: </span></p><p id="2453addf-00cb-8092-ac0c-d5ce9c4b1dfc" class=""><em><strong>nmap -</strong></em><em><mark class="highlight-red"><strong>sS</strong></mark></em><em><strong> -v [Targert IP]</strong></em></p><p id="2453addf-00cb-8044-9af5-d4d7758ae541" class="">
+</p><p id="2453addf-00cb-8004-b8b7-c0f8237a1727" class=""><strong>Note</strong>: The stealth scan involves resetting the TCP connection between the client and server abruptly before completion of three-way handshake signals, and hence leaving the connection half-open. This scanning technique can be used to bypass firewall rules, logging mechanisms, and hide under network traffic.<br/></p><p id="2453addf-00cb-80aa-b7d9-c5e1baab2ea8" class=""><span style="border-bottom:0.05em solid">Xmas scan: </span></p><p id="2453addf-00cb-80cf-b663-c30612e402ff" class=""><em><strong>nmap -</strong></em><em><mark class="highlight-red"><strong>sX</strong></mark></em><em><strong> -v [Target IP]</strong></em></p><p id="2453addf-00cb-8059-8acc-d5b039c40b64" class="">
+</p><p id="2453addf-00cb-8043-8829-f719e4edb5c9" class=""><strong>Note</strong>: Xmas scan sends a TCP frame to a target system with FIN, URG, and PUSH flags set. If the target has opened the port, then you will receive no response from the target system. If the target has closed the port, then you will receive a target system reply with an RST.</p><p id="2453addf-00cb-8084-bbb9-dee7c91e1e7c" class=""><strong>Ports displaying as either open or filtered means firewall has been configured on target machine<br/></strong></p><figure id="2453addf-00cb-80a5-9039-da43c75058cb" class="image"><a href="image%2041.png"><img style="width:339.98046875px" src="image%2041.png"/></a></figure><p id="2453addf-00cb-8053-8335-c8f08d8e93f5" class="">
+</p><p id="2453addf-00cb-80c6-9475-ecb7d496aaf9" class=""><span style="border-bottom:0.05em solid">TCP Maimon Scan: </span></p><p id="2453addf-00cb-8022-b527-d60158a3af83" class=""><em><strong>nmap -</strong></em><em><mark class="highlight-red"><strong>sM</strong></mark></em><em><strong> -v [Target IP Address]</strong></em></p><p id="2453addf-00cb-8082-9219-f5944f9e3cba" class="">
+</p><p id="2453addf-00cb-8002-a5dd-fe27e8e99348" class=""><strong>Note: </strong>In the TCP Maimon scan, a FIN/ACK probe is sent to the target; if there is no response, then the port is Open|Filtered, but if the RST packet is sent as a response, then the port is closed.</p><p id="2453addf-00cb-80fb-86ee-e1c2b8846c4c" class="">
+</p><p id="2453addf-00cb-80cc-a5cd-f133a9b60223" class=""><span style="border-bottom:0.05em solid">ACK flag probe scan:</span></p><p id="2453addf-00cb-808d-897d-db89aa17ea20" class=""><em><strong>nmap </strong></em><em><mark class="highlight-red"><strong>-sA</strong></mark></em><em><strong> -v [Target IP Address]</strong></em></p><p id="2453addf-00cb-800f-8ec7-f80ff86e4414" class="">
+</p><p id="2453addf-00cb-80fe-b7f4-fa3968dc2acb" class=""><strong>Note</strong>: The ACK flag probe scan sends an ACK probe packet with a random sequence number; no response implies that the port is filtered (stateful firewall is present), and an RST response means that the port is not filtered.<br/></p><p id="2453addf-00cb-8082-99cb-f869ad56285f" class="">
+</p><p id="2453addf-00cb-8015-b98c-ddeb12963a34" class=""><span style="border-bottom:0.05em solid">UDP Scan:</span></p><p id="2453addf-00cb-809b-8794-c5d63ab9c403" class=""><em><strong>nmap </strong></em><em><mark class="highlight-red"><strong>-sU</strong></mark></em><em><strong> -v [Target IP]</strong></em></p><p id="2453addf-00cb-8081-bc3d-e3f1a0fc3efb" class=""><strong>Note</strong>: The UDP scan uses UDP protocol instead of the TCP. There is no three-way handshake for the UDP scan. It sends UDP packets to the target host; no response means that the port is open. If the port is closed, an ICMP port unreachable message is received.<br/>This can take up to 20 minutes </p><p id="2453addf-00cb-8092-9cbf-e199dcbd6542" class="">
+</p><p id="2453addf-00cb-801b-a4e6-fd4f87de24d9" class="">
+</p><p id="2453addf-00cb-80c2-8c09-f195f1fb2ff9" class=""><strong>IDLE/IPID Header Scan:</strong> A TCP port scan method that can be used to send a spoofed source address to a computer to discover what services are available.<br/><em><strong># nmap </strong></em><em><mark class="highlight-red"><strong>-sI </strong></mark></em><em><strong>-v [target IP address]</strong></em></p><p id="2453addf-00cb-8098-8101-ff466e48163c" class="">
+</p><p id="2453addf-00cb-8074-92ea-ffde8ad0cabc" class=""><strong>SCTP INIT Scan</strong>: An INIT chunk is sent to the target host; an INIT+ACK chunk response implies that the port is open, and an ABORT Chunk response means that the port is closed.<br/><em><strong># nmap </strong></em><em><mark class="highlight-red"><strong>-sY</strong></mark></em><em><strong> -v [target IP address]</strong></em></p><p id="2453addf-00cb-805b-ba9b-fad7036b4c5b" class="">
+</p><p id="2453addf-00cb-808c-814b-c24237ea6960" class=""><strong>SCTP COOKIE ECHO Scan</strong>: A COOKIE ECHO chunk is sent to the target host; no response implies that the port is open and ABORT Chunk response means that the port is closed.<br/><em><strong># nmap </strong></em><em><mark class="highlight-red"><strong>-sZ</strong></mark></em><em><strong> -v [target IP address] </strong></em></p><p id="2453addf-00cb-80ce-9e21-c43d20d63b9c" class="">
+</p><p id="2453addf-00cb-8094-bd34-dc766da5f778" class="">
+</p><p id="2453addf-00cb-80d7-a27a-fdc9fcdb5c12" class=""><span style="border-bottom:0.05em solid">Service Version Detection: </span></p><p id="2453addf-00cb-80a6-9a07-e5b9cfc6e68d" class=""><em><strong>nmap </strong></em><em><mark class="highlight-red"><strong>-sV</strong></mark></em><em><strong> [Target IP Address}</strong></em></p><p id="2453addf-00cb-80dc-882a-ff5a4b5cb595" class="">
+</p><p id="2453addf-00cb-8025-9f3f-c70925cc0b3b" class=""><span style="border-bottom:0.05em solid">Agressive Scan: </span></p><p id="2453addf-00cb-80c9-99f4-e156fc992a8f" class=""><em><mark class="highlight-red"><strong>-A:</strong></mark></em><em><strong> </strong></em>enables aggressive scan. The aggressive scan option supports OS detection (-O), version scanning (-sV), script scanning (-sC), and traceroute (--traceroute). You should not use -A against target networks without permission.<br/></p><p id="2453addf-00cb-80b9-b949-e7cbbf793e2b" class="">To scan an entire subnet: <em><strong>nmap -A 10.10.1.*</strong></em></p><p id="2453addf-00cb-80c1-ac3a-d26af70615b2" class="">
+</p><p id="2453addf-00cb-80da-8f9b-de663cc0e8d4" class="">
+</p></div></details><p id="2453addf-00cb-807a-bfc0-ec226df1b30a" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 3: Perform OS Discovery</summary><div class="indented"><p id="2453addf-00cb-801b-a2ba-d7aeed31d57d" class="">
+</p><p id="2453addf-00cb-801c-bbf3-fc08f022d2d0" class="">
+</p><p id="2453addf-00cb-8074-97d2-f1faf07630c5" class="">▪ <strong>Active Banner Grabbing</strong> </p><p id="2453addf-00cb-80e8-8110-f397ce53b190" class="">Specially crafted packets are sent to the remote OS, and the responses are noted, which are then compared with a database to determine the OS. Responses from different OSes vary, because of differences in the TCP/IP stack implementation.<br/>▪ <strong>Passive Banner Grabbing</strong> </p><p id="2453addf-00cb-800e-9b3d-d4e190413750" class="">This depends on the differential implementation of the stack and the various ways an OS responds to packets. Passive banner grabbing includes banner grabbing from error messages, sniffing the network traffic, and banner grabbing from page extensions.<br/></p><p id="2453addf-00cb-8096-8667-c1e406eb3f09" class="">
+</p><figure id="2453addf-00cb-8028-9c41-fca75a80b5aa" class="image"><a href="image%2042.png"><img style="width:650.95703125px" src="image%2042.png"/></a></figure><p id="2453addf-00cb-8056-acca-cc4b2f0d3008" class="">
+</p><p id="2453addf-00cb-80e6-8b89-c43ed06278fb" class="">
+</p><p id="2453addf-00cb-80b0-9a85-f9c9cc216547" class=""><em><strong>nmap -A &lt;target IP&gt; </strong></em>will show much information including <strong>OS </strong></p><p id="2453addf-00cb-804a-b1ed-e1562ca15e58" class="">
+</p><p id="2453addf-00cb-804e-b3a7-e240fcad58d1" class=""><em><strong>nmap -O &lt;target IP&gt; </strong></em>performs OS discovery</p><p id="2453addf-00cb-807d-84bd-fa59bd185912" class="">
+</p><p id="2453addf-00cb-80d6-b916-edd141b13ded" class=""><em><strong>nmap --script smb-os-discovery.nse [Target IP Address] </strong></em></p><p id="2453addf-00cb-8045-8b6c-f865cbf6e69a" class="">Displays target OS, computer name, NetBIOS computer name </p><p id="2453addf-00cb-80f9-badb-ca8f281245c6" class="">
+</p><p id="2453addf-00cb-8075-9f0d-d7ed1ae1069a" class="">
+</p><p id="2453addf-00cb-80c6-be7c-eda8ff3066a3" class="">
+</p><p id="2453addf-00cb-80b3-84b0-e195377f3fd3" class="">
+</p><p id="2453addf-00cb-8061-8d85-fe4f2f368675" class="">
+</p><p id="2453addf-00cb-80f5-a91b-ecfef171b59b" class="">
+</p><p id="2453addf-00cb-8055-877f-ea91b76a8f33" class="">
+</p><p id="2453addf-00cb-8066-bb71-c58fbf2c27e5" class="">
+</p><p id="2453addf-00cb-803f-9bef-ccbd197d57ee" class="">
+</p><p id="2453addf-00cb-80ad-9952-cabababad9bc" class="">
+</p><p id="2453addf-00cb-8017-9ec8-de373335bd05" class="">
+</p><p id="2453addf-00cb-80ba-8e9d-e97082ee056f" class="">
+</p><p id="2453addf-00cb-80e5-b2b0-f1f78033fd60" class="">
+</p><p id="2453addf-00cb-8049-b696-ed806576b287" class="">
+</p></div></details><p id="2453addf-00cb-80c7-8e8e-e3e65b79cf81" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 4: Scan beyond IDS and Firewall</summary><div class="indented"><h3 id="2453addf-00cb-805c-a750-e6d6aa494a0d" class=""><em><strong>Lab Objectives:</strong></em></h3><p id="2453addf-00cb-80d4-aff9-db495354752b" class="">Scan beyond IDS/firewall using various evasion techniques </p><p id="2453addf-00cb-80b3-950d-d9733b77c1b2" class="">
+</p><p id="2453addf-00cb-806e-921d-d9a4fbf1a9b8" class="">
+</p><p id="2453addf-00cb-80be-8628-da28c36af92d" class="">Techniques to evade IDS/firewall: </p><p id="2453addf-00cb-802b-977b-ea9957c1d263" class="">▪<strong> Packet Fragmentation</strong>: Send fragmented probe packets to the intended target, which re-assembles it after receiving all the fragments<br/><strong>▪ Source Routing:</strong> Specifies the routing path for the malformed packet to reach the intended target<br/><strong>▪ Source Port Manipulation:</strong> Manipulate the actual source port with the common source port to evade IDS/firewall<br/><strong>▪ IP Address Decoy:</strong> Generate or manually specify IP addresses of the decoys so that the IDS/firewall cannot determine the actual IP address<br/><strong>▪ IP Address Spoofing: </strong>Change source IP addresses so that the attack appears to be coming in as someone else<br/><strong>▪ Creating Custom Packets:</strong> Send custom packets to scan the intended target beyond the firewalls<br/><strong>▪ Randomizing Host Order:</strong> Scan the number of hosts in the target network in a random order to scan the intended target that is lying beyond the firewall<br/><strong>▪ Sending Bad Checksums: </strong>Send the packets with bad or bogus TCP/UPD checksums to the intended target<br/><strong>▪ Proxy Servers: </strong>Use a chain of proxy servers to hide the actual source of a scan and evade certain IDS/firewall restrictions<br/><strong>▪ Anonymizers:</strong> Use anonymizers that allow them to bypass Internet censors and evade certain IDS and firewall rules<br/></p><p id="2453addf-00cb-8073-8630-c3a1fb0073fc" class="">
+</p><p id="2453addf-00cb-807c-a47c-d70e6c745299" class=""><strong><span style="border-bottom:0.05em solid">Packet fragmentation: </span></strong></p><p id="2463addf-00cb-800d-b387-f9e5a424f6a4" class=""><em><strong>nmap </strong></em><em><mark class="highlight-red"><strong>-f </strong></mark></em><em><strong>&lt;Target IP&gt;</strong></em></p><p id="2463addf-00cb-808c-ba66-ca629703e122" class="">
+</p><p id="2463addf-00cb-805e-9ec8-c29852a813d1" class="">Packet fragmentation refers to the splitting of a probe packet into several smaller packets (fragments) while sending it to a network. When these packets reach a host, IDSs and firewalls behind the host generally queue all of them and process them one by one. However, since this method of processing involves greater CPU consumption as well as network resources, the configuration of most of IDSs makes it skip fragmented packets during port scans.<br/>10</p><p id="2463addf-00cb-8003-ac35-ffc87f6e36ee" class="">
+</p><p id="2463addf-00cb-803c-9ad6-ed5d31c96426" class="">Wireshark snippet showing packet fragmentation: </p><figure id="2463addf-00cb-80bc-a685-f35ec6ad36d6" class="image"><a href="image%2043.png"><img style="width:662.94921875px" src="image%2043.png"/></a></figure><p id="2463addf-00cb-804e-bdcf-f7aed05f8427" class="">
+</p><p id="2463addf-00cb-8084-9f11-f02ca7ec381f" class="">
+</p><p id="2463addf-00cb-802f-8505-ea63ac062dd2" class=""><strong><span style="border-bottom:0.05em solid">Source Port Manipulation: </span></strong></p><p id="2463addf-00cb-803e-b349-fb25be3f1435" class=""><em><strong>nmap</strong></em><em><mark class="highlight-red"><strong> -g</strong></mark></em><em><strong> &lt;port&gt; &lt;Target IP&gt; </strong></em>or <em><strong>nmap </strong></em><em><mark class="highlight-red"><strong>--source-port</strong></mark></em><em><strong> &lt;port&gt; &lt;Target IP&gt;</strong></em></p><p id="2463addf-00cb-8010-8ba5-e851586da4d6" class="">
+</p><p id="2463addf-00cb-8070-9a72-d7bfb49dc02a" class="">Source port manipulation refers to manipulating actual port numbers with common port numbers to evade IDS/firewall: this is useful when the firewall is configured to allow packets from well-known ports like HTTP, DNS, FTP, etc.<br/>14</p><p id="2463addf-00cb-80b8-9254-c14f738f3f5c" class="">
+</p><p id="2463addf-00cb-804a-9991-f717fb1a2195" class="">
+</p><p id="2463addf-00cb-80b4-8294-c714555c110c" class=""><strong><span style="border-bottom:0.05em solid">Lmit packet size: </span></strong></p><p id="2463addf-00cb-80f8-a198-e85396af15af" class=""><em><strong>nmap -mtu 8 &lt;Target IP&gt;</strong></em></p><p id="2463addf-00cb-80f4-887a-e174e16e7300" class="">Using MTU, smaller packets are transmitted instead of sending one complete packet at a time. This technique evades the filtering and detection mechanism enabled in the target machine</p><p id="2463addf-00cb-80f3-a53f-c572a7d2885a" class="">
+</p><p id="2463addf-00cb-80a2-a337-f1f1fc1b9fcd" class=""><strong><span style="border-bottom:0.05em solid">IP Decoy: </span></strong></p><p id="2463addf-00cb-808a-ab28-cc81c8d38b10" class=""><em><strong>nmap -D RND:&lt;number of IPs&gt; &lt;Target IP&gt; </strong></em></p><p id="2463addf-00cb-80e5-b48f-de209ba27fdc" class="">In this command, <em><strong>-D</strong></em>: performs a decoy scan and <em><strong>RND:</strong></em> generates a random and non-reserved IP addresses (here, 10).<br/></p><p id="2463addf-00cb-8065-ab98-e1fea1d3c95a" class="">The IP address decoy technique refers to generating or manually specifying IP addresses of the decoys to evade IDS/firewall. This technique makes it difficult for the IDS/firewall to determine which IP address was actually scanning the network and which IP addresses were decoys. By using this command, Nmap automatically generates a random number of decoys for the scan and randomly positions the real IP address between the decoy IP addresses.<br/>21</p><p id="2463addf-00cb-805e-8ee9-ea06afcafcf5" class="">
+</p><p id="2463addf-00cb-800b-aaf5-d9e20b1b7827" class=""><strong><span style="border-bottom:0.05em solid">MAC Spoofing:</span></strong></p><p id="2463addf-00cb-800e-a38d-eb204542f4c4" class=""><em><strong>nmap -sT -Pn --spoof-mac 0 &lt;Target IP&gt;</strong></em></p><p id="2463addf-00cb-8050-9eb2-ed17b128bca9" class="">
+</p><p id="2463addf-00cb-80f1-8058-dd8a70f1abc5" class=""><em><strong>--spoof-mac 0: </strong></em>Represents randomizing the MAC address </p><p id="2463addf-00cb-80e4-8da7-cb6098b8561b" class=""><em><strong>-sT: </strong></em>TCP connect/full open scan </p><p id="2463addf-00cb-802b-9595-fda0f15b469b" class=""><em><strong>-Pn: </strong></em>Skips host discovery </p><p id="2463addf-00cb-8030-9303-e1845cafc2b6" class="">
+</p><p id="2463addf-00cb-80de-b519-eec6ba29d990" class="">MAC address spoofing technique involves spoofing a MAC address with the MAC address of a legitimate user on the network. This technique allows you to send request packets to the targeted machine/network pretending to be a legitimate host.<br/></p><p id="2463addf-00cb-80a6-81df-e0208acfb637" class="">
+</p><p id="2453addf-00cb-8079-9b2d-db43321f9b89" class="">
+</p></div></details><p id="2463addf-00cb-8074-bfbf-ff4b8bb09242" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 5: Perform Network Scanning using Various Scanning Tools</summary><div class="indented"><h3 id="2463addf-00cb-8006-9695-d36488b2870f" class=""><em><strong>Lab Objectives:</strong></em></h3><p id="2463addf-00cb-80d1-9aea-f75de77f26c9" class="">Scan a target network using Metasploit<br/></p><p id="2463addf-00cb-80e7-8106-cf8f3b83d5d5" class="">
+</p><ol type="1" id="2463addf-00cb-80a5-b129-cce30499817a" class="numbered-list" start="1"><li>To run metasploit: <ol type="a" id="2463addf-00cb-80f7-828a-f507f407377f" class="numbered-list" start="1"><li><em><strong>msfconsole</strong></em></li></ol></li></ol><ol type="1" id="2463addf-00cb-8066-8b0a-eedab0992324" class="numbered-list" start="2"><li>To scan an entire subnet: <ol type="a" id="2463addf-00cb-8041-8a4d-de05a78a49ab" class="numbered-list" start="1"><li><em><strong>nmap -Pn -sS -A -oX Test &lt;network address&gt;/24</strong></em></li></ol></li></ol><ol type="1" id="2463addf-00cb-8008-bba6-cdef03b3f1ff" class="numbered-list" start="3"><li>Show portscanning modules: <ol type="a" id="2463addf-00cb-8094-a19a-df982aaf6ffc" class="numbered-list" start="1"><li><em><strong>search portscan </strong></em></li></ol></li></ol><ol type="1" id="2463addf-00cb-804c-abc0-e543ede5d813" class="numbered-list" start="4"><li>Use <em><strong>auxiliary/scanner/portscan/syn </strong></em>module to SYN scan on target systems </li></ol><ol type="1" id="2463addf-00cb-807f-b1f0-e16d2e4b430a" class="numbered-list" start="5"><li> We will use this module to<strong> perform an SYN scan</strong> against the target IP address range (<strong>10.10.1.5-23</strong>) to look for<strong> open port 80 through the eth0</strong> interface<ol type="a" id="2463addf-00cb-806f-9a71-d751b7bb23b7" class="numbered-list" start="1"><li><em><strong>set INTERFACE eth0</strong></em></li></ol><ol type="a" id="2463addf-00cb-80e2-8039-d5363e7aa2ed" class="numbered-list" start="2"><li><em><strong>set PORTS 80 </strong></em></li></ol><ol type="a" id="2463addf-00cb-8073-8df7-f1fb69962b67" class="numbered-list" start="3"><li><em><strong>set RHOSTS 10.10.1.5-23</strong></em></li></ol><ol type="a" id="2463addf-00cb-80e9-bc20-c6f277aa88d8" class="numbered-list" start="4"><li><em><strong>set THREADS 50 </strong></em></li></ol><ol type="a" id="2463addf-00cb-8088-b60c-e0ccc4fb9563" class="numbered-list" start="5"><li><em><strong>run → Enter </strong></em></li></ol></li></ol><p id="2463addf-00cb-80c2-8d5a-d310d4282378" class=""><em><strong>PORTS: </strong></em>Specifies ports to scan </p><p id="2463addf-00cb-807d-9fc4-e96a708d5246" class=""><em><strong>RHOSTS: </strong></em>Specifies target range or CIDR identifier</p><p id="2463addf-00cb-800a-83d9-f98f3ea36c16" class="">
+</p><ol type="1" id="2463addf-00cb-80f1-8f76-d60c961a0501" class="numbered-list" start="6"><li>Next perform TCP scan for open ports on target systems <ol type="a" id="2463addf-00cb-80f0-9385-d94d29acf9e6" class="numbered-list" start="1"><li><em><strong>use auxiliary/scanner/portscan/tcp</strong></em></li></ol><ol type="a" id="2463addf-00cb-80ff-9e79-f1fedd3de2b6" class="numbered-list" start="2"><li>Run <em><strong>show options </strong></em>to view module options </li></ol><ol type="a" id="2463addf-00cb-80cb-8902-d3dae7ccd69e" class="numbered-list" start="3"><li><em><strong>set RHOSTS [Target IP Address] </strong></em><strong>- </strong>multiple IP addresses takes much time</li></ol><ol type="a" id="2463addf-00cb-8052-a74e-c74292acdd56" class="numbered-list" start="4"><li><em><strong>run → Enter </strong></em></li></ol></li></ol><p id="2463addf-00cb-8086-bdab-e14475b4448f" class="">
+</p><p id="2463addf-00cb-804c-9aa6-ea6dc1939208" class="">Active Hosts have been determined - now we can attempt to determine OSes running on target systes </p><p id="2463addf-00cb-807a-91b0-ee8414ca1e4b" class="">We see systems in our scan that have port 445 open - so we can use <em><strong>scanner/smb/version</strong></em> to determine which version of Windows is running on a target or which Samba version on Linux host </p><p id="2463addf-00cb-8031-aac5-db560e440515" class="">
+</p><ol type="1" id="2463addf-00cb-80dc-bbb5-d06879acecce" class="numbered-list" start="7"><li><em><strong>back </strong></em>to revert to msf command line </li></ol><ol type="1" id="2463addf-00cb-80d8-a9af-c2085cca28a4" class="numbered-list" start="8"><li><em><strong>use auxiliary/scanner/smb/smb_version</strong></em><ol type="a" id="2463addf-00cb-803b-9689-cc1d904e1b33" class="numbered-list" start="1"><li><em><strong>set RHOSTS 10.10.1.5-23</strong></em></li></ol><ol type="a" id="2463addf-00cb-8010-930f-ce9642605c1e" class="numbered-list" start="2"><li><em><strong>set THREADS 11</strong></em></li></ol></li></ol><ol type="1" id="2463addf-00cb-80f3-ad4d-e3cd6de6a082" class="numbered-list" start="9"><li></li></ol><p id="2463addf-00cb-80b0-b65e-cdce67c32013" class="">
+</p><p id="2463addf-00cb-8049-ae1e-f69453932b2e" class="">
+</p><p id="2463addf-00cb-80aa-ba5b-cf419dcb79f0" class="">
+</p><p id="2463addf-00cb-80f8-bdd9-d463eee25d3d" class="">
+</p></div></details><p id="2463addf-00cb-80d8-b292-c82834a317fa" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Lab 6: Perform Network Scanning using AI </summary><div class="indented"><h3 id="2463addf-00cb-8050-a9b0-c3f90d4f0909" class=""><em>Lab Objectives:</em></h3><p id="2463addf-00cb-80a4-b467-d2663c7ef8a2" class="">Scan a target using ShellGPT<br/></p><p id="2463addf-00cb-8031-bf9a-fcd8399a9de1" class=""><span style="border-bottom:0.05em solid">Perform ICM scan on target IP address: <br/></span><em><strong>sgpt --chat scan --shell “Use Hping3 to perform ICMP scanning on the target IP address 10.10.1.11 and stop after 10 iterations” </strong></em></p><p id="2463addf-00cb-807c-8d72-c72b44b4e5db" class="">
+</p><p id="2463addf-00cb-80c3-bee9-d38699a34a81" class=""><span style="border-bottom:0.05em solid">Perform ACK scan on target IP address: </span></p><p id="2463addf-00cb-80dd-aaea-f4fabcb8462a" class=""><em><strong>sgpt --chat scan --shell “Run a hping3 ACK scan on port 80 of target IP 10.10.1.11” </strong></em></p><p id="2463addf-00cb-80be-912f-f871222438b8" class="">
+</p><p id="2463addf-00cb-8043-9d46-f8e85e468e43" class=""><span style="border-bottom:0.05em solid">Perform host discovery: </span></p><p id="2463addf-00cb-80de-8719-df291d4ba70b" class=""><em><strong>sgpt --chat scan --shell &quot;Scan the target network 10.10.1.0/24 for active hosts and place only the IP addresses into a file scan1.txt” </strong></em></p><p id="2463addf-00cb-808f-ba51-c2a669855254" class="">Run <em><strong>pluma scan1.txt </strong></em>to view IP addresses </p><p id="2463addf-00cb-8020-8cd4-f50557e9a694" class="">
+</p><p id="2463addf-00cb-80d0-86f0-eb2db13e4ed8" class=""><span style="border-bottom:0.05em solid">Run nmap scan against target IPs: </span></p><p id="2463addf-00cb-805c-8561-d2fe826bb91b" class=""><em><strong>sgpt --chat scan --shell &quot;Run a fast but comprehensive Nmap scan against scan1.txt with low verbosity and write the results to scan2.txt&quot; </strong></em></p><p id="2463addf-00cb-806e-86d6-c6884529154c" class="">
+</p><p id="2463addf-00cb-8083-9b06-e8632522f1d4" class=""><span style="border-bottom:0.05em solid"> Perform ICMP ECHO ping sweep on the target network:</span></p><p id="2463addf-00cb-80b8-be2d-f45078a496b3" class=""><em><strong>sgpt --chat scan --shell “Use Nmap to perform ICMP ECHO ping sweep on the target network 10.10.1.0/24” </strong></em></p><p id="2463addf-00cb-80db-9d98-eb8f006b5be1" class="">
+</p><p id="2463addf-00cb-809c-b9f4-daa20b0ae5e6" class=""><span style="border-bottom:0.05em solid">Perform port scanning: </span></p><p id="2463addf-00cb-8002-973e-f219ffe9a761" class=""><em><strong>sgpt --chat scan --shell “Use Nmap to find open ports on target IP 10.10.1.11” </strong></em></p><p id="2463addf-00cb-8019-a0e0-c97f5b0d0ddf" class="">
+</p><p id="2463addf-00cb-806c-9597-dc6edb6929db" class=""><span style="border-bottom:0.05em solid">Perform stealth scan on a target IP:</span></p><p id="2463addf-00cb-809a-ab87-d7884c79594e" class=""><em><strong>sgpt --chat scan --shell &quot;Perform stealth scan on target IP 10.10.1.11 and display the results&quot; </strong></em></p><p id="2463addf-00cb-80b6-928f-f76f8d9f9e26" class="">
+</p><p id="2463addf-00cb-807d-8181-c1404a005cc5" class=""><span style="border-bottom:0.05em solid">Perform XMAS scan on a target IP address:</span></p><p id="2463addf-00cb-80f2-848d-fbb1efd5c69b" class=""><em><strong>sgpt --chat scan --shell “Perform an XMAS scan on target IP 10.10.1.11” </strong></em></p><p id="2463addf-00cb-80dc-979b-cef6c7ae408f" class="">
+</p><p id="2463addf-00cb-80d7-9da3-f53c479617ae" class=""><span style="border-bottom:0.05em solid">Scan for open services and ports against the list of IP addresses:</span></p><p id="2463addf-00cb-8058-a870-f1a4749a3017" class=""><em><strong>sgpt --chat scan --shell “Use Nmap to scan for open ports and services against a list of IP addresses in scan1.txt and copy only the port, service and version information with the respective IP address to a new file called scan3.txt” </strong></em></p><p id="2463addf-00cb-808f-b03e-e92f4b5b2a0f" class="">
+</p><p id="2463addf-00cb-803b-91bd-d66d05da85f3" class=""><span style="border-bottom:0.05em solid">Use Metasploit to discover open ports on target system:</span></p><p id="2463addf-00cb-808f-9aa2-ca91d0bb1523" class=""><em><strong>sgpt --chat scan --shell “Use Metasploit to discover open ports on the IP address 10.10.1.22” </strong></em></p><p id="2463addf-00cb-801b-86bc-f1c08379c6a6" class="">
+</p><p id="2463addf-00cb-8034-9494-e6b687e55488" class=""><span style="border-bottom:0.05em solid">To perform service version discovery on a target system:</span></p><p id="2463addf-00cb-80c9-a2ea-e48b59880cca" class=""><em><strong>sgpt --chat scan --shell “Use Nmap to scan open ports, MAC details, services running on open ports with their versions on target IP 10.10.1.11” </strong></em></p><p id="2463addf-00cb-80a5-90cf-d45a9bf228fb" class="">
+</p><p id="2463addf-00cb-80b2-86e2-d37129cb38f2" class=""><span style="border-bottom:0.05em solid">OS discovery using ShellGPT and TTL:</span></p><p id="2463addf-00cb-80da-af08-c88bfa9efe98" class=""><em><strong>sgpt --chat scan --shell “Use TTL value and identify the operating system running on the target IP address 10.10.1.11, display the TTL value and OS” </strong></em></p><p id="2463addf-00cb-8001-b114-f8c883a32fec" class="">
+</p><p id="2463addf-00cb-8096-b6d6-f6407ace3a6c" class=""><span style="border-bottom:0.05em solid">OS discovery using Nmap:</span></p><p id="2463addf-00cb-80ba-a39c-d03bca817629" class=""><em><strong>sgpt --chat scan --shell “Use Nmap script engine to perform OS discovery on the target IP addresses in scan1.txt” </strong></em></p><p id="2463addf-00cb-80f1-a0de-f9337ace9a42" class="">
+</p><p id="2463addf-00cb-8041-a01d-e3e3710cf33c" class=""><span style="border-bottom:0.05em solid">Automate various network scanning tasks by create custom script:</span></p><p id="2463addf-00cb-8077-920e-d30eebc3ad34" class=""><em><strong>sgpt --chat scan --shell “Develop a script which will automate network scanning efforts and find out live systems, open ports, running services, service versions, etc. on target IP range 10.10.1.0/24” </strong></em></p><p id="2463addf-00cb-80f5-8bd9-d8364d75c762" class="">
+</p><p id="2463addf-00cb-80a4-8f21-d0f2e241081c" class=""><span style="border-bottom:0.05em solid">Use the IP Address Decoy technique to scan:</span></p><p id="2463addf-00cb-8005-b8cf-c40d61dd9321" class=""><em><strong>sgpt --chat scan --shell “To evade an IDS/Firewall, use IP address decoy technique to scan the target IP address 10.10.1.22” </strong></em></p><p id="2463addf-00cb-80ce-a22f-fc349e6fe77b" class="">
+</p><p id="2463addf-00cb-80d9-bc2e-fc4a6bf94d60" class=""><span style="border-bottom:0.05em solid">Create a python script which performs Nmap scan:</span></p><p id="2463addf-00cb-8046-a5f5-d31bf9c2b3a9" class=""><em><strong>sgpt --chat scancode --code “Create a python script to run a fast but comprehensive Nmap scan on the IP addresses in scan1.txt and then execute vulnerability scanning using nikto against each IP address in scan1.txt” </strong></em></p><p id="2463addf-00cb-806e-8147-c252a1b5cd4e" class="">Copy the python code and type <em><strong>pluma python_scan.py → save and close file</strong></em></p><p id="2463addf-00cb-80cd-93b9-d212c5be03e4" class=""> type <em><strong>python3 python_scan.py</strong></em> to run the script</p><p id="2463addf-00cb-8076-874e-d6c2c0d8f72e" class="">
+</p><p id="2463addf-00cb-802d-91bc-c8c0ab2d4a7d" class="">
+</p><p id="2463addf-00cb-80e5-918d-f67868ade997" class="">
+</p><p id="2463addf-00cb-80f5-b1b2-cda1685a6561" class="">
+</p></div></details><p id="2413addf-00cb-8080-b4e7-e7927b941061" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

